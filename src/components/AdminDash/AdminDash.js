@@ -62,14 +62,16 @@ class AdminDash extends Component {
 
         return(
             <div>
-                <AdminList
-                    type = 'students'
-                    list = {students}
-                />
-                <AdminList
-                    type = 'instructors'
-                    list = {instructors}
-                />
+                <div>
+                    <AdminList
+                        type = 'students'
+                        list = {students}
+                    />
+                    <AdminList
+                        type = 'instructors'
+                        list = {instructors}
+                    />
+                </div>
             </div>
         )
     }
