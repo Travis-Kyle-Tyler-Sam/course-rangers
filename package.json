@@ -23,7 +23,8 @@
     "react-scripts": "1.1.4",
     "redux": "^4.0.0",
     "redux-promise-middleware": "^5.1.1",
-    "s3": "^4.4.0"
+    "s3": "^4.4.0",
+    "semantic-ui-react": "^0.80.0"
   },
   "scripts": {
     "start": "react-scripts start",
