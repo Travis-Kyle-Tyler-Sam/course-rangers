@@ -1,26 +1,27 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import FileUpload from './components/FileUpload';
-
+import { Switch, Route, HashRouter } from "react-router-dom";
+import TemporaryDashboard from './components/TemporaryDashboard';
+import Login from './components/Login';
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-                  <a href={process.env.REACT_APP_LOGIN}>
-              <button>
-                    Login
-                </button>
-                  </a>
-                  <FileUpload/>
-      </div>
+
+
+
+       <HashRouter>
+          <Switch>
+            <Route exact path='/' component={Login} />
+            <Route path='/temporarydashboard' component={TemporaryDashboard} />
+            {/* <Route path='/studentdashboard' component={StudentDashboard} /> */}
+            {/* <Route path='/teacherdashboard' component={TeacherDashboard} /> */}
+            {/* <Route path='/admindashboard' component={AdminDashboard} /> */}
+        
+          </Switch>
+        </HashRouter>
+       </div>
     );
   }
 }
