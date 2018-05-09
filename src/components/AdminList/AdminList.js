@@ -6,7 +6,17 @@ class AdminList extends Component{
     constructor(){
         super();
         this.state = {
-            add:false
+            list:[
+                {
+                    name:'',
+                    email:'',
+                    phone:'',
+                    userType:'',
+                    id:-1
+                }
+            ],
+            add:false,
+            type:''
         }
         this.handleClick = this.handleClick.bind(this);
     }
@@ -16,8 +26,16 @@ class AdminList extends Component{
             add:bool
         })
     }
-    render(){
+
+    componentDidMount(){
         const { list, type } = this.props;
+        this.setState({
+            list,
+            type
+        })
+    }
+    render(){
+        const { list, type } = this.state;
         const listItems = list.map( user => {
             return (
                 <div>
@@ -38,6 +56,7 @@ class AdminList extends Component{
                     { this.state.add
                        ? <AdminAddEdit
                         handleClickFn = {this.handleClick}
+                        new = { true }
                        />
                        : null
                     }

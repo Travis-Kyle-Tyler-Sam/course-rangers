@@ -33,6 +33,7 @@ class AdminListItem extends Component{
                     id = {user.id}
                     role = {user.role}
                     handleClickFn = {this.handleClick}
+                    new = { false }
                     />
                 : null
                 }

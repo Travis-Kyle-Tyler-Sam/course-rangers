@@ -51,13 +51,22 @@ class AdminAddEdit extends Component {
         
         return(
             <div>
-                <div>
-                    <p>Name: </p>
-                    <input value={name} onChange = { e=> this.handleChange('name',e.target.value)}/>
-                </div>
+                <form>
+                    <div>
+                        <p>Name: </p>
+                        <input value={name} onChange = { e=> this.handleChange('name',e.target.value)}/>
+                    </div>
                 <div>
                     <p>Role: </p>
-                    <form></form>
+                    <div>
+                        <input type='radio' value='Student' name='role' id='roleChoice1' onChange = { e => this.handleChange('role',e.target.value)}/>
+                        <label htmlFor='roleChoice1'>Student</label>
+                        
+                        <input type='radio' value='Instructor' name='role' id='roleChoice2' onChange = { e => this.handleChange('role',e.target.value)}/>
+                        <label htmlFor='roleChoice2'>Instructor</label>
+                    </div>
+                        
+                    
                 </div>
                 <div>
                     <p>Phone: </p>
@@ -71,7 +80,8 @@ class AdminAddEdit extends Component {
                     <p>{role} ID: </p> {displayID()}
                     
                 </div>
-                <button onClick = { () => handleClickFn(false)}>Save</button>
+                <button type = 'submit' onClick = { () => handleClickFn(false)}>Save</button>
+                </form>
             </div>
         )
     }
