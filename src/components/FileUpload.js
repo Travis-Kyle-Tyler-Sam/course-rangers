@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
-import { getUserInfo } from './../ducks/userReducer'
+import { getUserInfo } from './../dux/userReducer'
 import { truncate } from "fs";
 
 class FileUpload extends Component {
