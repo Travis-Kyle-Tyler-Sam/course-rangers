@@ -47,7 +47,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-/// need to rename db query functions
 passport.use(
   new Auth0Strategy(
     {
