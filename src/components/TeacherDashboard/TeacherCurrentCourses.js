@@ -12,7 +12,7 @@ class TeacherCurrentCourses extends Component {
         let currentCourseList = this.state.currentCourses.map(course=>{
             return <Table.Row>
       <Table.Cell><button>Today</button></Table.Cell>
-      <Table.Cell>Course #</Table.Cell>
+      <Table.Cell> Course #</Table.Cell>
       <Table.Cell>Curriculum</Table.Cell>
       <Table.Cell>Start Date</Table.Cell>
       <Table.Cell>End Date</Table.Cell>      
