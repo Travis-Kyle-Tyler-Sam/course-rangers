@@ -68,6 +68,9 @@ class FileUpload extends Component {
     };
     this.sendToback(stuffToSend).then(response => {
       console.log("Upload response", response.data);
+      if(this.props.cb){
+        this.props.cb(response.data)
+      }
       this.uploadPhotoToDB(response);
     });
     this.updateState();

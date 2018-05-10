@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Card, Icon, Image, Input, Button, TextArea, Form, Header, Checkbox } from 'semantic-ui-react'
-import Dropzone from 'react-dropzone'
-
+import FileUpload from '../FileUpload'
 import './CurriculumBuilder.css'
 
 class CurriculumBuilder extends Component {
@@ -77,10 +76,9 @@ class CurriculumBuilder extends Component {
         }
     }
 
-    onDrop = ( files ) => {
-        this.setState({files})
+    uploadedFile = (awsResponse) => {
+        console.log(awsResponse)
     }
-
 
     
 
@@ -199,9 +197,9 @@ class CurriculumBuilder extends Component {
                                     />
                                 </Form.Field>
                                 </div>
-                                <Dropzone 
-                                    multiple={ false }
-                                    onDrop={ this.onDrop }/>
+                                <FileUpload 
+                                    cb={ this.uploadedFile } />
+                               
                             </Form>
                         <Button 
                             primary={ true } 
