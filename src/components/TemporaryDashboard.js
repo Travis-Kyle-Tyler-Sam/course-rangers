@@ -18,6 +18,7 @@ class TemporaryDashboard extends Component {
     render() { 
         return ( 
             <div>
+                Hello {this.props.user.user_name}
             <section>
                 <button>   
                 <Link to="/studentdashboard">
@@ -38,7 +39,9 @@ class TemporaryDashboard extends Component {
                 Admin Dashboard
              </Link>
                 </button>
-                
+                <button> <a href={process.env.REACT_APP_LOGOUT}>
+                    Logout
+                  </a></button>
         
             </section>
 
