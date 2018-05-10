@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import AdminList from '../AdminList/AdminList';
+import './AdminDash.css';
 
 class AdminDash extends Component {
     constructor(){
@@ -11,7 +12,7 @@ class AdminDash extends Component {
                     name: 'Jose Gonzalez',
                     email: 'jose@jose.jose',
                     phone:'801-801-8018',
-                    userType:'student',
+                    userType:'Student',
                     id:98234598
                 },
                 
@@ -19,14 +20,14 @@ class AdminDash extends Component {
                     name:'Hermione Granger',
                     email:'ilovebooks55@gmail.com',
                     phone:'801-801-8017',
-                    userType:'student',
+                    userType:'Student',
                     id:1934875
                 },
                 {
                     name:'Goku',
                     email:'supersaiyinlol@capsulecorp.com',
                     phone:'801-801-8016',
-                    userType:'student',
+                    userType:'Student',
                     id:981357
                 }
             ],
@@ -54,6 +55,10 @@ class AdminDash extends Component {
         
     }
 
+    handleChange( name, email, phone, type, id){
+        //this will make an axios call to update the db, but in the meantime I'm going to update state with the updated information
+    }
+
 
     render(){
         const { students, instructors } = this.state;
@@ -62,13 +67,13 @@ class AdminDash extends Component {
 
         return(
             <div>
-                <div>
+                <div className='lists'>
                     <AdminList
-                        type = 'students'
+                        type = 'Students'
                         list = {students}
                     />
                     <AdminList
-                        type = 'instructors'
+                        type = 'Instructors'
                         list = {instructors}
                     />
                 </div>
