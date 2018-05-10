@@ -11,10 +11,12 @@ export default class Home extends Component {
                     <div className="dark-overlay landing-inner">
                         <div className="container"></div>
                     </div>
-                </div>
-
-                <div className='middle-container'>
-                    <div className='home-main-content'></div>
+                    <div className='middle-container'>
+                        <div className='home-main-content'>
+                            <h1>Elearning</h1>
+                            <p>Anim deserunt proident deserunt excepteur</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         )
