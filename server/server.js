@@ -165,3 +165,13 @@ app.get('/api/teacher_courses/:teacher_id', (req, res) =>{
     .then(response => res.status(200).send(response))
     .catch(err=> console.log(err));
 })
+
+app.delete('/api/delete_course/:id', (req, res)=>{
+  app
+    .get('db')
+    .courses_DB.delete_course([req.params.id])
+    .then(response => {
+      res.status(200).send(response);
+    })
+    .catch(err => console.log(err));
+})
