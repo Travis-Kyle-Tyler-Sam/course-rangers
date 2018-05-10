@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Card, Icon, Image, Input, Button, TextArea, Form, Header } from 'semantic-ui-react'
+import { Card, Icon, Image, Input, Button, TextArea, Form, Header, Checkbox } from 'semantic-ui-react'
+import Dropzone from 'react-dropzone'
 
 import './CurriculumBuilder.css'
 
@@ -15,10 +16,16 @@ class CurriculumBuilder extends Component {
             selectedDay: null,
             dayTopicInput: '',
             dayDescriptionInput: '',
-            contentSelector: 0
+            contentSelector: 0,
+            resourceTitleInput: '',
+            resourceDescriptionInput: '',
+            resourceTypeLink: true,
+            files: null,
 
          }
     }
+
+    handleResourceType = (e, { value }) => this.setState({ resourceTypeLink: value })
 
     handleInput = (e) => {
         this.setState({
@@ -68,12 +75,20 @@ class CurriculumBuilder extends Component {
                 editingTopicDesc: !this.state.editingTopicDesc
             })
         }
-
     }
 
+    onDrop = ( files ) => {
+        this.setState({files})
+    }
+
+
+    
+
     render() { 
+        // Switches between save name and edit name depending on whether the inputs ar showing or just the text
         let nameBtnLabel = this.state.editingName ? 'Save Name' : 'Edit Name'
 
+        // Button label switches between save and edit in the day 
         let daySaveLabel = this.state.editingTopicDesc ? 'Save' : 'Edit'
 
         let displayDays = this.state.curriculumDays.map( (day, i) => {
@@ -158,14 +173,40 @@ class CurriculumBuilder extends Component {
                         <Card.Header>
                             Add a Resource
                         </Card.Header>
-                            <Input name='dayTopicInput' value={this.state.dayTopicInput} onChange={this.handleInput} placeholder='Topic' fluid={true}/>
                             <Form>
-                                <TextArea name='dayDescriptionInput' value={this.state.dayDescriptionInput} onChange={this.handleInput} placeholder='Description' fluid={true}/>
+                            <Input name='resourceTitleInput' value={this.state.resourceTitleInput} onChange={this.handleInput} placeholder='Title' fluid={true}/>
+                                <TextArea name='resourceDescriptionInput' value={this.state.resourceDescriptionInput} onChange={this.handleInput} placeholder='Description' fluid={true}/>
+                                <div className='cb-resource-radios'>
+
+                                <Form.Field>
+                                <Checkbox
+                                    radio
+                                    label='Link'
+                                    name='resourceTypeLink'
+                                    value={ true }
+                                    checked={ this.state.resourceTypeLink }
+                                    onChange={ this.handleResourceType }
+                                    />
+                                </Form.Field>
+                                <Form.Field>
+                                <Checkbox
+                                    radio
+                                    label='Upload'
+                                    name='resourceTypeUpload'
+                                    value={ false }
+                                    checked={ !this.state.resourceTypeLink }
+                                    onChange={ this.handleResourceType }
+                                    />
+                                </Form.Field>
+                                </div>
+                                <Dropzone 
+                                    multiple={ false }
+                                    onDrop={ this.onDrop }/>
                             </Form>
                         <Button 
                             primary={ true } 
                             style={{float: 'right'}}
-                            onClick={ this.topicDescSave }>
+                            onClick={ this.resourceSave }>
                             { daySaveLabel }
                         </Button>
                     </Card.Content>
