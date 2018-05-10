@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { getUserInfo } from './../dux/userReducer';
 import { Link } from "react-router-dom";
 import Navbar from './Navbar/Navbar';
-///// this dashboard doesn't actually link anywhere yet
+
 
 class TemporaryDashboard extends Component {
     constructor(props) {
