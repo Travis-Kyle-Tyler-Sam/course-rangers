@@ -1,0 +1,31 @@
+.card {
+    width: 500px;
+    height: 800px;
+    border-color: #e2e9e6;
+    border: 1px solid gray;
+    border-radius: 10px;
+    margin-left: 150px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-bottom: 15px;
+}
+
+.card h2 {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.card2 {
+    width: 800px;
+    height: 500px;
+    border-color: #e2e9e6;
+    border: 1px solid gray;
+    border-radius: 10px;
+    margin-left: 145%;
+    margin-top: -12%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.card2 h2 {
+    text-align: center;
+    margin-top: 10px;
+}
