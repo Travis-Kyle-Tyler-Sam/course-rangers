@@ -19,8 +19,8 @@ class CurriculumBuilder extends Component {
             resourceTitleInput: '',
             resourceDescriptionInput: '',
             resourceTypeLink: true,
-            files: null,
-
+            upload: '',
+            resourceLink: ''
          }
     }
 
@@ -77,7 +77,9 @@ class CurriculumBuilder extends Component {
     }
 
     uploadedFile = (awsResponse) => {
-        console.log(awsResponse)
+        this.setState({
+            upload: awsResponse.Location
+        })
     }
 
     
@@ -99,6 +101,7 @@ class CurriculumBuilder extends Component {
         })
 
         let topicDescFlag =  this.state.dayTopicInput && this.state.dayDescriptionInput
+
 
         return ( 
             <div className='cb-container'>
@@ -199,6 +202,7 @@ class CurriculumBuilder extends Component {
                                 </div>
                                 <FileUpload 
                                     cb={ this.uploadedFile } />
+                                { this.state.upload !== '' && <img src={ this.state.upload } width='50px' />  }
                                
                             </Form>
                         <Button 
