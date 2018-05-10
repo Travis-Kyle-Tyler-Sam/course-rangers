@@ -24,10 +24,7 @@
     "redux": "^4.0.0",
     "redux-promise-middleware": "^5.1.1",
     "s3": "^4.4.0",
-<<<<<<< HEAD
-=======
     "semantic-ui": "^2.3.1",
->>>>>>> master
     "semantic-ui-react": "^0.80.0"
   },
   "scripts": {

@@ -1,24 +1,15 @@
 import React, { Component } from 'react';
 import './App.css';
-<<<<<<< HEAD
-import FileUpload from './components/FileUpload';
-import CurriculumBuilder from './components/CurriculumBuilder/CurriculumBuilder'
-
-=======
 import { Switch, Route, HashRouter } from "react-router-dom";
 import TemporaryDashboard from './components/TemporaryDashboard';
 import Login from './components/Login';
 import TeacherDashboard from './components/TeacherDashboard/TeacherDashboard';
->>>>>>> master
+import CurriculumBuilder from './components/CurriculumBuilder/CurriculumBuilder'
+
 class App extends Component {
   render() {
     return (
       <div className="App">
-<<<<<<< HEAD
-        <CurriculumBuilder />
-        {/* <FileUpload/> */}
-      </div>
-=======
 
 
 
@@ -29,11 +20,11 @@ class App extends Component {
             {/* <Route path='/studentdashboard' component={StudentDashboard} /> */}
             <Route path='/teacherdashboard' component={TeacherDashboard} />
             {/* <Route path='/admindashboard' component={AdminDashboard} /> */}
+            <Route path='/curriculumbuilder' component={CurriculumBuilder} />
         
           </Switch>
         </HashRouter>
        </div>
->>>>>>> master
     );
   }
 }
