@@ -6,7 +6,7 @@ CREATE TABLE users (
     phone INTEGER,
     user_type VARCHAR(10),
     linker_id INTEGER,
-    course_connect integer,
+    course_connect integer references user_courses(connect_id),
     level INTEGER,
     exp INTEGER
 );
