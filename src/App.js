@@ -1,25 +1,27 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
-import FileUpload from './components/FileUpload';
-import { Route, Switch } from 'react-router-dom';
-import AdminDash from './components/AdminDash/AdminDash';
-
+import { Switch, Route, HashRouter } from "react-router-dom";
+import TemporaryDashboard from './components/TemporaryDashboard';
+import Login from './components/Login';
+import TeacherDashboard from './components/TeacherDashboard/TeacherDashboard';
 class App extends Component {
   render() {
     return (
       <div className="App">
-        
-                  <a href={process.env.REACT_APP_LOGIN}>
-              <button>
-                    Login
-                </button>
-                  </a>
-                  <FileUpload/>
+
+
+
+       <HashRouter>
           <Switch>
-            <Route path='/admindash' component={AdminDash}/>
+            <Route exact path='/' component={Login} />
+            <Route path='/temporarydashboard' component={TemporaryDashboard} />
+            {/* <Route path='/studentdashboard' component={StudentDashboard} /> */}
+            <Route path='/teacherdashboard' component={TeacherDashboard} />
+            {/* <Route path='/admindashboard' component={AdminDashboard} /> */}
+        
           </Switch>
-      </div>
+        </HashRouter>
+       </div>
     );
   }
 }

@@ -47,7 +47,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-/// need to rename db query functions
 passport.use(
   new Auth0Strategy(
     {
@@ -55,16 +54,16 @@ passport.use(
       clientID: CLIENT_ID,
       clientSecret: CLIENT_SECRET,
       callbackURL: CALLBACK_URL,
-      scope: "openid profile"
+      scope: "openid profile email"
     },
     function(accessToken, refreshToken, extraParams, profile, done) {
       const db = app.get("db");
       db.users_DB.find_user([profile.id]).then(userResult => {
         if (!userResult[0]) {
           db.
-            users_DB.create_user([profile.displayName, profile.id, profile.picture])
+            users_DB.create_user([profile.displayName, profile.id, profile.emails[0].value, null, null, null, null, 0, 0 ])
             .then(createdUser => {
-              return done(null, createdUser[0].id);
+              return done(null, createdUser[0].id)
             })
             .catch(err => console.log(err));
         } else {
