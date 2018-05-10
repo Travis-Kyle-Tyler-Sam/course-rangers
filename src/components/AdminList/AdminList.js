@@ -3,49 +3,36 @@ import AdminAddEdit from '../AdminAddEdit/AdminAddEdit';
 import { Modal, Button, Header, Table } from 'semantic-ui-react';
 
 class AdminList extends Component{
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state = {
-            list:[
-                {
-                    name:'',
-                    email:'',
-                    phone:'',
-                    userType:'',
-                    id:-1
-                }
-            ],
-            add:false,
-            type:''
+            list:this.props.list,
+            modalOpen:false,
+            type:this.props.type
         }
         this.handleClick = this.handleClick.bind(this);
     }
 
     handleClick ( bool ){
         this.setState({
-            add:bool
+            modalOpen:bool
         })
     }
-
-    componentDidMount(){
-        const { list, type } = this.props;
-        this.setState({
-            list,
-            type
-        })
-    }
-
-
     render(){
-        const { list, type } = this.state;
+        // const { list, type } = this.state;
+        const { handleUsersChangeFn, list, type } = this.props;
         const editModal = () => (
-            <Modal trigger={<Button>New</Button>}>
+            <Modal trigger={<Button >New</Button>}
+            closeIcon={true}
+            open={this.state.modalOpen}
+            >
                 <Modal.Header>NEW</Modal.Header>
                 <Modal.Content>
                     <Modal.Description>
                     <AdminAddEdit
                         handleClickFn = {this.handleClick}
                         adjust = 'Save'
+                        handleUsersChangeFn = {handleUsersChangeFn}
                        />
                     </Modal.Description>
                 </Modal.Content>
@@ -53,13 +40,15 @@ class AdminList extends Component{
         )
         const listItems = list.map( user => {
             return (
-                <Table.Row>
+                <Table.Row key={user.id}>
                     <Table.Cell>{user.name}</Table.Cell>
                     <Table.Cell>{user.email}</Table.Cell>
                     <Table.Cell>{user.phone}</Table.Cell>
                     <Table.Cell>{user.id}</Table.Cell>
                     <Table.Cell>
-                        <Modal trigger={<Button>Edit</Button>}>
+                        <Modal trigger={<Button onClick={() => this.handleClick(true)}>Edit</Button>}
+                        open={this.state.modalOpen}
+                        >
                             <Modal.Header>EDIT</Modal.Header>
                             <Modal.Content>
                                 <AdminAddEdit
@@ -70,8 +59,10 @@ class AdminList extends Component{
                                     role = {user.userType}
                                     handleClickFn = {this.handleClick}
                                     adjust = 'Edit'
+                                    handleUsersChangeFn = {handleUsersChangeFn}
+                                    key={user.id}
                                     />
-                            </Modal.Content>
+                            </Modal.Content> 
                         </Modal>
                     </Table.Cell>
                 </Table.Row>

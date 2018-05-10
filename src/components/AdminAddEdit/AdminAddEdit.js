@@ -10,7 +10,7 @@ class AdminAddEdit extends Component {
             phone:'',
             email:'',
             id:-1,
-            adjust:''
+            adjust:'',
         }
     }
 
@@ -35,7 +35,7 @@ class AdminAddEdit extends Component {
     }
     componentDidUpdate(prevProps, prevState, snapshot){
         const { name, role, phone, email, id, adjust } = this.props;
-        if (prevProps.name!==name){
+        if (prevProps.id!==id){
             this.setState({
                 name,
                 value:role,
@@ -46,9 +46,13 @@ class AdminAddEdit extends Component {
             })
         }
     }
+    saveFunctions(name, email, phone, value, id, callback1, callback2, bool){
+        callback1(name, email, phone, value, id);
+        callback2(bool);
+    }
     render(){
         const { name, role, phone, email, id, adjust, value } = this.state;
-        const { handleClickFn } = this.props;
+        const { handleClickFn, handleUsersChangeFn } = this.props;
         let displayID = () =>{
             if (id === -1){
                 return <p>Not yet set</p>
@@ -86,9 +90,9 @@ class AdminAddEdit extends Component {
                             
                             
                                 <p>{value} ID: </p> {displayID()}
-                                
-                            
-                            <Button>Save</Button>
+                            <Button onClick={() => this.saveFunctions(name, email, phone, value, id, handleUsersChangeFn, handleClickFn, false) 
+                            }>Save</Button>
+                            <Button onClick={() => handleClickFn(false)}>Close</Button>
                         </Form>
                     </Modal.Description>
                 </Modal.Content>
