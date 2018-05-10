@@ -15,9 +15,9 @@ export default function HomeNavbar() {
                     <img src={navbarLogo} alt=""/>
                 </div>
                 <div className='Reg-log-section'>
-                    <a href="">Register</a>
+                    <a href={process.env.REACT_APP_LOGIN}>Register </a>
                     <span>/</span>
-                    <a href={process.env.REACT_APP_LOGIN}>Login</a>
+                    <a href={process.env.REACT_APP_LOGIN}> Login</a>
                 </div>
             </div>
         </header>

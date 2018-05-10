@@ -42,10 +42,20 @@ Top navbar styles Styles
 
 .top-navbar h2 {
     margin-left: 25px;
+    line-height: 17.5px;
+    font-weight: 700;
+    font-family: 'Roboto', sans-serif;
 }
 
 .Reg-log-section {
     margin-right: 25px;
+}
+
+.Reg-log-section a {
+    line-height: 17.5px;
+    font-weight: 700;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
 }
 
 
