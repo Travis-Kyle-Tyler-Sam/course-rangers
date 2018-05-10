@@ -18,6 +18,10 @@ export default class Home extends Component {
                         </div>
                     </div>
                 </div>
+                <section class="diagonal">
+                    <p>Lorem ipsum</p>
+                    <p>Lorem ipsum</p>
+                </section>
             </div>
         )
     }

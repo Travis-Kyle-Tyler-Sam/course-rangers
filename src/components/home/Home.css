@@ -45,3 +45,32 @@ img {
 .home-main-content p {
     color: white;
 }
+
+section {
+    position: relative;
+    text-align: center;
+}
+section:before {
+    position: absolute;
+    content:'';
+}
+section.diagonal {
+    background: #fff;
+}
+
+.diagonal {
+    z-index: 1;
+    padding: 3em;
+}
+.diagonal:before {
+    -webkit-transform: rotate(-3deg);
+    transform: rotate(-7deg);
+    -webkit-transform-origin: 3% 0;
+    transform-origin: 3% 0;
+    top: 0;
+    left: -7%;
+    z-index: -1;
+    width: 150%;
+    height: 180%;
+    background: inherit;
+}
