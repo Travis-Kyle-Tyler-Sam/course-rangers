@@ -4,6 +4,8 @@ import { Switch, Route, HashRouter } from "react-router-dom";
 import TemporaryDashboard from './components/TemporaryDashboard';
 import Login from './components/Login';
 import TeacherDashboard from './components/TeacherDashboard/TeacherDashboard';
+import CurriculumBuilder from './components/CurriculumBuilder/CurriculumBuilder'
+
 class App extends Component {
   render() {
     return (
@@ -18,6 +20,7 @@ class App extends Component {
             {/* <Route path='/studentdashboard' component={StudentDashboard} /> */}
             <Route path='/teacherdashboard' component={TeacherDashboard} />
             {/* <Route path='/admindashboard' component={AdminDashboard} /> */}
+            <Route path='/curriculumbuilder' component={CurriculumBuilder} />
         
           </Switch>
         </HashRouter>
