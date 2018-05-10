@@ -5,7 +5,8 @@ import TemporaryDashboard from './components/TemporaryDashboard';
 import Login from './components/Login';
 import StudentDashboard from './components/studentDashboard/StudentDashboard';
 import TeacherDashboard from './components/TeacherDashboard/TeacherDashboard';
-import CurriculumBuilder from './components/CurriculumBuilder/CurriculumBuilder'
+import CurriculumBuilder from './components/CurriculumBuilder/CurriculumBuilder';
+import AdminDash from './components/AdminDash/AdminDash';
 
 class App extends Component {
   render() {
@@ -21,7 +22,7 @@ class App extends Component {
             <Route path='/studentdashboard' component={StudentDashboard} />
             {/* <Route path='/studentdashboard' component={StudentDashboard} /> */}
             <Route path='/teacherdashboard' component={TeacherDashboard} />
-            {/* <Route path='/admindashboard' component={AdminDashboard} /> */}
+            <Route path='/admindashboard' component={AdminDash} />
             <Route path='/curriculumbuilder' component={CurriculumBuilder} />
         
           </Switch>
