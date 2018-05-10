@@ -6,7 +6,7 @@ class TeacherCourseTemplates extends Component {
     constructor(props) {
         super(props);
         this.state = { 
-            courseTemplates: ['a', 'b', 'c']
+            courseTemplates: []
          }
     }
 
@@ -29,7 +29,7 @@ deleteCourseTemplate(id){
 
     render() { 
        let currentTemplates = this.state.courseTemplates.map(template=>{
-        return <p><span>{template.curriculum_name}</span>
+        return <p><span key={template.id}>{template.curriculum_name}</span>
         <span><button><Link to= '/curriculumbuilder'    
         template={template}
         >

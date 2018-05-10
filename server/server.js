@@ -133,14 +133,6 @@ app.listen(SERVER_PORT, () => console.log(`Listening on port ${SERVER_PORT}`));
 
 
 
-
-
-
-
-
-
-
-
 ///////   curricula endpoints //////
 app.get('/api/teacherdash/:teacher_id', (req, res) =>{
     app
@@ -160,4 +152,16 @@ app.delete('/api/delete_curriculum/:id', (req, res)=>{
       res.status(200).send(response);
     })
     .catch(err => console.log(err));
+})
+
+
+
+//// courses endpoints /////
+
+app.get('/api/teacher_courses/:teacher_id', (req, res) =>{
+  app
+    .get('db')
+    .courses_DB.get_teachers_courses([req.session.passport.user])
+    .then(response => res.status(200).send(response))
+    .catch(err=> console.log(err));
 })
