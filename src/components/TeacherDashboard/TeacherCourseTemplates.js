@@ -8,7 +8,10 @@ class TeacherCourseTemplates extends Component {
     }
     render() { 
        let currentTemplates = this.state.courseTemplates.map(template=>{
-        return <p><span>Course Template Name</span><span><button>Edit</button></span><span><button>Delete</button></span></p>
+        return <p><span>Course Template Name</span>
+        <span><button>Edit</button></span>
+        <span><button>Delete</button></span>
+        </p>
         })
         return ( <div>
 

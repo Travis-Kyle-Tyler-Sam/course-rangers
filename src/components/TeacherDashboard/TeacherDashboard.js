@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import TeacherCurrentCourses from './TeacherCurrentCourses';
 import TeacherCourseTemplates from './TeacherCourseTemplates';
-
+import Navbar from './../Navbar/Navbar';
 class TeacherDashboard extends Component {
     constructor(props) {
         super(props);
@@ -10,6 +10,7 @@ class TeacherDashboard extends Component {
     render() { 
         return ( 
 <div>
+    <Navbar/>
     <h1>Teacher Dashboard</h1>
     <div className='ui container'>
 

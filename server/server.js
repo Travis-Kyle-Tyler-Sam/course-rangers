@@ -126,7 +126,7 @@ app.post("/api/add_uploads", (req, res) => {
 
 app.get("/auth/logout", (req, res) => {
     req.logOut();
-    res.redirect(process.env.REDIRECT_URL);
+    res.redirect(process.env.FAILURE_REDIRECT);
   });
 
 app.listen(SERVER_PORT, () => console.log(`Listening on port ${SERVER_PORT}`));
