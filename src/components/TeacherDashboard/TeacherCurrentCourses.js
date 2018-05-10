@@ -1,21 +1,36 @@
 import React, { Component } from 'react';
 import { Table } from 'semantic-ui-react';
+import axios from 'axios';
 class TeacherCurrentCourses extends Component {
     constructor(props) {
         super(props);
         this.state = { 
-            currentCourses: ['a', 'b', 'c']
+            currentCourses: []
          }
     }
+
+    componentDidMount(){
+this.getTeachersCourses()
+    }
+
+ getTeachersCourses() {
+    axios.get('/api/teacher_courses/:teacher_id').then(response => {
+        console.log(response.data)
+      this.setState({currentCourses: response.data})
+    });
+ }
+
+
     render() { 
 
         let currentCourseList = this.state.currentCourses.map(course=>{
+            console.log(course)
             return <Table.Row>
       <Table.Cell><button>Today</button></Table.Cell>
-      <Table.Cell> Course #</Table.Cell>
-      <Table.Cell>Curriculum</Table.Cell>
-      <Table.Cell>Start Date</Table.Cell>
-      <Table.Cell>End Date</Table.Cell>      
+      <Table.Cell> Course #????</Table.Cell>
+      <Table.Cell>{course.course_name}</Table.Cell>
+      <Table.Cell>{course.start_date}</Table.Cell>
+      <Table.Cell>{course.completion_date}</Table.Cell>      
       <Table.Cell><button>Edit</button></Table.Cell>
       <Table.Cell><button>Delete</button></Table.Cell>
             </Table.Row>
