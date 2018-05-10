@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import { Switch, Route, HashRouter } from "react-router-dom";
 import TemporaryDashboard from './components/TemporaryDashboard';
 import Login from './components/Login';
+import TeacherDashboard from './components/TeacherDashboard/TeacherDashboard';
 class App extends Component {
   render() {
     return (
@@ -16,7 +16,7 @@ class App extends Component {
             <Route exact path='/' component={Login} />
             <Route path='/temporarydashboard' component={TemporaryDashboard} />
             {/* <Route path='/studentdashboard' component={StudentDashboard} /> */}
-            {/* <Route path='/teacherdashboard' component={TeacherDashboard} /> */}
+            <Route path='/teacherdashboard' component={TeacherDashboard} />
             {/* <Route path='/admindashboard' component={AdminDashboard} /> */}
         
           </Switch>
