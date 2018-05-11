@@ -107,6 +107,8 @@ class CurriculumBuilder extends Component {
 
     
     render() { 
+        // ================ //
+        
         // Switches between save name and edit name depending on whether the inputs ar showing or just the text
         let nameBtnLabel = this.state.editingName ? 'Save Name' : 'Edit Name'
 

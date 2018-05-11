@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Icon, Image, Input, Button, TextArea, Form, Header, Modal, Checkbox, Label } from 'semantic-ui-react'
+import { Card, Icon, Image, Input, Button, TextArea, Form, Header, Modal, Checkbox, Label, Message } from 'semantic-ui-react'
 import '../CurriculumBuilder.css'
 
 
@@ -16,7 +16,8 @@ class CBQuizzes extends Component {
             modalOpen: true,
             quizQuestionOptionsInput: '',
             quizQuestionOptions: [],
-            quizQuestionAnswer: ''
+            quizQuestionAnswer: '',
+            errors: []
         }
     }
     
@@ -29,15 +30,54 @@ class CBQuizzes extends Component {
     handleOptionChange = (e, { value }) => this.setState({ quizQuestionAnswer: value })
 
     addQuestion = () => {
+        let { quizQuestionInput, quizQuestionPtsInput, quizQuestionOptions, quizQuestionAnswer } = this.state
         let errors = [];
-        
-        if()
+        // Error if:
+        // - No correct answer is selected
+        // - Only one answer option is present
+        // - The question input is blank
+        // - Points possible is blank
+        if( quizQuestionInput === '' ) {
+            errors.push("The question cannot be blank.")
+        }
+        if( quizQuestionPtsInput === '' ) {
+            errors.push("The points possible cannot be blank.")
+        }
+        if( quizQuestionOptions.length < 2 ) {
+            errors.push("You need at least two answer options for this question")
+        }
+        if( quizQuestionAnswer === '' ) {
+            errors.push("You must select an answer to the question")
+        }
+
+        if( errors.length > 0 ){
+            this.setState({
+                errors
+            })
+        } else {
+            let questionToAdd = {
+                questionText: quizQuestionInput,
+                ptsPossible: quizQuestionPtsInput,
+                correctAnswer: quizQuestionAnswer,
+                answerOptions: quizQuestionOptions
+            }
+
+            let newQuizQuestions = [...this.state.quizQuestions, questionToAdd ]
+
+            // YOU LEFT OFF HERE PREPARING TO CALL THE PROPS CALLBACK TO SUBMIT THE QUESTION TO THE PARENT
+        }
+
+
     }
 
 
     quizSave = () => {
         let { quizTitleInput, quizDescriptionInput, quizDueDateInput } = this.state ;
         let { resources, dayDesc, dayNum, dayTopic, quizzes, assignments } = this.props.selectedDay ;
+
+        // ============================================================================================ //
+        // === MAKE SURE TO ADD QUESTION IDS TO EACH QUESTION BEFORE SUBMITTING TO PARENT COMPONENT === //
+        // ============================================================================================ //
 
         // if( assignmentTitleInput !== '' && assignmentDescriptionInput !== '' && assignmentPointsInput > 0 ) {
 
@@ -75,9 +115,18 @@ class CBQuizzes extends Component {
         if( !this.state.quizQuestionOptions.includes( this.state.quizQuestionOptionsInput ) ){
             let newOptions = [...this.state.quizQuestionOptions, this.state.quizQuestionOptionsInput]
             this.setState({
+                quizQuestionOptionsInput: '',
                 quizQuestionOptions: newOptions
             })
         }
+    }
+
+    killOption = (i) => {
+        let newOptions = [...this.state.quizQuestionOptions]
+        newOptions.splice(i, 1)
+        this.setState({
+            quizQuestionOptions: newOptions
+        })
     }
 
     render() { 
@@ -89,6 +138,10 @@ class CBQuizzes extends Component {
                 return (
 
                 <Form.Field key={option + i}>
+                    <Icon 
+                        color='red' 
+                        name='close' 
+                        onClick={ ()=>this.killOption(i) } />
                     <Checkbox
                         radio
                         label={ option }
@@ -166,7 +219,7 @@ class CBQuizzes extends Component {
                     placeholder='Points possible' 
                     onChange={ this.handleInput } />
                 <br />
-                {this.state.quizQuestions.length + 1}. {this.state.quizQuestionInput}?
+                <Header> {this.state.quizQuestions.length + 1}. {this.state.quizQuestionInput}? </Header>
                 <br />
                 <Input 
                     name='quizQuestionOptionsInput' 
@@ -184,15 +237,21 @@ class CBQuizzes extends Component {
                     { answerOptions }
                    
                 </Form>
-                <Label basic color='red'>Please enter a value Moar!</Label>
+                <Message
+                    error
+                    header='Error:'
+                    hidden={ this.state.errors.length === 0 }
+                    list={ this.state.errors }
+                />
              </Modal.Content>
              <Modal.Actions>
-                 <Button
-                    primary >
-                    Save
-                 </Button>
                  <Button>
                      Cancel
+                 </Button>
+                 <Button
+                    primary 
+                    onClick={ this.addQuestion}>
+                    Save
                  </Button>
              </Modal.Actions>
          </Modal>
