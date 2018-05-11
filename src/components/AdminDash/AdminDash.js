@@ -3,6 +3,7 @@ import axios from 'axios';
 import AdminList from '../AdminList/AdminList';
 import './AdminDash.css';
 import {handleUsersChange} from '../../utils/adminfns/adminfns';
+import { connect } from 'react-redux';
 
 class AdminDash extends Component {
     constructor(){
@@ -53,7 +54,31 @@ class AdminDash extends Component {
     }
 
     componentDidMount(){
-        //axios call to get student and teacher information
+        axios.get('/auth/me').then( response => {
+            axios.get(`/api/registry/${response.data.id}`).then( response => {
+                console.log(response.data)
+                let students = response.data.students.map( student => {
+                    return Object.assign({},{
+                        name:student.user_name,
+                        email:student.email,
+                        phone:student.phone,
+                        userType:student.user_type,
+                        id:student.id
+                    })
+                })
+                let instructors = response.data.instructors.map( instructor => {
+                    return Object.assign({}, {
+                        name:instructor.user_name,
+                        email:instructor.email,
+                        phone:instructor.phone,
+                        userType:instructor.user_type,
+                        id:instructor.id
+                    })
+
+                })
+                this.setState({students, instructors})
+            })
+        })
         
     }
     
@@ -80,7 +105,12 @@ class AdminDash extends Component {
             </div>
         )
     }
-
 }
 
-export default AdminDash
+function mapStateToProps ( state ){
+    return {
+        user:state.user
+    }
+}
+
+export default connect(mapStateToProps,null)(AdminDash)
