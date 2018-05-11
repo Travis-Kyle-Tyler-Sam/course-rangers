@@ -4,6 +4,7 @@ const express = require("express"),
   session = require("express-session"),
   massive = require("massive"),
   passport = require("passport"),
+  adminctrl = require('./adminctrl'),
   Auth0Strategy = require("passport-auth0");
   S3 = require("./s3");
 const {
@@ -175,3 +176,7 @@ app.delete('/api/delete_course/:id', (req, res)=>{
     })
     .catch(err => console.log(err));
 })
+
+//// admin endpoints ////
+
+app.get('/api/registry/:adminid', adminctrl.getRegistry)
