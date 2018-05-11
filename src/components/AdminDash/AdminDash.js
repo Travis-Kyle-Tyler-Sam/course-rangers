@@ -56,7 +56,6 @@ class AdminDash extends Component {
     componentDidMount(){
         axios.get('/auth/me').then( response => {
             axios.get(`/api/registry/${response.data.id}`).then( response => {
-                console.log(response.data)
                 let students = response.data.students.map( student => {
                     return Object.assign({},{
                         name:student.user_name,
