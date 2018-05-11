@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import axios from 'axios';
 import AdminList from '../AdminList/AdminList';
 import './AdminDash.css';
+import {handleUsersChange} from '../../utils/adminfns/adminfns';
 
 class AdminDash extends Component {
     constructor(){
@@ -48,17 +49,14 @@ class AdminDash extends Component {
                 }
             ]
         }
+        this.handleUsersChange = handleUsersChange.bind(this);
     }
 
     componentDidMount(){
         //axios call to get student and teacher information
         
     }
-
-    handleChange( name, email, phone, type, id){
-        //this will make an axios call to update the db, but in the meantime I'm going to update state with the updated information
-    }
-
+    
 
     render(){
         const { students, instructors } = this.state;
@@ -71,10 +69,12 @@ class AdminDash extends Component {
                     <AdminList
                         type = 'Students'
                         list = {students}
+                        handleUsersChangeFn = {this.handleUsersChange}
                     />
                     <AdminList
                         type = 'Instructors'
                         list = {instructors}
+                        handleUsersChangeFn = {this.handleUsersChange}
                     />
                 </div>
             </div>
