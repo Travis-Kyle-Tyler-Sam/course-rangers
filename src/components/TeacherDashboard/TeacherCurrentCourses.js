@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Table } from 'semantic-ui-react';
 import axios from 'axios';
+import {Link} from 'react-router-dom';
 class TeacherCurrentCourses extends Component {
     constructor(props) {
         super(props);
@@ -21,6 +22,13 @@ this.getTeachersCourses()
  }
 
 
+
+deleteCourse(id){
+    axios.delete(`/api/delete_course/${id}`).then(response =>{
+        return this.getTeachersCourses()
+       })
+}
+
     render() { 
 
         let currentCourseList = this.state.currentCourses.map(course=>{
@@ -31,13 +39,17 @@ this.getTeachersCourses()
       <Table.Cell>{course.course_name}</Table.Cell>
       <Table.Cell>{course.start_date}</Table.Cell>
       <Table.Cell>{course.completion_date}</Table.Cell>      
-      <Table.Cell><button>Edit</button></Table.Cell>
-      <Table.Cell><button>Delete</button></Table.Cell>
+      <Table.Cell><button><Link to= '/coursebuilder' course ={course}>
+            Edit
+             </Link></button></Table.Cell>
+      <Table.Cell><button onClick={()=>this.deleteCourse(course.id)}>Delete</button></Table.Cell>
             </Table.Row>
         })
 
         return ( <div>
-            <button>Add New Current Course</button>
+            <button><Link to= '/coursebuilder'>
+            Add New Current Course
+             </Link></button>
             <Table striped>
     <Table.Header>
       <Table.Row>
