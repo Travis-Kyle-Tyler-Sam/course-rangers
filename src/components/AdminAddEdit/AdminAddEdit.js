@@ -10,8 +10,10 @@ class AdminAddEdit extends Component {
             phone:'',
             email:'',
             id:-1,
-            adjust:''
+            adjust:'',
+
         }
+        this.handleClick = this.handleClick.bind(this);
     }
 
     handleChange  ( key, value ) {
@@ -33,22 +35,31 @@ class AdminAddEdit extends Component {
             })
         }
     }
-    componentDidUpdate(prevProps, prevState, snapshot){
-        const { name, role, phone, email, id, adjust } = this.props;
-        if (prevProps.name!==name){
-            this.setState({
-                name,
-                value:role,
-                phone,
-                email,
-                id,
-                adjust
-            })
-        }
+    // componentDidUpdate(prevProps, prevState, snapshot){
+    //     const { name, role, phone, email, id, adjust } = this.props;
+    //     if (prevProps.id !== id ){
+    //         this.setState({
+    //             name,
+    //             value:role,
+    //             phone,
+    //             email,
+    //             id,
+    //             adjust
+    //         })
+    //     }
+    // }
+    handleClick ( bool ){
+        this.setState({
+            modalOpen:bool
+        })
+    }
+    saveFunctions(name, email, phone, value, id, callback1, callback2, bool){
+        callback1(name, email, phone, value, id);
+        callback2(bool);
     }
     render(){
         const { name, role, phone, email, id, adjust, value } = this.state;
-        const { handleClickFn } = this.props;
+        const { handleClickFn, handleUsersChangeFn } = this.props;
         let displayID = () =>{
             if (id === -1){
                 return <p>Not yet set</p>
@@ -59,6 +70,13 @@ class AdminAddEdit extends Component {
         
         return(
             <div>
+                <Modal trigger={<Button onClick={ () => this.handleClick(true)}>Edit</Button>}
+            closeIcon={true}
+            open={this.state.modalOpen}
+            >
+                <Modal.Header>Edit</Modal.Header>
+                <Modal.Content>
+                    <Modal.Description>
                 <Modal.Content>
                     <Modal.Description>
                         <Form>
@@ -86,12 +104,15 @@ class AdminAddEdit extends Component {
                             
                             
                                 <p>{value} ID: </p> {displayID()}
-                                
-                            
-                            <Button>Save</Button>
+                            <Button onClick={() => this.saveFunctions(name, email, phone, value, id, handleUsersChangeFn, this.handleClick, false) 
+                            }>Save</Button>
+                            <Button onClick={() => this.handleClick(false)}>Close</Button>
                         </Form>
                     </Modal.Description>
                 </Modal.Content>
+                </Modal.Description>
+                </Modal.Content>
+            </Modal>
             </div>
         )
     }
