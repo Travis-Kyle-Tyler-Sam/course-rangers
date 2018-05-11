@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { getUserInfo } from './../dux/userReducer';
 import { Link } from "react-router-dom";
-///// this dashboard doesn't actually link anywhere yet
+import Navbar from './Navbar/Navbar';
+
 
 class TemporaryDashboard extends Component {
     constructor(props) {
@@ -18,6 +19,7 @@ class TemporaryDashboard extends Component {
     render() { 
         return ( 
             <div>
+                <Navbar/>
                 Hello {this.props.user.user_name}
             <section>
                 <button>   
@@ -39,9 +41,7 @@ class TemporaryDashboard extends Component {
                 Admin Dashboard
              </Link>
                 </button>
-                <button> <a href={process.env.REACT_APP_LOGOUT}>
-                    Logout
-                  </a></button>
+                
         
             </section>
 

@@ -1,0 +1,99 @@
+/*----------------------------------------
+General Styles
+----------------------------------------*/
+
+img {
+    width: 100%;
+}
+
+.landing {
+    position: relative;
+    background: url('../../images/home2-slider-main.jpg') no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+}
+
+.dark-overlay {
+    background-color: rgba(0, 0, 0, 0.7);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.middle-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.home-main-content {
+    width: 1546px;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.home-main-content h1 {
+    color: white;
+    margin-top: 340px;
+}
+
+.home-main-content p {
+    color: white;
+}
+
+section {
+    position: relative;
+    text-align: center;
+}
+section:before {
+    position: absolute;
+    content:'';
+}
+section.diagonal {
+    background: #fff;
+}
+
+.diagonal {
+    z-index: 1;
+    padding: 3em;
+}
+.diagonal:before {
+    -webkit-transform: rotate(-7deg);
+    transform: rotate(-7deg);
+    -webkit-transform-origin: 3% 0;
+    transform-origin: 3% 0;
+    top: 0;
+    left: -7%;
+    z-index: -1;
+    width: 150%;
+    height: 285%;
+    background: inherit;
+}
+
+.main-feature-section {
+    display: flex;
+    margin-left: 100px;
+    margin-top: 50px;
+}
+
+.features-item {
+    width: 150px;
+    height: 100px;
+    margin-right: 100px;
+}
+
+.fi-logo h3 {
+    color: white;
+    width: 200px;
+    margin-left: -13px;
+}
+
+.fi-logo p {
+    text-align: center;
+    margin-left: 15px;
+}
