@@ -130,3 +130,48 @@ app.get("/auth/logout", (req, res) => {
   });
 
 app.listen(SERVER_PORT, () => console.log(`Listening on port ${SERVER_PORT}`));
+
+
+
+///////   curricula endpoints //////
+app.get('/api/teacherdash/:teacher_id', (req, res) =>{
+    app
+      .get("db")
+      .curricula_DB.get_teachers_curricula([req.session.passport.user])
+      .then(response => res.status(200).send(response))
+      .catch(err => console.log(err));
+
+})
+
+
+app.delete('/api/delete_curriculum/:id', (req, res)=>{
+  app
+    .get('db')
+    .curricula_DB.delete_curriculum([req.params.id])
+    .then(response => {
+      res.status(200).send(response);
+    })
+    .catch(err => console.log(err));
+})
+
+
+
+//// courses endpoints /////
+
+app.get('/api/teacher_courses/:teacher_id', (req, res) =>{
+  app
+    .get('db')
+    .courses_DB.get_teachers_courses([req.session.passport.user])
+    .then(response => res.status(200).send(response))
+    .catch(err=> console.log(err));
+})
+
+app.delete('/api/delete_course/:id', (req, res)=>{
+  app
+    .get('db')
+    .courses_DB.delete_course([req.params.id])
+    .then(response => {
+      res.status(200).send(response);
+    })
+    .catch(err => console.log(err));
+})
