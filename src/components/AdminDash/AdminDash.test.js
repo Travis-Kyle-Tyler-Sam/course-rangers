@@ -1,8 +1,5 @@
 const fns = require('../../utils/adminfns/adminfns');
 
-
-
-
 describe('resetting state with new user info', () => {
     let state
     beforeEach(() => {
@@ -84,6 +81,12 @@ describe('resetting state with new user info', () => {
        expect(newState.students).toEqual(newUserArray)
     })
     test('the other array should remain untouched', () => {
+        //arrange/act
+        let newState = fns.mergeState('bob','hello@','888-333-5555','Student',1983, state)
+        
+       expect(newState.instructors).toEqual(state.instructors)
+    })
+    test('the instructors array should repopulate with all the old instructors', () => {
         //arrange/act
         let newState = fns.mergeState('bob','hello@','888-333-5555','Student',1983, state)
         

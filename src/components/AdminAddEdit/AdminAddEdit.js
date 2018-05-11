@@ -11,7 +11,9 @@ class AdminAddEdit extends Component {
             email:'',
             id:-1,
             adjust:'',
+
         }
+        this.handleClick = this.handleClick.bind(this);
     }
 
     handleChange  ( key, value ) {
@@ -33,18 +35,23 @@ class AdminAddEdit extends Component {
             })
         }
     }
-    componentDidUpdate(prevProps, prevState, snapshot){
-        const { name, role, phone, email, id, adjust } = this.props;
-        if (prevProps.id!==id){
-            this.setState({
-                name,
-                value:role,
-                phone,
-                email,
-                id,
-                adjust
-            })
-        }
+    // componentDidUpdate(prevProps, prevState, snapshot){
+    //     const { name, role, phone, email, id, adjust } = this.props;
+    //     if (prevProps.id !== id ){
+    //         this.setState({
+    //             name,
+    //             value:role,
+    //             phone,
+    //             email,
+    //             id,
+    //             adjust
+    //         })
+    //     }
+    // }
+    handleClick ( bool ){
+        this.setState({
+            modalOpen:bool
+        })
     }
     saveFunctions(name, email, phone, value, id, callback1, callback2, bool){
         callback1(name, email, phone, value, id);
@@ -63,6 +70,13 @@ class AdminAddEdit extends Component {
         
         return(
             <div>
+                <Modal trigger={<Button onClick={ () => this.handleClick(true)}>Edit</Button>}
+            closeIcon={true}
+            open={this.state.modalOpen}
+            >
+                <Modal.Header>Edit</Modal.Header>
+                <Modal.Content>
+                    <Modal.Description>
                 <Modal.Content>
                     <Modal.Description>
                         <Form>
@@ -90,12 +104,15 @@ class AdminAddEdit extends Component {
                             
                             
                                 <p>{value} ID: </p> {displayID()}
-                            <Button onClick={() => this.saveFunctions(name, email, phone, value, id, handleUsersChangeFn, handleClickFn, false) 
+                            <Button onClick={() => this.saveFunctions(name, email, phone, value, id, handleUsersChangeFn, this.handleClick, false) 
                             }>Save</Button>
-                            <Button onClick={() => handleClickFn(false)}>Close</Button>
+                            <Button onClick={() => this.handleClick(false)}>Close</Button>
                         </Form>
                     </Modal.Description>
                 </Modal.Content>
+                </Modal.Description>
+                </Modal.Content>
+            </Modal>
             </div>
         )
     }

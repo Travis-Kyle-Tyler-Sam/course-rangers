@@ -82,23 +82,31 @@ module.exports = {
             otherGroup = 'instructors';
         }
         else {
-            let tempUserState = this.state.instructors.map( instructor => ({...instructor}));
+            tempUserState = this.state.instructors.map( instructor => ({...instructor}));
             group = 'instructors';
             otherGroup = 'students';
         }
         let flag = false;
-        let newUserState = tempUserState.map( user => 
+        let newUserState = tempUserState.map( (user, i) => 
             {if (user.id === id){
                 flag = true;
-                return ({name,email,phone,userType,id})
+                return ({name,email,phone,userType,id});
             }
-            else return user
+            else return user;
             }
         )
+        let index = -1;
+        let otherUserState = this.state[otherGroup].map( user => ({...user}));
         if (!flag){
             newUserState.push({name,email,phone,userType,id})
+            this.state[otherGroup].forEach( (user, i) => {
+                user.id === id ? index = i : null
+            })
+            if (index !== -1){
+                otherUserState.splice(index,1)
+            }
         }
-        let newState = Object.assign({}, {[otherGroup]:this.state[otherGroup]}, {[group]:newUserState})
+        let newState = Object.assign({}, {[otherGroup]:otherUserState}, {[group]:newUserState})
         this.setState(newState)
     },
 

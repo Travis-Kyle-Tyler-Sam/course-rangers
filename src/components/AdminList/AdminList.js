@@ -22,21 +22,22 @@ class AdminList extends Component{
         // const { list, type } = this.state;
         const { handleUsersChangeFn, list, type } = this.props;
         const editModal = () => (
-            <Modal trigger={<Button >New</Button>}
-            closeIcon={true}
-            open={this.state.modalOpen}
-            >
-                <Modal.Header>NEW</Modal.Header>
-                <Modal.Content>
-                    <Modal.Description>
+            // <Modal trigger={<Button onClick={ () => this.handleClick(true)}>New</Button>}
+            // closeIcon={true}
+            // open={this.state.modalOpen}
+            // >
+            //     <Modal.Header>NEW</Modal.Header>
+            //     <Modal.Content>
+            //         <Modal.Description>
                     <AdminAddEdit
                         handleClickFn = {this.handleClick}
                         adjust = 'Save'
                         handleUsersChangeFn = {handleUsersChangeFn}
+                        key = 'new'
                        />
-                    </Modal.Description>
-                </Modal.Content>
-            </Modal>
+            //         {/* </Modal.Description>
+            //     </Modal.Content>
+            // </Modal> */}
         )
         const listItems = list.map( user => {
             return (
@@ -46,11 +47,11 @@ class AdminList extends Component{
                     <Table.Cell>{user.phone}</Table.Cell>
                     <Table.Cell>{user.id}</Table.Cell>
                     <Table.Cell>
-                        <Modal trigger={<Button onClick={() => this.handleClick(true)}>Edit</Button>}
+                        {/* <Modal trigger={<Button onClick={() => this.handleClick(true)}>Edit</Button>}
                         open={this.state.modalOpen}
                         >
                             <Modal.Header>EDIT</Modal.Header>
-                            <Modal.Content>
+                            <Modal.Content> */}
                                 <AdminAddEdit
                                     name = {user.name}
                                     email = {user.email}
@@ -62,8 +63,8 @@ class AdminList extends Component{
                                     handleUsersChangeFn = {handleUsersChangeFn}
                                     key={user.id}
                                     />
-                            </Modal.Content> 
-                        </Modal>
+                            {/* </Modal.Content> 
+                        </Modal> */}
                     </Table.Cell>
                 </Table.Row>
             )
