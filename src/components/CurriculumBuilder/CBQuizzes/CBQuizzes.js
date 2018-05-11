@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Icon, Image, Input, Button, TextArea, Form, Header, Modal } from 'semantic-ui-react'
+import { Card, Icon, Image, Input, Button, TextArea, Form, Header, Modal, Checkbox, Label } from 'semantic-ui-react'
 import '../CurriculumBuilder.css'
 
 
@@ -15,7 +15,8 @@ class CBQuizzes extends Component {
             quizQuestions: [],
             modalOpen: true,
             quizQuestionOptionsInput: '',
-            quizQuestionOptions: []
+            quizQuestionOptions: [],
+            quizQuestionAnswer: ''
         }
     }
     
@@ -25,6 +26,14 @@ class CBQuizzes extends Component {
         })
     }
 
+    handleOptionChange = (e, { value }) => this.setState({ quizQuestionAnswer: value })
+
+    addQuestion = () => {
+        let errors = [];
+        
+        if()
+    }
+
 
     quizSave = () => {
         let { quizTitleInput, quizDescriptionInput, quizDueDateInput } = this.state ;
@@ -32,7 +41,7 @@ class CBQuizzes extends Component {
 
         // if( assignmentTitleInput !== '' && assignmentDescriptionInput !== '' && assignmentPointsInput > 0 ) {
 
-        //     let newassignment = {
+        //     let newQuestion = {
         //         title: assignmentTitleInput,
         //         description: assignmentDescriptionInput,
         //         dueOffset: +assignmentDueDateInput,
@@ -63,17 +72,36 @@ class CBQuizzes extends Component {
     }
 
     addOption = () => {
-        let newOptions = [...this.state.quizQuestionOptions, this.state.quizQuestionOptionsInput]
-        this.setState({
-            quizQuestionOptions: newOptions
-        })
+        if( !this.state.quizQuestionOptions.includes( this.state.quizQuestionOptionsInput ) ){
+            let newOptions = [...this.state.quizQuestionOptions, this.state.quizQuestionOptionsInput]
+            this.setState({
+                quizQuestionOptions: newOptions
+            })
+        }
     }
 
     render() { 
 
         let daySaveLabel = this.state.editingTopicDesc ? 'Save' : 'Edit'
 
-        // let answerOptions = this.state.quizQuestionOptions ? 
+        let answerOptions = this.state.quizQuestionOptions 
+            ? this.state.quizQuestionOptions.map( (option, i) => {
+                return (
+
+                <Form.Field key={option + i}>
+                    <Checkbox
+                        radio
+                        label={ option }
+                        name='quizAnswerOptions'
+                        value={ option }
+                        checked={this.state.quizQuestionAnswer === option}
+                        onChange={this.handleOptionChange}
+                        />
+                </Form.Field>
+            )
+            })
+        
+            : null;
 
         return ( 
 
@@ -147,7 +175,26 @@ class CBQuizzes extends Component {
                     onChange={ this.handleInput } />
                 <Button
                     onClick={ this.addOption }>Add</Button>
+                
+                <Form>
+                    <Form.Field>
+                    Answer Options:
+                    </Form.Field>
+                  
+                    { answerOptions }
+                   
+                </Form>
+                <Label basic color='red'>Please enter a value Moar!</Label>
              </Modal.Content>
+             <Modal.Actions>
+                 <Button
+                    primary >
+                    Save
+                 </Button>
+                 <Button>
+                     Cancel
+                 </Button>
+             </Modal.Actions>
          </Modal>
          </Card> 
          )
