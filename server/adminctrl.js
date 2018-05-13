@@ -1,6 +1,6 @@
 module.exports = {
     getRegistry: (req, res, next) => {
-        const { adminid } = req.params;
+        let { adminid } = req.params;
         req.app.get('db')
         .users_DB.get_admin_people([adminid])
         .then( response => {
@@ -41,7 +41,6 @@ module.exports = {
         req.app.get('db')
         .users_DB.create_user([name, null, email, phone, userType, adminid, null, null, null])
         .then( response => {
-            console.log(response);
             res.status(200).send({
                 id:response[0].id,
                 name:response[0].user_name, 
@@ -63,7 +62,6 @@ module.exports = {
         req.app.get('db')
         .users_DB.edit_user([id, name, email, phone, userType, adminid])
         .then( response => {
-            
             res.status(200).send({
                 id:response[0].id,
                 name:response[0].user_name, 

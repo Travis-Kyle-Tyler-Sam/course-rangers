@@ -20,24 +20,16 @@ class AdminList extends Component{
     }
     render(){
         // const { list, type } = this.state;
-        const { handleUsersChangeFn, list, type } = this.props;
+        const { handleUsersChangeFn, list, type, addUserFn, editUserFn } = this.props;
         const editModal = () => (
-            // <Modal trigger={<Button onClick={ () => this.handleClick(true)}>New</Button>}
-            // closeIcon={true}
-            // open={this.state.modalOpen}
-            // >
-            //     <Modal.Header>NEW</Modal.Header>
-            //     <Modal.Content>
-            //         <Modal.Description>
-                    <AdminAddEdit
-                        handleClickFn = {this.handleClick}
-                        adjust = 'Save'
-                        handleUsersChangeFn = {handleUsersChangeFn}
-                        key = 'new'
-                       />
-            //         {/* </Modal.Description>
-            //     </Modal.Content>
-            // </Modal> */}
+            
+            <AdminAddEdit
+                handleClickFn = {this.handleClick}
+                adjust = 'Save'
+                callbackFn = {addUserFn}
+                key = 'new'
+            />
+
         )
         const listItems = list.map( user => {
             return (
@@ -47,24 +39,17 @@ class AdminList extends Component{
                     <Table.Cell>{user.phone}</Table.Cell>
                     <Table.Cell>{user.id}</Table.Cell>
                     <Table.Cell>
-                        {/* <Modal trigger={<Button onClick={() => this.handleClick(true)}>Edit</Button>}
-                        open={this.state.modalOpen}
-                        >
-                            <Modal.Header>EDIT</Modal.Header>
-                            <Modal.Content> */}
-                                <AdminAddEdit
-                                    name = {user.name}
-                                    email = {user.email}
-                                    phone = {user.phone}
-                                    id = {user.id}
-                                    role = {user.userType}
-                                    handleClickFn = {this.handleClick}
-                                    adjust = 'Edit'
-                                    handleUsersChangeFn = {handleUsersChangeFn}
-                                    key={user.id}
-                                    />
-                            {/* </Modal.Content> 
-                        </Modal> */}
+                        <AdminAddEdit
+                            name = {user.name}
+                            email = {user.email}
+                            phone = {user.phone}
+                            id = {user.id}
+                            role = {user.userType}
+                            handleClickFn = {this.handleClick}
+                            adjust = 'Edit'
+                            callbackFn = {editUserFn}
+                            key={user.id}
+                        />
                     </Table.Cell>
                 </Table.Row>
             )

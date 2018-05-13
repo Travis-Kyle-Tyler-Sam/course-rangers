@@ -15,7 +15,7 @@ module.exports = {
         }
         return tempUserState;
     },
-    addUser( name, email, phone, userType, id, state){
+    addUser( name, email, phone, userType, id){
         //this will make an axios call to update the db, but in the meantime I'm going to update state with the updated information
         let tempUserState = [];
         let group = ''
@@ -110,9 +110,5 @@ module.exports = {
         let newState = Object.assign({}, {[otherGroup]:otherUserState}, {[group]:newUserState})
         this.setState(newState);
     },
-    updateDB( name, email, phone, userType, id){
-
-    },
-
     
 }

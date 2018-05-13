@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import axios from 'axios';
 import AdminList from '../AdminList/AdminList';
 import './AdminDash.css';
-import {handleUsersChange} from '../../utils/adminfns/adminfns';
+import { handleUsersChange } from '../../utils/adminfns/adminfns';
 import { connect } from 'react-redux';
 
 class AdminDash extends Component {
@@ -52,26 +52,42 @@ class AdminDash extends Component {
             adminID:3
         }
         this.handleUsersChange = handleUsersChange.bind(this);
+        this.addUser = this.addUser.bind(this);
+        this.editUser = this.editUser.bind(this);
     }
 
     componentDidMount(){
-        axios.get('/auth/me').then( response => {
-            this.setState({adminID:response.data.id});
-            axios.get(`/api/registry/${this.state.adminID}`).then( response => {
-                this.setState({
-                    students:response.data.students, 
-                    instructors:response.data.instructors
-                });
+        // uncomment this when ready for production--this authenticates the user before getting the data
+        // axios.get('/auth/me').then( response => {
+        //     this.setState({adminID:response.data.id});
+        //     axios.get(`/api/registry/${this.state.adminID}`).then( response => {
+        //         this.setState({
+        //             students:response.data.students, 
+        //             instructors:response.data.instructors
+        //         });
+        //     });
+        // });
+        axios.get(`/api/registry/${this.state.adminID}`).then( response => {
+            this.setState({
+                students:response.data.students, 
+                instructors:response.data.instructors
             });
         });
         
     };
 
-    addUser( user ){
-
+    addUser( name, email, phone, userType, id ){
+        axios.post('/api/registry/addUser', {name, email, phone, userType, id}).then( response => {
+            let { name:newName, email:newEmail, phone:newPhone, userType:newUserType, id:newID } = response.data;
+            this.handleUsersChange(newName, newEmail, newPhone, newUserType, newID)
+        })
     }
-    
-
+    editUser( name, email, phone, userType, id ){
+        axios.post('/api/registry/editUser', {name, email, phone, userType, id}).then( response => {
+            let { name:newName, email:newEmail, phone:newPhone, userType:newUserType, id:newID } = response.data;
+            this.handleUsersChange(newName, newEmail, newPhone, newUserType, newID)
+        })
+    }
     render(){
         const { students, instructors } = this.state;
 
@@ -84,11 +100,15 @@ class AdminDash extends Component {
                         type = 'Students'
                         list = {students}
                         handleUsersChangeFn = {this.handleUsersChange}
+                        addUserFn = {this.addUser}
+                        editUserFn = {this.editUser}
                     />
                     <AdminList
                         type = 'Instructors'
                         list = {instructors}
                         handleUsersChangeFn = {this.handleUsersChange}
+                        addUserFn = {this.addUser}
+                        editUserFn = {this.editUser}
                     />
                 </div>
             </div>
