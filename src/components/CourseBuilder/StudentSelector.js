@@ -7,6 +7,9 @@ class StudentSelector extends Component {
 
 
     /// need a get endpoint that gets all users where access level = student
+    //// pagination 
+    //// auto complete on input
+    
     render() { 
         return ( <div>
              <h3>Students</h3>

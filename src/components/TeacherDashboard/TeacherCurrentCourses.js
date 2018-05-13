@@ -18,7 +18,6 @@ this.getTeachersCourses()
 
  getTeachersCourses() {
     axios.get('/api/teacher_courses/:teacher_id').then(response => {
-        console.log(response.data)
       this.setState({currentCourses: response.data})
     });
  }
@@ -36,7 +35,6 @@ deleteCourse(id){
     render() { 
 
         let currentCourseList = this.state.currentCourses.map(course=>{
-            console.log(course)
             return <Table.Row key={course.id}>
       <Table.Cell><button>Today</button></Table.Cell>
       <Table.Cell> {course.course_name}</Table.Cell>
@@ -51,7 +49,7 @@ deleteCourse(id){
         })
 
         return ( <div>
-            <Link to= '/coursebuilder'>
+            <Link to={{pathname: '/coursebuilder', state: {course: ""}}}>
             <button>Add New Current Course</button>
              </Link>
             <Table striped>
