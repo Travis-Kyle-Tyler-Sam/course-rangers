@@ -80,7 +80,7 @@ module.exports = {
         req.app.get('db')
         .users_DB.delete_user([userid])
         .then ( response => {
-            res.status(200).send(response);
+            res.status(200).send(response[0]);
         })
         .catch( err => console.log(err))
     }

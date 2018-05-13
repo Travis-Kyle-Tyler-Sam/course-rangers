@@ -110,5 +110,17 @@ module.exports = {
         let newState = Object.assign({}, {[otherGroup]:otherUserState}, {[group]:newUserState})
         this.setState(newState);
     },
+    removeUser(id){
+        let newStudents = this.state.students.filter( user => {
+            return user.id !== id;
+        });
+        let newInstructors = this.state.instructors.filter( user => {
+            return user.id !== id;
+        });
+        this.setState({
+            students:newStudents,
+            instructors:newInstructors
+        })
+    }
     
 }

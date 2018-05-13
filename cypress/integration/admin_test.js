@@ -1,7 +1,12 @@
 describe('admins should be able to login as well as add, edit, or delete other users', () => {
-    it('admin can add a user', () => {
+    it('admin should get a list of students and a list of instructors', () => {
         cy.visit('http://localhost:3000/#/admindashboard')
-            .wait(1000)
+            .wait(1500)
+        cy.get('td#8011111111_cell')
+            .should('contain','8011111111')
+
+    });
+    it('admin can add a user', () => {
         cy.get('button')
             .contains('Add')
             .click()
@@ -38,6 +43,13 @@ describe('admins should be able to login as well as add, edit, or delete other u
             .click()
         cy.get('td#8675308_cell')
             .should('contain','8675308')
+    });
+    it('admin should be able to delete a user', () => {
+        cy.get('button#8675308')
+            .click()
+        cy.get('button')
+            .contains('Delete')
+            .click()
         
     })
 })

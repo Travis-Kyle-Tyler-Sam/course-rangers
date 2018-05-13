@@ -10,7 +10,7 @@ class AdminAddEdit extends Component {
             email:'',
             id:-1,
             adjust:'Add',
-
+            snackOpen:false
         }
         this.handleClick = this.handleClick.bind(this);
     }
@@ -39,13 +39,21 @@ class AdminAddEdit extends Component {
             modalOpen:bool
         })
     }
+    
     saveFunctions(name, email, phone, value, id, callback1, callback2, bool){
         callback1(name, email, phone, value, id);
         callback2(bool);
+        this.setState({
+            name:'',
+            phone:'',
+            email:'',
+            id:-1,
+        })
     }
+
     render(){
         const { name, phone, email, id, adjust, value } = this.state;
-        const { handleClickFn, callbackFn } = this.props;
+        const { handleClickFn, callbackFn, deleteUserFn } = this.props;
         let displayID = () =>{
             if (id === -1){
                 return <p>Not yet set</p>
@@ -89,6 +97,7 @@ class AdminAddEdit extends Component {
                                 <p>{value} ID: </p> {displayID()}
                             <Button onClick={() => this.saveFunctions(name, email, phone, value, id, callbackFn, this.handleClick, false) 
                             }>Save</Button>
+                            <Button onClick={() => deleteUserFn(id)}>Delete</Button>
                             <Button onClick={() => this.handleClick(false)}>Close</Button>
                         </Form>
                     </Modal.Description>
@@ -96,6 +105,7 @@ class AdminAddEdit extends Component {
                 </Modal.Description>
                 </Modal.Content>
             </Modal>
+           
             </div>
         )
     }

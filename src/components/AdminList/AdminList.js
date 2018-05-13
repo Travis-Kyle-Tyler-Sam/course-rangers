@@ -21,7 +21,7 @@ class AdminList extends Component{
     }
     render(){
         // const { list, type } = this.state;
-        const { handleUsersChangeFn, list, type, addUserFn, editUserFn } = this.props;
+        const { handleUsersChangeFn, list, type, addUserFn, editUserFn, deleteUserFn } = this.props;
         const editModal = () => (
             
             <AdminAddEdit
@@ -29,6 +29,7 @@ class AdminList extends Component{
                 adjust = 'Save'
                 callbackFn = {addUserFn}
                 key = 'new'
+                deleteUserFn = {deleteUserFn}
             />
 
         )
@@ -50,6 +51,7 @@ class AdminList extends Component{
                             adjust = 'Edit'
                             callbackFn = {editUserFn}
                             key={user.id}
+                            deleteUserFn = {deleteUserFn}
                         />
                     </Table.Cell>
                 </Table.Row>
