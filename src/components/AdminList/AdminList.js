@@ -1,6 +1,7 @@
 import React, {Component}from 'react';
 import AdminAddEdit from '../AdminAddEdit/AdminAddEdit';
 import { Modal, Button, Header, Table } from 'semantic-ui-react';
+import './AdminList.css';
 
 class AdminList extends Component{
     constructor(props){
@@ -34,11 +35,11 @@ class AdminList extends Component{
         const listItems = list.map( user => {
             return (
                 <Table.Row key={user.id}>
-                    <Table.Cell>{user.name}</Table.Cell>
-                    <Table.Cell>{user.email}</Table.Cell>
-                    <Table.Cell>{user.phone}</Table.Cell>
-                    <Table.Cell>{user.id}</Table.Cell>
-                    <Table.Cell>
+                    <Table.Cell id={`${user.name}_cell`}>{user.name}</Table.Cell>
+                    <Table.Cell >{user.email}</Table.Cell>
+                    <Table.Cell id={`${user.phone}_cell`}>{user.phone}</Table.Cell>
+                    <Table.Cell >{user.id}</Table.Cell>
+                    <Table.Cell >
                         <AdminAddEdit
                             name = {user.name}
                             email = {user.email}
@@ -60,7 +61,7 @@ class AdminList extends Component{
                     <h2>{type}</h2>
                     {editModal()}  
                 </div>
-                <Table striped={true} >
+                <Table striped={true} compact={true}>
                     <Table.Header>
                         <Table.Row>
                             <Table.HeaderCell>Name</Table.HeaderCell>

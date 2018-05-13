@@ -56,7 +56,7 @@ class AdminAddEdit extends Component {
         
         return(
             <div>
-                <Modal trigger={<Button onClick={ () => this.handleClick(true)} id={`${value}_${adjust}_${id}`}>{adjust}</Button>}
+                <Modal trigger={<Button onClick={ () => this.handleClick(true)} id={`${phone}`}>{adjust}</Button>}
             open={this.state.modalOpen}
             >
                 <Modal.Header>{adjust}</Modal.Header>
@@ -67,23 +67,23 @@ class AdminAddEdit extends Component {
                         <Form>
                             
                                 <p>Name: </p>
-                                <Input value={name} onChange = { e=> this.handleChange('name',e.target.value)}/>
+                                <Input value={name} id='name_input' onChange = { e=> this.handleChange('name',e.target.value)}/>
                                 <p>Role: </p>
                                 
-                                    <Radio value='Student' name='role' id='roleChoice1' onChange = { e => this.handleChange('value',e.target.value)}
+                                    <Radio value='Student' name='role' id='studentChoice' onChange = { e => this.handleChange('value',e.target.value)}
                                     checked={this.state.value === 'Student'}/>
-                                    <Label htmlFor='roleChoice1'>Student</Label>
+                                    <Label htmlFor='studentChoice'>Student</Label>
                                     
-                                    <Radio value='Instructor' name='role' id='roleChoice2' onChange = { e => this.handleChange('value',e.target.value)}
+                                    <Radio value='Instructor' name='role' id='instructorChoice' onChange = { e => this.handleChange('value',e.target.value)}
                                     checked={this.state.value==='Instructor'}/>
-                                    <Label htmlFor='roleChoice2'>Instructor</Label>
+                                    <Label htmlFor='instructorChoice'>Instructor</Label>
 
                                 <p>Phone: </p>
-                                <Input value={phone} onChange={ e=> this.handleChange('phone',e.target.value)}/>
+                                <Input value={phone} id='input_phone' onChange={ e=> this.handleChange('phone',e.target.value)}/>
                             
                             
                                 <p>Email: </p>
-                                <Input value={email} onChange = { e=> this.handleChange('email',e.target.value)}/>
+                                <Input value={email} id='input_email' onChange = { e=> this.handleChange('email',e.target.value)}/>
                             
                             
                                 <p>{value} ID: </p> {displayID()}

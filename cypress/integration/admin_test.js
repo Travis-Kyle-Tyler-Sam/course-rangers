@@ -1,8 +1,43 @@
 describe('admins should be able to login as well as add, edit, or delete other users', () => {
-    it('', () => {
+    it('admin can add a user', () => {
         cy.visit('http://localhost:3000/#/admindashboard')
-        cy
-        cy.get('button#Student_Edit_5')
-            
+            .wait(1000)
+        cy.get('button')
+            .contains('Add')
+            .click()
+        cy.get('input#name_input')
+            .type('Todd Ross')
+        cy.get('input#instructorChoice')
+            .check({force:true})
+        cy.get('input#input_phone')
+            .type(8675309)
+        cy.get('input#input_email')
+            .type('onlyTheHappiestTrees@bob.ross')
+        cy.get('button')
+            .contains('Save')
+            .click()
+        cy.get('td#8675309_cell')
+            .should('contain','8675309')
+    });
+    it('admin can edit a user', () => {
+        cy.get('button#8675309')
+            .click()
+        cy.get('input#name_input')
+            .clear()
+            .type('Todd Rosssss')
+        cy.get('input#studentChoice')
+            .check({force:true})
+        cy.get('input#input_phone')
+            .clear()
+            .type(8675308)
+        cy.get('input#input_email')
+            .clear()
+            .type('onlyTheHappiestTrees@bob.ross')
+        cy.get('button')
+            .contains('Save')
+            .click()
+        cy.get('td#8675308_cell')
+            .should('contain','8675308')
+        
     })
 })

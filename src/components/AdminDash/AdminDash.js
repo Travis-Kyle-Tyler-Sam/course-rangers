@@ -83,7 +83,7 @@ class AdminDash extends Component {
         })
     }
     editUser( name, email, phone, userType, id ){
-        axios.post('/api/registry/editUser', {name, email, phone, userType, id}).then( response => {
+        axios.put('/api/registry/editUser', {name, email, phone, userType, id}).then( response => {
             let { name:newName, email:newEmail, phone:newPhone, userType:newUserType, id:newID } = response.data;
             this.handleUsersChange(newName, newEmail, newPhone, newUserType, newID)
         })
@@ -94,7 +94,7 @@ class AdminDash extends Component {
         
 
         return(
-            <div>
+            <div className='dash'>
                 <div className='lists'>
                     <AdminList
                         type = 'Students'
