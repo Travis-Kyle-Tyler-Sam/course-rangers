@@ -130,7 +130,7 @@ class CurriculumBuilder extends Component {
                 onClick={ () => this.selectDay(i) }> 
                 Day {day.dayNum}
                 <br />
-                {day.dayTopic}
+                <strong> {day.dayTopic} </strong>
                 <div className='cb-day-counters'>
                     <div className="cb-day-counters-q">
                         Q:{ day.quizzes.length }
@@ -150,19 +150,18 @@ class CurriculumBuilder extends Component {
 
         return ( 
             <div className='cb-container'>
-                <Card style={{ width: 340, margin: 10 }}>
-                    <Card.Content>
+                <div className="ui segment cb-pane" style={ { margin: 10, width: 462 } }>
                     {!this.state.editingName && <Card.Header>
                             {this.state.curriculumNameInput}
                     </Card.Header> }
 
                     {this.state.editingName &&
                          
-                        <Input 
-                            placeholder='Curriculum Name' 
-                            name='curriculumNameInput'
-                            value={this.state.curriculumNameInput} 
-                            onChange={this.handleInput}/> }
+                         <Input 
+                         placeholder='Curriculum Name' 
+                         name='curriculumNameInput'
+                         value={this.state.curriculumNameInput} 
+                         onChange={this.handleInput}/> }
                         <Button
                             onClick={this.saveName}> 
                         { nameBtnLabel } 
@@ -181,36 +180,34 @@ class CurriculumBuilder extends Component {
                             onClick={ this.populateDays }>Set Days</Button>
 
                         <div className='cb-days-container'> { displayDays } </div>
-                    </Card.Content>
-                </Card>
+                    </div>
                 
-                {/* { this.state.selectedDay &&  */}
                 <CBDaySelect 
-                    selectedDay={ this.state.curriculumDays[this.state.selectedDay] } 
-                    updateDay={ this.updateDay } 
-                    switch={ this.switchWindows } /> 
-                {/* } */}
+                selectedDay={ this.state.curriculumDays[this.state.selectedDay] } 
+                updateDay={ this.updateDay } 
+                switch={ this.switchWindows } /> 
                 
                 { this.state.windowIndex === 1 && 
-                <CBResources 
+                    <CBResources 
                     selectedDay={ this.state.curriculumDays[this.state.selectedDay] } 
                     updateDay={ this.updateDay} 
                     switch={ this.switchWindows } /> }
-
+                    
                 { this.state.windowIndex === 2 &&
-                <CBAssignments 
-                     selectedDay={ this.state.curriculumDays[this.state.selectedDay] } 
-                     updateDay={ this.updateDay} 
-                     switch={ this.switchWindows } /> }
-                 { this.state.windowIndex === 3 &&
-                <CBQuizzes 
+                    <CBAssignments 
                     selectedDay={ this.state.curriculumDays[this.state.selectedDay] } 
                     updateDay={ this.updateDay} 
-                 switch={ this.switchWindows } /> }
+                    switch={ this.switchWindows } /> }
+                    
+                { this.state.windowIndex === 3 &&
+                    <CBQuizzes 
+                    selectedDay={ this.state.curriculumDays[this.state.selectedDay] } 
+                    updateDay={ this.updateDay} 
+                    switch={ this.switchWindows } /> }
+                            
+                    </div>
+                        )
+                    }
+                }
                 
-            </div>
-         )
-    }
-}
- 
-export default CurriculumBuilder;
+                export default CurriculumBuilder;

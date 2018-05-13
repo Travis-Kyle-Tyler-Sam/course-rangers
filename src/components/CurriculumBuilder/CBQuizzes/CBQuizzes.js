@@ -231,12 +231,11 @@ class CBQuizzes extends Component {
                 : null
 
         return ( 
-        <div>
-         <Card style={{ margin: 10}}>
-         <Card.Content>
-             <Card.Header>
+         <div className="ui segment cb-pane" style={ { margin: 10 } }>
+             <Header>
+
                  Build a Quiz
-             </Card.Header>
+             </Header>
             <Form>
                  <Input 
                     name='quizTitleInput' 
@@ -280,10 +279,8 @@ class CBQuizzes extends Component {
                  onClick={ this.quizSave } >
                  Add quiz
              </Button>
-         </Card.Content>
-         </Card> 
          <Modal
-            open={ this.state.modalOpen }>
+         open={ this.state.modalOpen }>
              <Header>Add a Question</Header>
              <Modal.Content>
                  <Input 
@@ -322,7 +319,7 @@ class CBQuizzes extends Component {
                     header='Error:'
                     hidden={ this.state.questionErrors.length === 0 }
                     list={ this.state.questionErrors }
-                />
+                    />
              </Modal.Content>
              <Modal.Actions>
                  <Button
@@ -336,9 +333,9 @@ class CBQuizzes extends Component {
                  </Button>
              </Modal.Actions>
          </Modal>
-         </div>
-         )
+        </div>
+        )
     }
 }
- 
+
 export default CBQuizzes;

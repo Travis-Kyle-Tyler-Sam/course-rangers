@@ -11,9 +11,12 @@
 
 .cb-daysquare {
     border: 1px solid black;
+    padding: 8px;
     width: 100px;
     height: 100px;
     position: relative;
+    border-radius: 5px;
+    margin: 4px;
 }
 
 .cb-days-container {
@@ -34,5 +37,11 @@
     justify-content: space-evenly;
     position: absolute;
     bottom: 0;
-    width: 100%;
+    width: 85%;
+}
+
+.cb-pane {
+    width: 350px;
+    margin:10px;
+    min-height: 400px;
 }

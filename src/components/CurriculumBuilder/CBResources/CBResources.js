@@ -65,12 +65,10 @@ class CBResources extends Component {
         let daySaveLabel = this.state.editingTopicDesc ? 'Save' : 'Edit'
 
         return ( 
-
-         <Card style={{ margin: 10}}>
-         <Card.Content>
-             <Card.Header>
+        <div className="ui segment cb-pane" style={ { margin: 10 } }>
+             <Header>
                  Add a Resource
-             </Card.Header>
+             </Header>
                  <Form>
                  <Input name='resourceTitleInput' value={this.state.resourceTitleInput} onChange={this.handleInput} placeholder='Title' fluid />
                      <TextArea name='resourceDescriptionInput' value={this.state.resourceDescriptionInput} onChange={this.handleInput} placeholder='Description' fluid />
@@ -117,9 +115,8 @@ class CBResources extends Component {
                  onClick={ this.resourceSave } >
                  Add Resource
              </Button>
-         </Card.Content>
-         </Card> 
-         )
+        </div>
+        )
     }
 }
  

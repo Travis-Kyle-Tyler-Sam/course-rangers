@@ -64,68 +64,66 @@ class CBDaySelect extends Component {
          let quizList = quizzes ? quizzes.map( quiz => <div> { quiz.title } </div> ) : null;
 
         return ( 
-            <Card style={{ margin: 10}}>
-                <Card.Content>
-                    <Card.Header>
-                        Day { this.props.selectedDay.dayNum }
-                    </Card.Header>
+            <div className="ui segment cb-pane" style={ { margin: 10 } }>
+                <Header>
+                    Day { this.props.selectedDay.dayNum }
+                </Header>
 
-                    { !this.state.editingTopicDesc && 
-                    <div>
-                        <Header> { this.state.dayTopicInput } </Header> 
-                        <p> { this.state.dayDescriptionInput } </p> 
-                    </div> }
-                    { this.state.editingTopicDesc &&
-                    <div>
-                        <Input name='dayTopicInput' value={this.state.dayTopicInput} onChange={this.handleInput} placeholder='Topic' fluid />
-                        <Form>
-                            <TextArea name='dayDescriptionInput' value={this.state.dayDescriptionInput} onChange={this.handleInput} placeholder='Description' fluid />
-                        </Form>
-                    </div> }
+                { !this.state.editingTopicDesc && 
+                <div>
+                    <Header> { this.state.dayTopicInput } </Header> 
+                    <p> { this.state.dayDescriptionInput } </p> 
+                </div> }
+                { this.state.editingTopicDesc &&
+                <div>
+                    <Input name='dayTopicInput' value={this.state.dayTopicInput} onChange={this.handleInput} placeholder='Topic' fluid />
+                    <Form>
+                        <TextArea name='dayDescriptionInput' value={this.state.dayDescriptionInput} onChange={this.handleInput} placeholder='Description' fluid />
+                    </Form>
+                </div> }
 
-                    <Button 
-                        primary={ true } 
-                        style={{float: 'right'}}
-                        onClick={ this.topicDescSave }>
-                        { daySaveLabel }
-                    </Button>
+                <Button 
+                    primary={ true } 
+                    style={{float: 'right'}}
+                    onClick={ this.topicDescSave }>
+                    { daySaveLabel }
+                </Button>
 
-                    <Button 
-                        icon
-                        onClick={ ()=>this.props.switch(1) } 
-                        labelPosition='right' 
-                        fluid > 
-                        Add Resource 
-                        <Icon name='plus'/>
-                    </Button>
-                        { resourceList }
+                <Button 
+                    icon
+                    onClick={ ()=>this.props.switch(1) } 
+                    labelPosition='right' 
+                    fluid > 
+                    Add Resource 
+                    <Icon name='plus'/>
+                </Button>
+                    { resourceList }
 
-                    <Button 
-                        icon
-                        onClick={ ()=>this.props.switch(2) } 
-                        labelPosition='right' 
-                        fluid > 
-                        Add Assignment 
-                        <Icon name='plus'/>
-                    </Button>
-                    { assignmentList }
+                <Button 
+                    icon
+                    onClick={ ()=>this.props.switch(2) } 
+                    labelPosition='right' 
+                    fluid > 
+                    Add Assignment 
+                    <Icon name='plus'/>
+                </Button>
+                { assignmentList }
 
-                    <Button 
-                        icon
-                        onClick={ ()=>this.props.switch(3) } 
-                        labelPosition='right' 
-                        fluid > 
-                        Add Quiz 
-                        <Icon name='plus'/>
-                    </Button>
-                    { quizList }
+                <Button 
+                    icon
+                    onClick={ ()=>this.props.switch(3) } 
+                    labelPosition='right' 
+                    fluid > 
+                    Add Quiz 
+                    <Icon name='plus'/>
+                </Button>
+                { quizList }
 
-                </Card.Content>
-            </Card> 
-         )
+            </div>
+        )
     }
 }
- 
+
 export default CBDaySelect;
 
 

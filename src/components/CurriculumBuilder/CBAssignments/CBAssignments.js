@@ -65,11 +65,10 @@ class CBassignments extends Component {
 
         return ( 
 
-         <Card style={{ margin: 10}}>
-         <Card.Content>
-             <Card.Header>
+        <div className="ui segment cb-pane" style={ { margin: 10 } }>
+             <Header>
                  Add an Assignment
-             </Card.Header>
+             </Header>
             <Form>
                  <Input 
                     name='assignmentTitleInput' 
@@ -113,11 +112,10 @@ class CBassignments extends Component {
                  onClick={ this.assignmentSave } >
                  Add assignment
              </Button>
-         </Card.Content>
-         </Card> 
-         )
+        </div>
+        )
     }
 }
- 
+
 export default CBassignments;
 
