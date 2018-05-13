@@ -2,29 +2,47 @@ import React, { Component } from 'react';
 import { Card, Icon, Image, Input, Button, TextArea, Form, Header, Checkbox } from 'semantic-ui-react'
 import FileUpload from '../FileUpload'
 import './CurriculumBuilder.css'
+import CBDaySelect from './CBDaySelect/CBDaySelect'
+import CBResources from './CBResources/CBResources'
+import CBAssignments from './CBAssignments/CBAssignments'
+import CBQuizzes from './CBQuizzes/CBQuizzes'
 
 class CurriculumBuilder extends Component {
     constructor(props) {
         super(props);
+
+        let initialDays = [
+            {
+                dayNum: 1,
+                dayTopic: '',
+                dayDesc: '',
+                assignments: [],
+                resources: [],
+                quizzes: [] 
+            }
+        ]
+
         this.state = { 
             editingName: true,
             editingTopicDesc: true,
             curriculumNameInput: '',
             numDaysInput: 1,
-            curriculumDays: [],
-            selectedDay: null,
+            curriculumDays: initialDays,
+            selectedDay: 0,
             dayTopicInput: '',
             dayDescriptionInput: '',
             contentSelector: 0,
             resourceTitleInput: '',
             resourceDescriptionInput: '',
             resourceTypeLink: true,
-            files: null,
-
+            upload: '',
+            resourceLink: '',
+            windowIndex: 0
          }
+         this.populateDays = this.populateDays.bind(this)
     }
 
-    handleResourceType = (e, { value }) => this.setState({ resourceTypeLink: value })
+    
 
     handleInput = (e) => {
         this.setState({
@@ -41,80 +59,109 @@ class CurriculumBuilder extends Component {
     }
 
     populateDays = () => {
-        if(this.state.numDaysInput > 0 && this.state.numDaysInput <= 100){
-            let numOfDays = this.state.numDaysInput
-            let daysArray = [];
-            for(let i=0; i < numOfDays; i++){
-                daysArray.push({
-                    dayNum: i + 1,
-                    assignments: [],
-                    resources: [],
-                    quizzes: []
+        let numDaysInput = +this.state.numDaysInput
+
+        if(numDaysInput > 0 && numDaysInput <= 100){
+            if(numDaysInput > this.state.curriculumDays.length) {
+                let numOfDays = numDaysInput - this.state.curriculumDays.length 
+                let daysArray = [...this.state.curriculumDays];
+                for(let i=0; i < numOfDays; i++){
+                    daysArray.push({
+                        dayNum: daysArray.length + 1,
+                        dayTopic: '',
+                        dayDesc: '',
+                        assignments: [],
+                        resources: [],
+                        quizzes: []
+                    })
+                } 
+                this.setState({
+                    curriculumDays: daysArray
                 })
+            } else {
+
+                let daysArray = this.state.curriculumDays.filter( element => element.dayNum <= numDaysInput )
+                this.setState({
+                    curriculumDays: daysArray
+                }) 
             }
-
-            this.setState({
-                curriculumDays: daysArray
-            })
-
         }
     }
 
     selectDay = (index) => {
         this.setState({
-            selectedDay: this.state.curriculumDays[index]
+            selectedDay: index
         })
     }
 
-    topicDescSave = () => {
-        let { dayTopicInput, dayDescriptionInput } = this.state
-        
-        if( dayTopicInput !== '' && dayDescriptionInput !== '' ){
-            this.setState({
-                editingTopicDesc: !this.state.editingTopicDesc
-            })
-        }
+    updateDay = (day) => {
+        let freshCurriculumDays = [...this.state.curriculumDays]
+        let updatedDays = freshCurriculumDays.map( curriculumDay => {
+            if(day.dayNum === curriculumDay.dayNum) {
+                return day
+            }
+            return curriculumDay
+        })
+
+        this.setState({
+            curriculumDays: updatedDays
+        })
     }
 
-    uploadedFile = (awsResponse) => {
-        console.log(awsResponse)
+    switchWindows = (index) => {
+        this.setState({
+            windowIndex: index
+        })
     }
 
     
-
     render() { 
+        // ================ //
+        
         // Switches between save name and edit name depending on whether the inputs ar showing or just the text
         let nameBtnLabel = this.state.editingName ? 'Save Name' : 'Edit Name'
 
-        // Button label switches between save and edit in the day 
-        let daySaveLabel = this.state.editingTopicDesc ? 'Save' : 'Edit'
+       
 
         let displayDays = this.state.curriculumDays.map( (day, i) => {
             return <div 
                 className='cb-daysquare' 
                 key={ i } 
                 onClick={ () => this.selectDay(i) }> 
-                Day {day.dayNum} 
+                Day {day.dayNum}
+                <br />
+                <strong> {day.dayTopic} </strong>
+                <div className='cb-day-counters'>
+                    <div className="cb-day-counters-q">
+                        Q:{ day.quizzes.length }
+                    </div>
+                    <div className="cb-day-counters-r">
+                        R:{ day.resources.length }
+                    </div>
+                    <div className="cb-day-counters-a">
+                        A:{ day.assignments.length }
+                    </div>
+                </div> 
             </div>
         })
 
         let topicDescFlag =  this.state.dayTopicInput && this.state.dayDescriptionInput
 
+
         return ( 
             <div className='cb-container'>
-                <Card style={{ width: 340, margin: 10 }}>
-                    <Card.Content>
+                <div className="ui segment cb-pane" style={ { margin: 10, width: 462 } }>
                     {!this.state.editingName && <Card.Header>
                             {this.state.curriculumNameInput}
                     </Card.Header> }
 
                     {this.state.editingName &&
                          
-                        <Input 
-                            placeholder='Curriculum Name' 
-                            name='curriculumNameInput'
-                            value={this.state.curriculumNameInput} 
-                            onChange={this.handleInput}/> }
+                         <Input 
+                         placeholder='Curriculum Name' 
+                         name='curriculumNameInput'
+                         value={this.state.curriculumNameInput} 
+                         onChange={this.handleInput}/> }
                         <Button
                             onClick={this.saveName}> 
                         { nameBtnLabel } 
@@ -127,97 +174,40 @@ class CurriculumBuilder extends Component {
                             name='numDaysInput'
                             placeholder='# of Days in Curriculum' 
                             onChange={this.handleInput} 
-                            value={this.state.numDaysInput}/>
+                            value={this.state.numDaysInput} />
+                            
                         <Button
                             onClick={ this.populateDays }>Set Days</Button>
 
                         <div className='cb-days-container'> { displayDays } </div>
-                    </Card.Content>
-                </Card>
+                    </div>
                 
-                { this.state.selectedDay && 
-                <Card style={{ margin: 10}}>
-                    <Card.Content>
-                        <Card.Header>
-                            Day { this.state.selectedDay.dayNum }
-                        </Card.Header>
-
-                        { !this.state.editingTopicDesc && 
-                        <div>
-                            <Header> { this.state.dayTopicInput } </Header> 
-                            <p> { this.state.dayDescriptionInput } </p> 
-                        </div> }
-                        { this.state.editingTopicDesc &&
-                        <div>
-                            <Input name='dayTopicInput' value={this.state.dayTopicInput} onChange={this.handleInput} placeholder='Topic' fluid={true}/>
-                            <Form>
-                                <TextArea name='dayDescriptionInput' value={this.state.dayDescriptionInput} onChange={this.handleInput} placeholder='Description' fluid={true}/>
-                            </Form>
-                        </div> }
-                        <Button 
-                            primary={ true } 
-                            style={{float: 'right'}}
-                            onClick={ this.topicDescSave }>
-                            { daySaveLabel }
-                        </Button>
-                        <Button icon labelPosition='right' fluid={ true }> Add Resource <Icon name='plus'/></Button>
-                        <Button icon labelPosition='right' fluid={ true }> Add Assignment <Icon name='plus'/></Button>
-                        <Button icon labelPosition='right' fluid={ true }> Add Quiz <Icon name='plus'/></Button>
-                    </Card.Content>
-                </Card> 
+                <CBDaySelect 
+                selectedDay={ this.state.curriculumDays[this.state.selectedDay] } 
+                updateDay={ this.updateDay } 
+                switch={ this.switchWindows } /> 
+                
+                { this.state.windowIndex === 1 && 
+                    <CBResources 
+                    selectedDay={ this.state.curriculumDays[this.state.selectedDay] } 
+                    updateDay={ this.updateDay} 
+                    switch={ this.switchWindows } /> }
+                    
+                { this.state.windowIndex === 2 &&
+                    <CBAssignments 
+                    selectedDay={ this.state.curriculumDays[this.state.selectedDay] } 
+                    updateDay={ this.updateDay} 
+                    switch={ this.switchWindows } /> }
+                    
+                { this.state.windowIndex === 3 &&
+                    <CBQuizzes 
+                    selectedDay={ this.state.curriculumDays[this.state.selectedDay] } 
+                    updateDay={ this.updateDay} 
+                    switch={ this.switchWindows } /> }
+                            
+                    </div>
+                        )
+                    }
                 }
-                 <Card style={{ margin: 10}}>
-                    <Card.Content>
-                        <Card.Header>
-                            Add a Resource
-                        </Card.Header>
-                            <Form>
-                            <Input name='resourceTitleInput' value={this.state.resourceTitleInput} onChange={this.handleInput} placeholder='Title' fluid={true}/>
-                                <TextArea name='resourceDescriptionInput' value={this.state.resourceDescriptionInput} onChange={this.handleInput} placeholder='Description' fluid={true}/>
-                                <div className='cb-resource-radios'>
-
-                                <Form.Field>
-                                <Checkbox
-                                    radio
-                                    label='Link'
-                                    name='resourceTypeLink'
-                                    value={ true }
-                                    checked={ this.state.resourceTypeLink }
-                                    onChange={ this.handleResourceType }
-                                    />
-                                </Form.Field>
-                                <Form.Field>
-                                <Checkbox
-                                    radio
-                                    label='Upload'
-                                    name='resourceTypeUpload'
-                                    value={ false }
-                                    checked={ !this.state.resourceTypeLink }
-                                    onChange={ this.handleResourceType }
-                                    />
-                                </Form.Field>
-                                </div>
-                                <FileUpload 
-                                    cb={ this.uploadedFile } />
-                               
-                            </Form>
-                        <Button 
-                            primary={ true } 
-                            style={{float: 'right'}}
-                            onClick={ this.resourceSave }>
-                            { daySaveLabel }
-                        </Button>
-                    </Card.Content>
-                </Card> 
-
-                <Card style={{ margin: 10}}>
-                    
-                    
-                </Card>
                 
-            </div>
-         )
-    }
-}
- 
-export default CurriculumBuilder;
+                export default CurriculumBuilder;
