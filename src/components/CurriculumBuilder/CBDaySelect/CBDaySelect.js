@@ -57,10 +57,11 @@ class CBDaySelect extends Component {
          // Button label switches between save and edit in the day 
          let daySaveLabel = this.state.editingTopicDesc ? 'Save' : 'Edit'
 
-         let { resources, assignments } = this.props.selectedDay
+         let { resources, assignments, quizzes } = this.props.selectedDay
 
          let resourceList = resources ? resources.map( resource => <div> { resource.title } </div> ) : null;
          let assignmentList = assignments ? assignments.map( assignment => <div> { assignment.title } </div> ) : null;
+         let quizList = quizzes ? quizzes.map( quiz => <div> { quiz.title } </div> ) : null;
 
         return ( 
             <Card style={{ margin: 10}}>
@@ -109,7 +110,16 @@ class CBDaySelect extends Component {
                     </Button>
                     { assignmentList }
 
-                    <Button icon labelPosition='right' fluid > Add Quiz <Icon name='plus'/></Button>
+                    <Button 
+                        icon
+                        onClick={ ()=>this.props.switch(3) } 
+                        labelPosition='right' 
+                        fluid > 
+                        Add Quiz 
+                        <Icon name='plus'/>
+                    </Button>
+                    { quizList }
+
                 </Card.Content>
             </Card> 
          )

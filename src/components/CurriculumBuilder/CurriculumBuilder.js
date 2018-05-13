@@ -39,6 +39,7 @@ class CurriculumBuilder extends Component {
             resourceLink: '',
             windowIndex: 0
          }
+         this.populateDays = this.populateDays.bind(this)
     }
 
     
@@ -58,24 +59,32 @@ class CurriculumBuilder extends Component {
     }
 
     populateDays = () => {
-        if(this.state.numDaysInput > 0 && this.state.numDaysInput <= 100){
-            let numOfDays = this.state.numDaysInput
-            let daysArray = [];
-            for(let i=0; i < numOfDays; i++){
-                daysArray.push({
-                    dayNum: i + 1,
-                    dayTopic: '',
-                    dayDesc: '',
-                    assignments: [],
-                    resources: [],
-                    quizzes: []
+        let numDaysInput = +this.state.numDaysInput
+
+        if(numDaysInput > 0 && numDaysInput <= 100){
+            if(numDaysInput > this.state.curriculumDays.length) {
+                let numOfDays = numDaysInput - this.state.curriculumDays.length 
+                let daysArray = [...this.state.curriculumDays];
+                for(let i=0; i < numOfDays; i++){
+                    daysArray.push({
+                        dayNum: daysArray.length + 1,
+                        dayTopic: '',
+                        dayDesc: '',
+                        assignments: [],
+                        resources: [],
+                        quizzes: []
+                    })
+                } 
+                this.setState({
+                    curriculumDays: daysArray
                 })
+            } else {
+
+                let daysArray = this.state.curriculumDays.filter( element => element.dayNum <= numDaysInput )
+                this.setState({
+                    curriculumDays: daysArray
+                }) 
             }
-
-            this.setState({
-                curriculumDays: daysArray
-            })
-
         }
     }
 
@@ -121,7 +130,18 @@ class CurriculumBuilder extends Component {
                 onClick={ () => this.selectDay(i) }> 
                 Day {day.dayNum}
                 <br />
-                {day.dayTopic} 
+                {day.dayTopic}
+                <div className='cb-day-counters'>
+                    <div className="cb-day-counters-q">
+                        Q:{ day.quizzes.length }
+                    </div>
+                    <div className="cb-day-counters-r">
+                        R:{ day.resources.length }
+                    </div>
+                    <div className="cb-day-counters-a">
+                        A:{ day.assignments.length }
+                    </div>
+                </div> 
             </div>
         })
 
@@ -156,6 +176,7 @@ class CurriculumBuilder extends Component {
                             placeholder='# of Days in Curriculum' 
                             onChange={this.handleInput} 
                             value={this.state.numDaysInput} />
+                            
                         <Button
                             onClick={ this.populateDays }>Set Days</Button>
 
@@ -181,11 +202,11 @@ class CurriculumBuilder extends Component {
                      selectedDay={ this.state.curriculumDays[this.state.selectedDay] } 
                      updateDay={ this.updateDay} 
                      switch={ this.switchWindows } /> }
-
+                 { this.state.windowIndex === 3 &&
                 <CBQuizzes 
                     selectedDay={ this.state.curriculumDays[this.state.selectedDay] } 
                     updateDay={ this.updateDay} 
-                    switch={ this.switchWindows } />
+                 switch={ this.switchWindows } /> }
                 
             </div>
          )

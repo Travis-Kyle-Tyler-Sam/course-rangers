@@ -13,11 +13,12 @@ class CBQuizzes extends Component {
             quizQuestionInput: '',
             quizQuestionPtsInput: '',
             quizQuestions: [],
-            modalOpen: true,
+            modalOpen: false,
             quizQuestionOptionsInput: '',
             quizQuestionOptions: [],
             quizQuestionAnswer: '',
-            errors: []
+            questionErrors: [], 
+            quizErrors: []
         }
     }
     
@@ -31,77 +32,108 @@ class CBQuizzes extends Component {
 
     addQuestion = () => {
         let { quizQuestionInput, quizQuestionPtsInput, quizQuestionOptions, quizQuestionAnswer } = this.state
-        let errors = [];
+        let questionErrors = [];
         // Error if:
         // - No correct answer is selected
         // - Only one answer option is present
         // - The question input is blank
         // - Points possible is blank
         if( quizQuestionInput === '' ) {
-            errors.push("The question cannot be blank.")
+            questionErrors.push("The question cannot be blank.")
         }
         if( quizQuestionPtsInput === '' ) {
-            errors.push("The points possible cannot be blank.")
+            questionErrors.push("The points possible cannot be blank.")
         }
         if( quizQuestionOptions.length < 2 ) {
-            errors.push("You need at least two answer options for this question")
+            questionErrors.push("You need at least two answer options for this question")
         }
         if( quizQuestionAnswer === '' ) {
-            errors.push("You must select an answer to the question")
+            questionErrors.push("You must select an answer to the question")
         }
 
-        if( errors.length > 0 ){
+        if( questionErrors.length > 0 ){
             this.setState({
-                errors
+                questionErrors
             })
         } else {
             let questionToAdd = {
                 questionText: quizQuestionInput,
-                ptsPossible: quizQuestionPtsInput,
+                ptsPossible: +quizQuestionPtsInput,
                 correctAnswer: quizQuestionAnswer,
                 answerOptions: quizQuestionOptions
             }
 
             let newQuizQuestions = [...this.state.quizQuestions, questionToAdd ]
 
-            // YOU LEFT OFF HERE PREPARING TO CALL THE PROPS CALLBACK TO SUBMIT THE QUESTION TO THE PARENT
+            this.setState({
+                quizTitleInput: '',
+                quizDescriptionInput: '',
+                quizDueDateInput: '',
+                quizQuestions: newQuizQuestions,
+                quizQuestionInput: '',
+                quizQuestionPtsInput: '',
+                modalOpen: false,
+                quizQuestionOptionsInput: '',
+                quizQuestionOptions: [],
+                quizQuestionAnswer: '',
+                questionErrors: []
+            })
         }
-
-
     }
 
-
     quizSave = () => {
-        let { quizTitleInput, quizDescriptionInput, quizDueDateInput } = this.state ;
+        let { quizTitleInput, quizDescriptionInput, quizDueDateInput, quizQuestions } = this.state ;
         let { resources, dayDesc, dayNum, dayTopic, quizzes, assignments } = this.props.selectedDay ;
+        let quizErrors = []
 
-        // ============================================================================================ //
-        // === MAKE SURE TO ADD QUESTION IDS TO EACH QUESTION BEFORE SUBMITTING TO PARENT COMPONENT === //
-        // ============================================================================================ //
+        if( quizTitleInput === '' ){
+            quizErrors.push('You must give your quiz a title')
+        }
+        if( quizDescriptionInput === '' ){
+            quizErrors.push('You must give your quiz a description')
+        }
+        if( quizDueDateInput === '' ){
+            quizErrors.push('You must specify how many days will be allotted before the quiz is due')
+        }
+        if( quizQuestions.length < 1 ){
+            quizErrors.push('Your quiz must have at least one question')
+        }
 
-        // if( assignmentTitleInput !== '' && assignmentDescriptionInput !== '' && assignmentPointsInput > 0 ) {
+        if( quizErrors.length > 0) {
+            this.setState({ quizErrors })
+        } else {
+            let newQuiz = {
+                title: quizTitleInput,
+                description: quizDescriptionInput,
+                dueDate: +quizDueDateInput,
+                questions: quizQuestions
+            }
+            
+            let updatedQuizzes = [...quizzes, newQuiz ]
+            let sendDay = {
+                dayNum,
+                resources,
+                assignments,
+                assignments,
+                quizzes: updatedQuizzes,
+                dayTopic,
+                dayDesc
+            }
 
-        //     let newQuestion = {
-        //         title: assignmentTitleInput,
-        //         description: assignmentDescriptionInput,
-        //         dueOffset: +assignmentDueDateInput,
-        //         totalPts: +assignmentPointsInput,
-        //         url: assignmentFileInput
-        //     }
-
-        //     let updatedassignments = [...assignments, newassignment ]
-        //     let sendDay = {
-        //         dayNum,
-        //         resources,
-        //         assignments,
-        //         assignments: updatedassignments,
-        //         quizzes,
-        //         dayTopic,
-        //         dayDesc
-        //     }
-        //     this.props.updateDay( sendDay )
-        //     this.props.switch(0)
-        // }
+            this.setState({
+                quizQuestions: [],
+                quizQuestionInput: '',
+                quizQuestionPtsInput: '',
+                modalOpen: false,
+                quizQuestionOptionsInput: '',
+                quizQuestionOptions: [],
+                quizQuestionAnswer: '',
+                questionErrors: []
+            })
+            
+            this.props.updateDay( sendDay )
+            this.props.switch(0)
+        }
     }
     
 
@@ -129,6 +161,32 @@ class CBQuizzes extends Component {
         })
     }
 
+    killQuestion = (i) => {
+        let newQuestions = [...this.state.quizQuestions]
+        newQuestions.splice(i, 1)
+        this.setState({
+            quizQuestions: newQuestions
+        })
+    }
+
+    openModal = () => {
+        this.setState({
+            modalOpen: true
+        })
+    }
+
+    cancelModal = () => {
+        this.setState({
+            quizQuestionInput: '',
+            quizQuestionPtsInput: '',
+            modalOpen: false,
+            quizQuestionOptionsInput: '',
+            quizQuestionOptions: [],
+            quizQuestionAnswer: '',
+            questionErrors: []
+        })
+    }
+
     render() { 
 
         let daySaveLabel = this.state.editingTopicDesc ? 'Save' : 'Edit'
@@ -153,11 +211,27 @@ class CBQuizzes extends Component {
                 </Form.Field>
             )
             })
-        
             : null;
 
-        return ( 
+            let questionsDisplay = this.state.quizQuestions.length > 0 
+                ? <ol> 
+                    { this.state.quizQuestions.map( (question, i) => {
+                        return (
 
+                            <li key={i} >
+                                <Icon 
+                                    color='red' 
+                                    name='close' 
+                                    onClick={ ()=>this.killQuestion(i) } /> 
+                                { question.questionText } - { question.ptsPossible } 
+                            </li>
+                        )
+                    }) } 
+                </ol>
+                : null
+
+        return ( 
+        <div>
          <Card style={{ margin: 10}}>
          <Card.Content>
              <Card.Header>
@@ -189,11 +263,16 @@ class CBQuizzes extends Component {
                
                     
             </Form>
+            <Header
+                style={{display: "inline-block"}}>Questions</Header>
              <Button
+                style={{float: "right", marginTop: 20}}
                 primary={ true } 
-                onClick={ this.quizSave } >
-                Add Question
+                onClick={ this.openModal } >
+                +
              </Button>
+             <br />
+             { questionsDisplay }
              <br />
              <Button 
                  primary={ true } 
@@ -202,6 +281,7 @@ class CBQuizzes extends Component {
                  Add quiz
              </Button>
          </Card.Content>
+         </Card> 
          <Modal
             open={ this.state.modalOpen }>
              <Header>Add a Question</Header>
@@ -240,25 +320,25 @@ class CBQuizzes extends Component {
                 <Message
                     error
                     header='Error:'
-                    hidden={ this.state.errors.length === 0 }
-                    list={ this.state.errors }
+                    hidden={ this.state.questionErrors.length === 0 }
+                    list={ this.state.questionErrors }
                 />
              </Modal.Content>
              <Modal.Actions>
-                 <Button>
+                 <Button
+                    onClick={this.cancelModal }>
                      Cancel
                  </Button>
                  <Button
                     primary 
-                    onClick={ this.addQuestion}>
+                    onClick={ this.addQuestion} >
                     Save
                  </Button>
              </Modal.Actions>
          </Modal>
-         </Card> 
+         </div>
          )
     }
 }
  
 export default CBQuizzes;
-
