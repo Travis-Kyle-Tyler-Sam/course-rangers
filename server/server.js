@@ -180,3 +180,6 @@ app.delete('/api/delete_course/:id', (req, res)=>{
 //// admin endpoints ////
 
 app.get('/api/registry/:adminid', adminctrl.getRegistry)
+app.post('/api/registry/addUser', adminctrl.addUser)
+app.put('/api/registry/editUser', adminctrl.editUser)
+app.delete('/api/registry/deleteUser/:userid', adminctrl.deleteUser)

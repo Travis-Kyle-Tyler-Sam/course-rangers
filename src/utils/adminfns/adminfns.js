@@ -1,3 +1,4 @@
+const axios = require('axios');
 
 module.exports = {
     newUsers ( name, email, phone, type, id, state ){
@@ -107,7 +108,10 @@ module.exports = {
             }
         }
         let newState = Object.assign({}, {[otherGroup]:otherUserState}, {[group]:newUserState})
-        this.setState(newState)
+        this.setState(newState);
+    },
+    updateDB( name, email, phone, userType, id){
+
     },
 
     

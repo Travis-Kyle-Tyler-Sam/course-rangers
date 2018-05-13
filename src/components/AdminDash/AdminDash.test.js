@@ -1,4 +1,8 @@
 const fns = require('../../utils/adminfns/adminfns');
+const axios = require('axios');
+const MockAdapter = require('axios-mock-adapter');
+let mock = new MockAdapter('axios');
+mock.onGet('/')
 
 describe('resetting state with new user info', () => {
     let state
@@ -119,5 +123,12 @@ describe('resetting state with new user info', () => {
         }
         let newState = fns.mergeState('bob','hello@','888-333-5555','Student',5555, state)
         expect(newState.students).toContainEqual(objectToAdd)
+    })
+    
+})
+
+describe('admin can add users to db, as well as edit users in db', () => {
+    test('admin can add user to db', () => {
+        
     })
 })

@@ -48,37 +48,27 @@ class AdminDash extends Component {
                     userType:'Instructor',
                     id:2359879134
                 }
-            ]
+            ],
+            adminID:3
         }
         this.handleUsersChange = handleUsersChange.bind(this);
     }
 
     componentDidMount(){
         axios.get('/auth/me').then( response => {
-            axios.get(`/api/registry/${response.data.id}`).then( response => {
-                let students = response.data.students.map( student => {
-                    return Object.assign({},{
-                        name:student.user_name,
-                        email:student.email,
-                        phone:student.phone,
-                        userType:student.user_type,
-                        id:student.id
-                    })
-                })
-                let instructors = response.data.instructors.map( instructor => {
-                    return Object.assign({}, {
-                        name:instructor.user_name,
-                        email:instructor.email,
-                        phone:instructor.phone,
-                        userType:instructor.user_type,
-                        id:instructor.id
-                    })
-
-                })
-                this.setState({students, instructors})
-            })
-        })
+            this.setState({adminID:response.data.id});
+            axios.get(`/api/registry/${this.state.adminID}`).then( response => {
+                this.setState({
+                    students:response.data.students, 
+                    instructors:response.data.instructors
+                });
+            });
+        });
         
+    };
+
+    addUser( user ){
+
     }
     
 
