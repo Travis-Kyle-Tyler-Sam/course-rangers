@@ -128,6 +128,21 @@ class CourseBuilderTool extends Component {
     this.setState({ selectedDaysArray: newArray });
   }
 
+
+  dateCreator(startDate, endDate){
+    let rangeArray =[]
+   function makeDiv(day){
+        return <div className="item-1" key={day}>{day}</div>
+    }
+    for(let i=startDate.getDate(); i<=endDate.getDate(); i++){
+         rangeArray.push(makeDiv(i))
+    }
+    return rangeArray
+}
+
+
+
+
   ///// if week 1 has 7 days, and days the class is being held is 3 days per week, and the total number of days the curriculum is setup for is 30, it would populate 10 weeks.
   ////// if class is being held 1 day per week, it would populate 30 weeks.
   ///// if class is being held 4 times per week, it would populate 7 full weeks and an 8th week with only the first two days being populated.
@@ -143,7 +158,6 @@ class CourseBuilderTool extends Component {
       //// need to only populate days in columns that match with the days of the week in this.state.selectedDaysArray    //// maybe something with nth child inline css
 
     const mappedDays = this.state.days_of_week[0].curriculumDays.map(day => {
-        let availableDays= this.state.selectedDaysArray
       return (
         <div className="item-1" key={day.dayNum} style={{}}>
           {day.dayNum}
@@ -242,8 +256,8 @@ class CourseBuilderTool extends Component {
           <div className="support-grid" />
 
           <section className="grid-1">
-          
-          {mappedDays}</section>
+          {mappedDays}
+          </section>
         </div>
       </div>
     );
