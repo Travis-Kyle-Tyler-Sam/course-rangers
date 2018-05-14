@@ -11,4 +11,4 @@ create table curricula (
 insert into curricula (
 curriculum_name, teacher_id, days_of_week
 )
-values ('Math and Stuff', 1, ARRAY['a'])
+values ('practice', 1, ARRAY['a','b','c','d'])

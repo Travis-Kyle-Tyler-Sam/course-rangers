@@ -1,8 +1,5 @@
 const fns = require('../../utils/adminfns/adminfns');
-const axios = require('axios');
-const MockAdapter = require('axios-mock-adapter');
-let mock = new MockAdapter('axios');
-mock.onGet('/')
+
 
 describe('resetting state with new user info', () => {
     let state
