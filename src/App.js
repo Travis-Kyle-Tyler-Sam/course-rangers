@@ -9,6 +9,7 @@ import CurriculumBuilder from './components/CurriculumBuilder/CurriculumBuilder'
 import AdminDash from './components/AdminDash/AdminDash';
 import Home from './components/home/Home';
 import CourseBuilder from './components/CourseBuilder/CourseBuilder';
+import LogoutScreen from './components/Logout/LogoutScreen';
 
 class App extends Component {
   render() {
@@ -26,7 +27,7 @@ class App extends Component {
             <Route path='/admindashboard' component={AdminDash} />
             <Route path='/curriculumbuilder' component={CurriculumBuilder} />
             <Route path='/coursebuilder' component={CourseBuilder}/>
-        
+            <Route path='/logoutscreen' component={LogoutScreen}/>
           </Switch>
         </HashRouter>
        </div>
