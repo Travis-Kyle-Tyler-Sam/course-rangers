@@ -143,9 +143,11 @@ class CourseBuilderTool extends Component {
       //// need to only populate days in columns that match with the days of the week in this.state.selectedDaysArray    //// maybe something with nth child inline css
 
     const mappedDays = this.state.days_of_week[0].curriculumDays.map(day => {
+        let availableDays= this.state.selectedDaysArray
       return (
-        <div className="item-1" key={day.dayNum}>
+        <div className="item-1" key={day.dayNum} style={{}}>
           {day.dayNum}
+
         </div>
       );
     });
@@ -239,7 +241,9 @@ class CourseBuilderTool extends Component {
           </Table>
           <div className="support-grid" />
 
-          <section className="grid-1">{mappedDays}</section>
+          <section className="grid-1">
+          
+          {mappedDays}</section>
         </div>
       </div>
     );
