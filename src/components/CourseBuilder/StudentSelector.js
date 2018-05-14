@@ -13,6 +13,7 @@ class StudentSelector extends Component {
     render() { 
         return ( <div>
              <h3>Students</h3>
+             <input placeholder='Auto-Complete list of all students'/>
 
         </div> )
     }

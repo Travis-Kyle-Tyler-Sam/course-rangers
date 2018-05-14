@@ -25,9 +25,7 @@ class CourseBuilder extends Component {
          }
 
     render() {
-        const {course}=this.props.location.state
-        console.log(course)
-
+    
         const curriculumTemplate = this.state.courseTemplates.map(template =>{
             return <option value={template.curriculum_name} key={template.id + template.curriculum_name}>{template.curriculum_name}</option>
         })
@@ -39,11 +37,11 @@ class CourseBuilder extends Component {
 
                 <div style={{display:'flex'}}>
                     <div className='ui segment'>
-                        <input defaultValue={course === "" ? "" : course.course_name}/>
+                        <input defaultValue={this.props.location.state.course === "" ? "" : this.props.location.state.course.course_name}/>
                         <p>Curriculum Template: <select>{curriculumTemplate}</select></p>
-                        <p>Start Date: <input type="date" defaultValue={course? moment(course.start_date).format('YYYY-MM-DD'): ''}/></p>
-                        <p>End Date: <input type="date" defaultValue={course? moment(course.completion_date).format('YYYY-MM-DD'): ''}/></p>
-                    <CourseBuilderTool courseInfo = {course}/>
+                        <p>Start Date: <input type="date" defaultValue={this.props.location.state.course? moment(this.props.location.state.course.start_date).format('YYYY-MM-DD'): ''}/></p>
+                        <p>End Date: <input type="date" defaultValue={this.props.location.state.course? moment(this.props.location.state.course.completion_date).format('YYYY-MM-DD'): ''}/></p>
+                    <CourseBuilderTool courseInfo = {this.props.location.state.course}/>
                     </div>
                         
                     <div className='ui segment'>
