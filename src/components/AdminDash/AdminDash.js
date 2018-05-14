@@ -2,7 +2,11 @@ import React, {Component} from 'react';
 import axios from 'axios';
 import AdminList from '../AdminList/AdminList';
 import './AdminDash.css';
-import {handleUsersChange} from '../../utils/adminfns/adminfns';
+import { handleUsersChange, removeUser } from '../../utils/adminfns/adminfns';
+import { connect } from 'react-redux';
+import Snackbar from 'material-ui/Snackbar';
+import { Button } from 'semantic-ui-react';
+import {getUserInfo} from '../../dux/userReducer';
 
 class AdminDash extends Component {
     constructor(){
@@ -47,40 +51,109 @@ class AdminDash extends Component {
                     userType:'Instructor',
                     id:2359879134
                 }
-            ]
+            ],
+            adminID:2,
+            snackOpen:false
         }
         this.handleUsersChange = handleUsersChange.bind(this);
+        this.removeUser = removeUser.bind(this);
+        this.addUser = this.addUser.bind(this);
+        this.editUser = this.editUser.bind(this);
+        this.handleSnack = this.handleSnack.bind(this);
+        this.deleteUser = this.deleteUser.bind(this);
     }
 
     componentDidMount(){
-        //axios call to get student and teacher information
         
+        axios.get('/auth/me').then( response => {
+            this.setState({adminID:response.data.id});
+            axios.get(`/api/registry/${this.state.adminID}`).then( response => {
+                this.setState({
+                    students:response.data.students, 
+                    instructors:response.data.instructors
+                });
+            });
+        });
+        // axios.get(`/api/registry/${this.state.adminID}`).then( response => {
+        //     this.setState({
+        //         students:response.data.students, 
+        //         instructors:response.data.instructors
+        //     });
+        // });
+    };
+    handleSnack( bool){
+        this.setState({
+            snackOpen:bool
+        })
     }
-    
-
+    addUser( name, email, phone, userType, id ){
+        const { adminID } = this.state;
+        axios.post('/api/registry/addUser', {name, email, phone, userType, id, adminID}).then( response => {
+            let { name:newName, email:newEmail, phone:newPhone, userType:newUserType, id:newID } = response.data;
+            this.handleUsersChange(newName, newEmail, newPhone, newUserType, newID)
+            
+        })
+    }
+    editUser( name, email, phone, userType, id ){
+        const { adminID } = this.state;
+        axios.put('/api/registry/editUser', {name, email, phone, userType, id, adminID}).then( response => {
+            let { name:newName, email:newEmail, phone:newPhone, userType:newUserType, id:newID } = response.data;
+            this.handleUsersChange(newName, newEmail, newPhone, newUserType, newID)
+        })
+    }
+    deleteUser(id){
+        axios.delete(`/api/registry/deleteUser/${id}`).then( result => {
+            let {id} = result.data
+            this.removeUser(result.data.id)
+            this.handleSnack(true)
+        })
+    }
     render(){
         const { students, instructors } = this.state;
 
         
 
         return(
-            <div>
+            <div className='dash'>
                 <div className='lists'>
                     <AdminList
                         type = 'Students'
                         list = {students}
                         handleUsersChangeFn = {this.handleUsersChange}
+                        addUserFn = {this.addUser}
+                        editUserFn = {this.editUser}
+                        deleteUserFn = {this.deleteUser}
+                        adminID = {this.state.adminID}
                     />
                     <AdminList
                         type = 'Instructors'
                         list = {instructors}
                         handleUsersChangeFn = {this.handleUsersChange}
+                        addUserFn = {this.addUser}
+                        editUserFn = {this.editUser}
+                        deleteUserFn = {this.deleteUser}
                     />
                 </div>
+                <Snackbar 
+                    open = {this.state.snackOpen}
+                    autoHideDuration = {3000}
+                    onClose ={() => this.handleSnack(false)}
+                    action={[
+                        <Button id='ok'onClick={() => this.handleSnack(false)}>
+                        OK 
+                        </Button>
+                    ]}
+                    message={<span>User Deleted</span>}
+                />
             </div>
         )
     }
-
 }
 
-export default AdminDash
+function mapStateToProps ( state ){
+    return {
+        user:state.user
+    }
+}
+
+export default connect(mapStateToProps,{ getUserInfo })(AdminDash)

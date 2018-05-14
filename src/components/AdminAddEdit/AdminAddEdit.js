@@ -6,12 +6,11 @@ class AdminAddEdit extends Component {
         super();
         this.state = {
             name:'',
-            role:'',
             phone:'',
             email:'',
             id:-1,
-            adjust:'',
-
+            adjust:'Add',
+            snackOpen:false
         }
         this.handleClick = this.handleClick.bind(this);
     }
@@ -35,31 +34,26 @@ class AdminAddEdit extends Component {
             })
         }
     }
-    // componentDidUpdate(prevProps, prevState, snapshot){
-    //     const { name, role, phone, email, id, adjust } = this.props;
-    //     if (prevProps.id !== id ){
-    //         this.setState({
-    //             name,
-    //             value:role,
-    //             phone,
-    //             email,
-    //             id,
-    //             adjust
-    //         })
-    //     }
-    // }
     handleClick ( bool ){
         this.setState({
             modalOpen:bool
         })
     }
+    
     saveFunctions(name, email, phone, value, id, callback1, callback2, bool){
         callback1(name, email, phone, value, id);
         callback2(bool);
+        this.setState({
+            name:'',
+            phone:'',
+            email:'',
+            id:-1,
+        })
     }
+
     render(){
-        const { name, role, phone, email, id, adjust, value } = this.state;
-        const { handleClickFn, handleUsersChangeFn } = this.props;
+        const { name, phone, email, id, adjust, value } = this.state;
+        const { handleClickFn, callbackFn, deleteUserFn } = this.props;
         let displayID = () =>{
             if (id === -1){
                 return <p>Not yet set</p>
@@ -70,11 +64,10 @@ class AdminAddEdit extends Component {
         
         return(
             <div>
-                <Modal trigger={<Button onClick={ () => this.handleClick(true)}>Edit</Button>}
-            closeIcon={true}
+                <Modal trigger={<Button onClick={ () => this.handleClick(true)} id={`${phone}`}>{adjust}</Button>}
             open={this.state.modalOpen}
             >
-                <Modal.Header>Edit</Modal.Header>
+                <Modal.Header>{adjust}</Modal.Header>
                 <Modal.Content>
                     <Modal.Description>
                 <Modal.Content>
@@ -82,30 +75,29 @@ class AdminAddEdit extends Component {
                         <Form>
                             
                                 <p>Name: </p>
-                                <Input value={name} onChange = { e=> this.handleChange('name',e.target.value)}/>
-                            
-                            
+                                <Input value={name} id='name_input' onChange = { e=> this.handleChange('name',e.target.value)}/>
                                 <p>Role: </p>
                                 
-                                    <Radio value='Student' name='role' id='roleChoice1' onChange = { e => this.handleChange('value',e.target.value)}
+                                    <Radio value='Student' name='role' id='studentChoice' onChange = { e => this.handleChange('value',e.target.value)}
                                     checked={this.state.value === 'Student'}/>
-                                    <Label htmlFor='roleChoice1'>Student</Label>
+                                    <Label htmlFor='studentChoice'>Student</Label>
                                     
-                                    <Radio value='Instructor' name='role' id='roleChoice2' onChange = { e => this.handleChange('value',e.target.value)}
+                                    <Radio value='Instructor' name='role' id='instructorChoice' onChange = { e => this.handleChange('value',e.target.value)}
                                     checked={this.state.value==='Instructor'}/>
-                                    <Label htmlFor='roleChoice2'>Instructor</Label>
+                                    <Label htmlFor='instructorChoice'>Instructor</Label>
 
                                 <p>Phone: </p>
-                                <Input value={phone} onChange={ e=> this.handleChange('phone',e.target.value)}/>
+                                <Input value={phone} id='input_phone' onChange={ e=> this.handleChange('phone',e.target.value)}/>
                             
                             
                                 <p>Email: </p>
-                                <Input value={email} onChange = { e=> this.handleChange('email',e.target.value)}/>
+                                <Input value={email} id='input_email' onChange = { e=> this.handleChange('email',e.target.value)}/>
                             
                             
                                 <p>{value} ID: </p> {displayID()}
-                            <Button onClick={() => this.saveFunctions(name, email, phone, value, id, handleUsersChangeFn, this.handleClick, false) 
+                            <Button onClick={() => this.saveFunctions(name, email, phone, value, id, callbackFn, this.handleClick, false) 
                             }>Save</Button>
+                            <Button onClick={() => deleteUserFn(id)}>Delete</Button>
                             <Button onClick={() => this.handleClick(false)}>Close</Button>
                         </Form>
                     </Modal.Description>
@@ -113,6 +105,7 @@ class AdminAddEdit extends Component {
                 </Modal.Description>
                 </Modal.Content>
             </Modal>
+           
             </div>
         )
     }

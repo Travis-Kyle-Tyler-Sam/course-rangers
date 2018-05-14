@@ -1,3 +1,4 @@
+const axios = require('axios');
 
 module.exports = {
     newUsers ( name, email, phone, type, id, state ){
@@ -14,7 +15,7 @@ module.exports = {
         }
         return tempUserState;
     },
-    addUser( name, email, phone, userType, id, state){
+    addUser( name, email, phone, userType, id){
         //this will make an axios call to update the db, but in the meantime I'm going to update state with the updated information
         let tempUserState = [];
         let group = ''
@@ -107,8 +108,19 @@ module.exports = {
             }
         }
         let newState = Object.assign({}, {[otherGroup]:otherUserState}, {[group]:newUserState})
-        this.setState(newState)
+        this.setState(newState);
     },
-
+    removeUser(id){
+        let newStudents = this.state.students.filter( user => {
+            return user.id !== id;
+        });
+        let newInstructors = this.state.instructors.filter( user => {
+            return user.id !== id;
+        });
+        this.setState({
+            students:newStudents,
+            instructors:newInstructors
+        })
+    }
     
 }

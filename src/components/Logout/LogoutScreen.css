@@ -1,0 +1,19 @@
+.logout{
+    background-image:url(./../../images/nickycagechesthair.jpg);
+    height:100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.box{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: aliceblue;
+    border:black;
+    height: 25%;
+    width: 25%;
+    font-family: 'Roboto', sans-serif;
+}

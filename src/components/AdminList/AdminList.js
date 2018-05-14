@@ -1,6 +1,7 @@
 import React, {Component}from 'react';
 import AdminAddEdit from '../AdminAddEdit/AdminAddEdit';
 import { Modal, Button, Header, Table } from 'semantic-ui-react';
+import './AdminList.css';
 
 class AdminList extends Component{
     constructor(props){
@@ -20,51 +21,38 @@ class AdminList extends Component{
     }
     render(){
         // const { list, type } = this.state;
-        const { handleUsersChangeFn, list, type } = this.props;
+        const { handleUsersChangeFn, list, type, addUserFn, editUserFn, deleteUserFn } = this.props;
         const editModal = () => (
-            // <Modal trigger={<Button onClick={ () => this.handleClick(true)}>New</Button>}
-            // closeIcon={true}
-            // open={this.state.modalOpen}
-            // >
-            //     <Modal.Header>NEW</Modal.Header>
-            //     <Modal.Content>
-            //         <Modal.Description>
-                    <AdminAddEdit
-                        handleClickFn = {this.handleClick}
-                        adjust = 'Save'
-                        handleUsersChangeFn = {handleUsersChangeFn}
-                        key = 'new'
-                       />
-            //         {/* </Modal.Description>
-            //     </Modal.Content>
-            // </Modal> */}
+            
+            <AdminAddEdit
+                handleClickFn = {this.handleClick}
+                adjust = 'Save'
+                callbackFn = {addUserFn}
+                key = 'new'
+                deleteUserFn = {deleteUserFn}
+            />
+
         )
         const listItems = list.map( user => {
             return (
                 <Table.Row key={user.id}>
-                    <Table.Cell>{user.name}</Table.Cell>
-                    <Table.Cell>{user.email}</Table.Cell>
-                    <Table.Cell>{user.phone}</Table.Cell>
-                    <Table.Cell>{user.id}</Table.Cell>
-                    <Table.Cell>
-                        {/* <Modal trigger={<Button onClick={() => this.handleClick(true)}>Edit</Button>}
-                        open={this.state.modalOpen}
-                        >
-                            <Modal.Header>EDIT</Modal.Header>
-                            <Modal.Content> */}
-                                <AdminAddEdit
-                                    name = {user.name}
-                                    email = {user.email}
-                                    phone = {user.phone}
-                                    id = {user.id}
-                                    role = {user.userType}
-                                    handleClickFn = {this.handleClick}
-                                    adjust = 'Edit'
-                                    handleUsersChangeFn = {handleUsersChangeFn}
-                                    key={user.id}
-                                    />
-                            {/* </Modal.Content> 
-                        </Modal> */}
+                    <Table.Cell id={`${user.name}_cell`}>{user.name}</Table.Cell>
+                    <Table.Cell >{user.email}</Table.Cell>
+                    <Table.Cell id={`${user.phone}_cell`}>{user.phone}</Table.Cell>
+                    <Table.Cell >{user.id}</Table.Cell>
+                    <Table.Cell >
+                        <AdminAddEdit
+                            name = {user.name}
+                            email = {user.email}
+                            phone = {user.phone}
+                            id = {user.id}
+                            role = {user.userType}
+                            handleClickFn = {this.handleClick}
+                            adjust = 'Edit'
+                            callbackFn = {editUserFn}
+                            key={user.id}
+                            deleteUserFn = {deleteUserFn}
+                        />
                     </Table.Cell>
                 </Table.Row>
             )
@@ -75,7 +63,7 @@ class AdminList extends Component{
                     <h2>{type}</h2>
                     {editModal()}  
                 </div>
-                <Table striped={true} >
+                <Table striped={true} compact={true}>
                     <Table.Header>
                         <Table.Row>
                             <Table.HeaderCell>Name</Table.HeaderCell>

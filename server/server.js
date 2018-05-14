@@ -4,6 +4,7 @@ const express = require("express"),
   session = require("express-session"),
   massive = require("massive"),
   passport = require("passport"),
+  adminctrl = require('./adminctrl'),
   Auth0Strategy = require("passport-auth0");
   S3 = require("./s3");
 const {
@@ -16,7 +17,8 @@ const {
     CONNECTION_STRING,
     SUCCESS_REDIRECT,
     FAILURE_REDIRECT,
-    REDIRECT_URL
+    REDIRECT_URL,
+    LOGOUT_SUCCESS
   } = process.env;
 
 
@@ -126,7 +128,7 @@ app.post("/api/add_uploads", (req, res) => {
 
 app.get("/auth/logout", (req, res) => {
     req.logOut();
-    res.redirect(process.env.FAILURE_REDIRECT);
+    res.redirect(process.env.LOGOUT_SUCCESS);
   });
 
 app.listen(SERVER_PORT, () => console.log(`Listening on port ${SERVER_PORT}`));
@@ -175,3 +177,10 @@ app.delete('/api/delete_course/:id', (req, res)=>{
     })
     .catch(err => console.log(err));
 })
+
+//// admin endpoints ////
+
+app.get('/api/registry/:adminid', adminctrl.getRegistry)
+app.post('/api/registry/addUser', adminctrl.addUser)
+app.put('/api/registry/editUser', adminctrl.editUser)
+app.delete('/api/registry/deleteUser/:userid', adminctrl.deleteUser)

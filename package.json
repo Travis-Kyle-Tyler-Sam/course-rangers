@@ -9,13 +9,13 @@
     "axios": "^0.18.0",
     "axios-mock-adapter": "^1.15.0",
     "body-parser": "^1.18.2",
-    "cypress": "^2.1.0",
     "dotenv": "^5.0.1",
     "express": "^4.16.3",
     "express-session": "^1.15.6",
     "fs": "0.0.1-security",
     "jest": "^22.4.3",
     "massive": "^4.8.0",
+    "material-ui": "^1.0.0-beta.47",
     "moment": "^2.22.1",
     "passport": "^0.4.0",
     "passport-auth0": "^0.6.1",
@@ -27,16 +27,17 @@
     "redux": "^4.0.0",
     "redux-promise-middleware": "^5.1.1",
     "s3": "^4.4.0",
-    "semantic-ui": "^2.3.1",
     "semantic-ui-react": "^0.80.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "jest",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "cypress:open": "cypress open"
   },
   "devDependencies": {
-    "babel-plugin-transform-object-rest-spread": "^6.26.0"
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "cypress": "^2.1.0"
   }
 }
