@@ -33,13 +33,13 @@ module.exports = {
         .catch(err => console.log(err));
     },
     addUser: (req, res, next) => {
-        let { name, email, phone, userType, adminid } = req.body;
+        let { name, email, phone, userType, adminID } = req.body;
         if ( typeof phone === 'string'){
             phone = parseInt(phone, 10);
         };
 
         req.app.get('db')
-        .users_DB.create_user([name, null, email, phone, userType, adminid, null, null, null])
+        .users_DB.create_user([name, null, email, phone, userType, adminID, null, null, null])
         .then( response => {
             res.status(200).send({
                 id:response[0].id,
@@ -52,7 +52,7 @@ module.exports = {
         .catch(err => {console.log(err)})
     },
     editUser: (req, res, next) => {
-        let { id, name, email, phone, userType, adminid } = req.body;
+        let { id, name, email, phone, userType, adminID } = req.body;
         if ( typeof phone === 'string'){
             phone = parseInt(phone, 10);
         };
@@ -60,7 +60,7 @@ module.exports = {
             id = parseInt(id, 10)
         }
         req.app.get('db')
-        .users_DB.edit_user([id, name, email, phone, userType, adminid])
+        .users_DB.edit_user([id, name, email, phone, userType, adminID])
         .then( response => {
             res.status(200).send({
                 id:response[0].id,

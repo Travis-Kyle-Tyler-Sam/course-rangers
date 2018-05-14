@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import HomeNavbar from './homeNavbar/HomeNavbar';
 import './Home.css';
+import axios from 'axios';
+import { connect } from 'react-redux';
+import { getUserInfo } from '../../dux/userReducer';
 
 import featureOne from '../../images/features-01.png';
 import featureSecond from '../../images/features-02.png';
@@ -12,6 +15,18 @@ import IconTwo from '../../images/icon-2.jpg';
 import IconThree from '../../images/icon-3.jpg';
 
 class Home extends Component {
+
+
+    componentDidMount(){
+        axios.get('/auth/me').then( response => {
+            if (response.status === 401){
+                null
+            } else {
+                this.props.getUserInfo()
+            }
+        })
+    }
+
     render() {
         return (
             <div>
@@ -129,4 +144,11 @@ class Home extends Component {
     }
 }
 
-export default Home;
+
+// function mapStateToProps( state ){
+//     return {
+//         user: state.user
+//     }
+// }
+
+export default connect(null,{getUserInfo})(Home);

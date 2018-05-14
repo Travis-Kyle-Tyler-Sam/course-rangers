@@ -50,6 +50,8 @@ describe('admins should be able to login as well as add, edit, or delete other u
         cy.get('button')
             .contains('Delete')
             .click()
-        
+        cy.get('button#ok')
+            .should('contain', 'OK')
+            .click()
     })
 })

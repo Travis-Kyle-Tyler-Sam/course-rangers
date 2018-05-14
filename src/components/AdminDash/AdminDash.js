@@ -6,6 +6,7 @@ import { handleUsersChange, removeUser } from '../../utils/adminfns/adminfns';
 import { connect } from 'react-redux';
 import Snackbar from 'material-ui/Snackbar';
 import { Button } from 'semantic-ui-react';
+import {getUserInfo} from '../../dux/userReducer';
 
 class AdminDash extends Component {
     constructor(){
@@ -51,7 +52,7 @@ class AdminDash extends Component {
                     id:2359879134
                 }
             ],
-            adminID:3,
+            adminID:2,
             snackOpen:false
         }
         this.handleUsersChange = handleUsersChange.bind(this);
@@ -59,25 +60,26 @@ class AdminDash extends Component {
         this.addUser = this.addUser.bind(this);
         this.editUser = this.editUser.bind(this);
         this.handleSnack = this.handleSnack.bind(this);
+        this.deleteUser = this.deleteUser.bind(this);
     }
 
     componentDidMount(){
-        // uncomment this when ready for production--this authenticates the user before getting the data
-        // axios.get('/auth/me').then( response => {
-        //     this.setState({adminID:response.data.id});
-        //     axios.get(`/api/registry/${this.state.adminID}`).then( response => {
-        //         this.setState({
-        //             students:response.data.students, 
-        //             instructors:response.data.instructors
-        //         });
-        //     });
-        // });
-        axios.get(`/api/registry/${this.state.adminID}`).then( response => {
-            this.setState({
-                students:response.data.students, 
-                instructors:response.data.instructors
+        
+        axios.get('/auth/me').then( response => {
+            this.setState({adminID:response.data.id});
+            axios.get(`/api/registry/${this.state.adminID}`).then( response => {
+                this.setState({
+                    students:response.data.students, 
+                    instructors:response.data.instructors
+                });
             });
         });
+        // axios.get(`/api/registry/${this.state.adminID}`).then( response => {
+        //     this.setState({
+        //         students:response.data.students, 
+        //         instructors:response.data.instructors
+        //     });
+        // });
     };
     handleSnack( bool){
         this.setState({
@@ -85,24 +87,25 @@ class AdminDash extends Component {
         })
     }
     addUser( name, email, phone, userType, id ){
-        axios.post('/api/registry/addUser', {name, email, phone, userType, id}).then( response => {
+        const { adminID } = this.state;
+        axios.post('/api/registry/addUser', {name, email, phone, userType, id, adminID}).then( response => {
             let { name:newName, email:newEmail, phone:newPhone, userType:newUserType, id:newID } = response.data;
             this.handleUsersChange(newName, newEmail, newPhone, newUserType, newID)
             
         })
     }
     editUser( name, email, phone, userType, id ){
-        axios.put('/api/registry/editUser', {name, email, phone, userType, id}).then( response => {
+        const { adminID } = this.state;
+        axios.put('/api/registry/editUser', {name, email, phone, userType, id, adminID}).then( response => {
             let { name:newName, email:newEmail, phone:newPhone, userType:newUserType, id:newID } = response.data;
             this.handleUsersChange(newName, newEmail, newPhone, newUserType, newID)
         })
     }
     deleteUser(id){
         axios.delete(`/api/registry/deleteUser/${id}`).then( result => {
-            // let {id} = result.data
-            // this.removeUser(result.data.id)
-            // this.handleSnack(true)
-            console.log(this)
+            let {id} = result.data
+            this.removeUser(result.data.id)
+            this.handleSnack(true)
         })
     }
     render(){
@@ -120,6 +123,7 @@ class AdminDash extends Component {
                         addUserFn = {this.addUser}
                         editUserFn = {this.editUser}
                         deleteUserFn = {this.deleteUser}
+                        adminID = {this.state.adminID}
                     />
                     <AdminList
                         type = 'Instructors'
@@ -152,4 +156,4 @@ function mapStateToProps ( state ){
     }
 }
 
-export default connect(mapStateToProps,null)(AdminDash)
+export default connect(mapStateToProps,{ getUserInfo })(AdminDash)

@@ -17,7 +17,8 @@ const {
     CONNECTION_STRING,
     SUCCESS_REDIRECT,
     FAILURE_REDIRECT,
-    REDIRECT_URL
+    REDIRECT_URL,
+    LOGOUT_SUCCESS
   } = process.env;
 
 
@@ -127,7 +128,7 @@ app.post("/api/add_uploads", (req, res) => {
 
 app.get("/auth/logout", (req, res) => {
     req.logOut();
-    res.redirect(process.env.FAILURE_REDIRECT);
+    res.redirect(process.env.LOGOUT_SUCCESS);
   });
 
 app.listen(SERVER_PORT, () => console.log(`Listening on port ${SERVER_PORT}`));
