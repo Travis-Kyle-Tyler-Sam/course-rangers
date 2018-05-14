@@ -1,11 +1,14 @@
 require("dotenv").config();
+
 const express = require("express"),
   bodyParser = require("body-parser"),
   session = require("express-session"),
   massive = require("massive"),
   passport = require("passport"),
-  Auth0Strategy = require("passport-auth0");
-  S3 = require("./s3");
+  Auth0Strategy = require("passport-auth0"),
+  S3 = require("./s3"),
+  ctrl = require("./controller")
+
 const {
     SERVER_PORT,
     SESSION_SECRET,
@@ -153,6 +156,8 @@ app.delete('/api/delete_curriculum/:id', (req, res)=>{
     })
     .catch(err => console.log(err));
 })
+
+app.post('/api/curriculum/new', ctrl.newCurriculum)
 
 
 

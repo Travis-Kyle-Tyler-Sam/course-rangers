@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
-import { Card, Icon, Image, Input, Button, TextArea, Form, Header, Checkbox } from 'semantic-ui-react'
+import axios from 'axios'
 import FileUpload from '../FileUpload'
-import './CurriculumBuilder.css'
 import CBDaySelect from './CBDaySelect/CBDaySelect'
 import CBResources from './CBResources/CBResources'
 import CBAssignments from './CBAssignments/CBAssignments'
 import CBQuizzes from './CBQuizzes/CBQuizzes'
+
+import './CurriculumBuilder.css'
+
+import { Card, Icon, Image, Input, Button, TextArea, Form, Header, Checkbox, Message } from 'semantic-ui-react'
 
 class CurriculumBuilder extends Component {
     constructor(props) {
@@ -28,6 +31,7 @@ class CurriculumBuilder extends Component {
             curriculumNameInput: '',
             numDaysInput: 1,
             curriculumDays: initialDays,
+            curriculumErrors: [],
             selectedDay: 0,
             dayTopicInput: '',
             dayDescriptionInput: '',
@@ -112,6 +116,38 @@ class CurriculumBuilder extends Component {
         this.setState({
             windowIndex: index
         })
+    }
+
+    submitCurriculum = () => {
+        let curriculumErrors = [];
+        let { curriculumNameInput, curriculumDays } = this.state
+        if( curriculumNameInput === '' ){
+            curriculumErrors.push( 'The curriculum name cannot be blank' )
+        }
+
+        curriculumDays.forEach( el => {
+            if( el.dayTopic === '' && el.dayDesc === '' ) {
+                curriculumErrors.push(`Day ${el.dayNum} needs both a topic and a description`)
+            } else if( el.dayTopic === '' ) {
+                curriculumErrors.push(`Day ${el.dayNum} topic cannot be blank`)
+            } else if( el.dayDesc === '' ) {
+                curriculumErrors.push(`Day ${el.dayNum} description cannot be blank`)
+            }
+        })
+
+        if( curriculumErrors.length > 0 ) {
+            this.setState({
+                curriculumErrors
+            })
+        } else {
+            let curriculumBody = {
+                name: this.state.curriculumNameInput,
+                days: this.state.curriculumDays
+            }
+
+            axios.post('/api/curriculum/new', curriculumBody)
+            .then( response => console.log(response.data) )
+        }
     }
 
     
@@ -204,7 +240,28 @@ class CurriculumBuilder extends Component {
                     selectedDay={ this.state.curriculumDays[this.state.selectedDay] } 
                     updateDay={ this.updateDay} 
                     switch={ this.switchWindows } /> }
+                <div>
+
+                <Button
+                    onClick={ this.submitCurriculum }
+                    primary>
+                Submit Curriculum
+                </Button>
+                
+                    <br />
+                
+                <Button>
+                Cancel
+                </Button>
+
+                <Message
+                    error
+                    header='Error:'
+                    hidden={ this.state.curriculumErrors.length === 0 }
+                    list={ this.state.curriculumErrors }
+                />
                             
+                    </div>
                     </div>
                         )
                     }
