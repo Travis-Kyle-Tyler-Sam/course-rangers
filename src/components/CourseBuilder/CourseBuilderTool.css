@@ -5,7 +5,7 @@ body {
   .grid-1 {
     display: grid;
     width: 100%;
-    max-width: 750px;
+    max-width: auto;
     margin: 0 auto;
     grid-template-columns: repeat(7, 1fr);
     grid-template-rows: repeat(5, 1fr);
@@ -25,54 +25,4 @@ body {
   .item-1 {
     background: #4464a1;
   }
-  .item-2 {
-    background: #33a8a5;
-  }
-  .item-3 {
-    background: #ff9069;
-  }
-  .item-4 {
-    background: #6a478f;
-  }
-  .item-5 {
-    background: #3d8bb1;
-  }
-  .item-6 {
-    background: #4464a1;
-  }
-  .item-7 {
-    background: #e03f3f;
-  }
-  .item-8 {
-    background: #59a627;
-  }
-  .item-9 {
-    background: #b03532;
-  }
-  .item-10 {
-    background: #4464a1;
-  }
-  .item-11 {
-    background: #33a8a5;
-  }
-  .item-12 {
-    background: #ff9069;
-  }
-  .item-13 {
-    background: #3d8bb1;
-  }
-  .item-14 {
-    background: #da6f2b;
-  }
-  .item-15 {
-    background: #59a627;
-  }
-  .item-16 {
-    background: #30997a;
-  }
-  .item-17 {
-    background: #6a478f;
-  }
-  .item-18 {
-    background: #da6f2b;
-  }
+  
