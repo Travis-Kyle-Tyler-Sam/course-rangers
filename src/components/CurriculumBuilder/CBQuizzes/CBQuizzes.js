@@ -319,7 +319,7 @@ class CBQuizzes extends Component {
                     header='Error:'
                     hidden={ this.state.questionErrors.length === 0 }
                     list={ this.state.questionErrors }
-                    />
+                />
              </Modal.Content>
              <Modal.Actions>
                  <Button
