@@ -1,2 +1,1 @@
-select * from questions
-where assignment_id = $1
+select * from questions;
