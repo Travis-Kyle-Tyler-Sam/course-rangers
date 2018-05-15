@@ -16,7 +16,6 @@ this.getTeachersCourseTemplates()
 
  getTeachersCourseTemplates() {
     axios.get('/api/teacherdash/:teacher_id').then(response => {
-        console.log(response.data)
       this.setState({courseTemplates: response.data})
     });
  }
@@ -29,12 +28,10 @@ deleteCourseTemplate(id){
 
     render() { 
        let currentTemplates = this.state.courseTemplates.map(template=>{
-        return <p><span key={template.id}>{template.curriculum_name}</span>
-        <span><button><Link to= '/curriculumbuilder'    
-        template={template}
-        >
-            Edit
-             </Link></button></span>
+        return <p key={template.id}><span>{template.curriculum_name}</span>
+        <span><Link to= {{pathname: '/curriculumbuilder', state: {currentCurriculum: template}}}>
+            <button>Edit</button>
+             </Link></span>
         <span><button onClick={()=>{
             this.deleteCourseTemplate(template.id)
         }}>Delete</button></span>
@@ -42,9 +39,9 @@ deleteCourseTemplate(id){
         })
         return ( <div>
             
-            <button>  <Link to= '/curriculumbuilder'>
-            Add New Course Template
-             </Link></button>
+             <Link to= '/curriculumbuilder'>
+            <button>Add New Course Template</button>
+             </Link>
             {currentTemplates}
 
         </div> )
