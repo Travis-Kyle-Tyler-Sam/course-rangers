@@ -34,6 +34,26 @@ class AdminAddEdit extends Component {
             })
         }
     }
+    componentDidUpdate(prevProps, prevState, snapshot){
+        const { name:newName, role:newRole, phone:newPhone, email:newEmail, id:newID } = this.props;
+        const { name, role, phone, email, id } = prevProps;
+        if (name === newName 
+            && role === newRole 
+            && phone === newPhone 
+            && email === newEmail 
+            && id === newID){
+            null
+        } else {
+            this.setState({
+                name:newName, 
+                value:newRole,
+                phone:newPhone, 
+                email:newEmail, 
+                id:newID,
+            })
+        }
+
+    }
     handleClick ( bool ){
         this.setState({
             modalOpen:bool
@@ -41,14 +61,23 @@ class AdminAddEdit extends Component {
     }
     
     saveFunctions(name, email, phone, value, id, callback1, callback2, bool){
+        const { handleListChangeFn } = this.props;
         callback1(name, email, phone, value, id);
         callback2(bool);
-        this.setState({
-            name:'',
-            phone:'',
-            email:'',
-            id:-1,
-        })
+        if (this.state.adjust !== 'Edit'){
+            this.setState({
+                name:'',
+                phone:'',
+                email:'',
+                id:-1,
+            })
+        }
+        handleListChangeFn();
+    }
+    deleteFunctions(id){
+        const { deleteUserFn, handleListChangeFn} = this.props;
+        deleteUserFn(id);
+        handleListChangeFn();
     }
 
     render(){
@@ -97,7 +126,7 @@ class AdminAddEdit extends Component {
                                 <p>{value} ID: </p> {displayID()}
                             <Button onClick={() => this.saveFunctions(name, email, phone, value, id, callbackFn, this.handleClick, false) 
                             }>Save</Button>
-                            <Button onClick={() => deleteUserFn(id)}>Delete</Button>
+                            <Button onClick={() => this.deleteFunctions(id)}>Delete</Button>
                             <Button onClick={() => this.handleClick(false)}>Close</Button>
                         </Form>
                     </Modal.Description>
