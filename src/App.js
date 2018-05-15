@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import { Switch, Route, HashRouter } from "react-router-dom";
 import TemporaryDashboard from './components/TemporaryDashboard';
-import Login from './components/Login';
+import Login from './components/Login/Login';
 import StudentDashboard from './components/studentDashboard/StudentDashboard';
 import TeacherDashboard from './components/TeacherDashboard/TeacherDashboard';
 import CurriculumBuilder from './components/CurriculumBuilder/CurriculumBuilder';
