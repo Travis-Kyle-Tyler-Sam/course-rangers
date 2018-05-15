@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Table } from 'semantic-ui-react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
+import moment from 'moment';
+
 class TeacherCurrentCourses extends Component {
     constructor(props) {
         super(props);
@@ -16,7 +18,6 @@ this.getTeachersCourses()
 
  getTeachersCourses() {
     axios.get('/api/teacher_courses/:teacher_id').then(response => {
-        console.log(response.data)
       this.setState({currentCourses: response.data})
     });
  }
@@ -29,17 +30,18 @@ deleteCourse(id){
        })
 }
 
+
+
     render() { 
 
         let currentCourseList = this.state.currentCourses.map(course=>{
-            console.log(course)
-            return <Table.Row>
+            return <Table.Row key={course.id}>
       <Table.Cell><button>Today</button></Table.Cell>
-      <Table.Cell> Course #????</Table.Cell>
-      <Table.Cell>{course.course_name}</Table.Cell>
-      <Table.Cell>{course.start_date}</Table.Cell>
-      <Table.Cell>{course.completion_date}</Table.Cell>      
-      <Table.Cell><button><Link to= '/coursebuilder' course ={course}>
+      <Table.Cell> {course.course_name}</Table.Cell>
+      <Table.Cell>{course.curriculum_id}</Table.Cell> 
+      <Table.Cell>{moment(course.start_date).format('MMMM DD, YYYY')}</Table.Cell>
+      <Table.Cell>{moment(course.completion_date).format('MMMM DD, YYYY')}</Table.Cell>      
+      <Table.Cell><button><Link to={{pathname: '/coursebuilder', state: {course:course}}}>
             Edit
              </Link></button></Table.Cell>
       <Table.Cell><button onClick={()=>this.deleteCourse(course.id)}>Delete</button></Table.Cell>
@@ -47,14 +49,14 @@ deleteCourse(id){
         })
 
         return ( <div>
-            <button><Link to= '/coursebuilder'>
-            Add New Current Course
-             </Link></button>
+            <Link to={{pathname: '/coursebuilder', state: {course: ""}}}>
+            <button>Add New Current Course</button>
+             </Link>
             <Table striped>
     <Table.Header>
       <Table.Row>
         <Table.HeaderCell>Today</Table.HeaderCell>
-        <Table.HeaderCell>Course #</Table.HeaderCell>
+        <Table.HeaderCell>Course</Table.HeaderCell>
         <Table.HeaderCell>Curriculum</Table.HeaderCell>
         <Table.HeaderCell>Start Date</Table.HeaderCell>
         <Table.HeaderCell>End Date</Table.HeaderCell>

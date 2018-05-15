@@ -13,3 +13,29 @@ justify-content: flex-end;
   width: 150px;
   font-size: 20px;
 }
+.mainDiv {
+  margin-top: 250px;
+display: flex;
+justify-content: center;
+border-color: black;
+border-width: 2px;
+border-style: solid;
+padding: 100px;
+width: 50%;
+margin-left: 25%;
+padding-top: 100px;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+box-shadow: 5px;
+}
+
+#login_button{
+margin-top: 25px;
+}
+
+.App {
+  width: 100vw;
+  height: 100vh;
+}
