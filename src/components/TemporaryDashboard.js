@@ -22,6 +22,7 @@ class TemporaryDashboard extends Component {
                 <Navbar/>
                 Hello {this.props.user.user_name}
             <section>
+                
                 <button>   
                 <Link to="/studentdashboard">
                 Student Dashboard

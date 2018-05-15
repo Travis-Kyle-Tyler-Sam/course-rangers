@@ -2,13 +2,22 @@ import React, { Component } from "react";
 import moment from "moment";
 import { Table } from "semantic-ui-react";
 import "./CourseBuilderTool.css";
-///// will need to delete days_of_week from state and use actual data once we are receiving correctly formated data from the DB
+import BigCalendar from "react-big-calendar";
+import "react-big-calendar/lib/css/react-big-calendar.css";
+
+
+moment.locale("en");
+BigCalendar.momentLocalizer(moment);
+
+const allViews = Object.keys(BigCalendar.Views).map(k => BigCalendar.Views[k]);
 
 class CourseBuilderTool extends Component {
   constructor(props) {
     super(props);
     this.state = {
       courseInfo: [],
+            startDate: '',
+            endDate: '',
       numberOfDaysTotal: 0,
       numberOfDaysPerWeek: 0,
       selectedDaysArray: [],
@@ -57,57 +66,63 @@ class CourseBuilderTool extends Component {
                   url: "url of resource"
                 }
               ]
-            },
-            {
-              dayNum: 2
-            },
-            {
-              dayNum: 3
-            },
-            {
-              dayNum: 4
-            },
-            {
-              dayNum: 5
-            },
-            {
-              dayNum: 6
-            },
-            {
-              dayNum: 7
-            },
-            {
-              dayNum: 8
-            },
-            {
-              dayNum: 9
-            },
-            {
-              dayNum: 10
-            },
-            {
-              dayNum: 11
-            },
-            {
-              dayNum: 12
-            },
-            {
-              dayNum: 13
-            },
-            {
-              dayNum: 14
-            },
-            {
-              dayNum: 15
             }
           ]
         }
-      ]
+      ],
+      view: "month",
+      date: new Date(),
+      width: 950,
+      events: []
     };
   }
+
+
+
+
+
+ eventClassConstructor(dayTitle, newThing, newStartDate, newEndDate){
+  let newArray = []
+  
+  function Event(title, allDay, start, end) {
+    this.title = title;
+    this.allDay = allDay;
+    this.startDate = start;
+    this.endDate = end;
+    this.showEvent = ()=>{
+      return {
+        title: this.title,
+        allDay: this.allDay,
+        start: this.startDate,
+        end: this.endDate
+      }
+    }
+  }
+  
+
+
+  let coolVariable = new Event(dayTitle, newThing, newStartDate, newEndDate)
+  newArray.push(coolVariable.showEvent())
+  return newArray
+  }
+  
+
+
+
+
+
+
+
+
   componentDidMount() {
-    this.setState({ courseInfo: this.props.courseInfo });
+    this.setState({ 
+      courseInfo: this.props.courseInfo,
+            startDate: this.props.startDateInput,
+            endDate: this.props.endDateInput
+      
+    });
     this.calculateNumberOfCourseDays();
+    this.createEvents()
   }
 
   calculateNumberOfCourseDays() {
@@ -116,6 +131,26 @@ class CourseBuilderTool extends Component {
     });
   }
 
+
+
+
+
+  createEvents(){
+        let newArray = this.state.events
+    let newObject = this.eventClassConstructor('Day1', true, '2018-05-12', '2018-05-12')
+    newArray.push(newObject[0])
+    
+    
+    let object2 = this.eventClassConstructor('Day2', true, '2018-05-16', '2018-05-16')
+    newArray.push(object2[0])
+    
+    let object3 = this.eventClassConstructor('Day3', true, '2018-05-17', '2018-05-17')
+    newArray.push(object3[0])
+    
+    let object4 = this.eventClassConstructor('Day4', true, '2018-05-21', '2018-05-21')
+    newArray.push(object4[0])
+    this.setState({events: newArray})
+  }
 
   handleDaySelected(day) {
     let newArray = this.state.selectedDaysArray;
@@ -129,44 +164,13 @@ class CourseBuilderTool extends Component {
   }
 
 
-  dateCreator(startDate, endDate){
-    let rangeArray =[]
-   function makeDiv(day){
-        return <div className="item-1" key={day}>{day}</div>
-    }
-    for(let i=startDate.getDate(); i<=endDate.getDate(); i++){
-         rangeArray.push(makeDiv(i))
-    }
-    return rangeArray
-}
 
 
 
-
-  ///// if week 1 has 7 days, and days the class is being held is 3 days per week, and the total number of days the curriculum is setup for is 30, it would populate 10 weeks.
-  ////// if class is being held 1 day per week, it would populate 30 weeks.
-  ///// if class is being held 4 times per week, it would populate 7 full weeks and an 8th week with only the first two days being populated.
 
   render() {
-      console.log(this.state.selectedDaysArray);
-      const { days_of_week } = this.state.courseInfo;
-      
-      
-      ///// sunday = column 1, monday = column 2  tuesday = column 3, thursday = column 4, friday = column 6, saturday = column 7
-      
-      
-      //// need to only populate days in columns that match with the days of the week in this.state.selectedDaysArray    //// maybe something with nth child inline css
 
-    const mappedDays = this.state.days_of_week[0].curriculumDays.map(day => {
-      return (
-        <div className="item-1" key={day.dayNum} style={{}}>
-          {day.dayNum}
-
-        </div>
-      );
-    });
-
-
+      console.log(this.state.events)
 
 
 
@@ -253,11 +257,21 @@ class CourseBuilderTool extends Component {
               </Table.Row>
             </Table.Body>
           </Table>
-          <div className="support-grid" />
-
-          <section className="grid-1">
-          {mappedDays}
-          </section>
+          <div style={{ height: 700 }}>
+      
+        <BigCalendar
+          style={{ height: 500, width: this.state.width }}
+          toolbar={false}
+          events={this.state.events}
+          step={60}
+          views={allViews}
+          view={this.state.view}
+          onView={() => {}}
+          date={this.state.date}
+          onNavigate={date => this.setState({ date })}
+        />
+      </div>
+       
         </div>
       </div>
     );
