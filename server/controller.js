@@ -65,59 +65,79 @@ module.exports = {
         let db = req.app.get('db')
         // =========== CHANGE THIS TO REQ.USER ===========//
         let curricula = await db.curricula_DB.get_teachers_curricula([1])
-        allCurricula = await curricula.map( async curr => {
 
-            let days = await db.days_DB.get_days( [curr.id] )
-            let myDays = days.map( async day => {
-
-                let assignments = await db.assignments_DB.get_day_assignments([day.id])
-
-                let resources = await db.resources_DB.get_day_resources([day.id])
-
-                let quizzes = await db.assignments_DB.get_day_quizzes([day.id])
-
-                quizzes = await quizzes.map( async quiz =>{
-
-                    let questions = await db.questions_DB.get_quiz_questions([quiz.id])
-
-                    questions = await questions.map( async q => {
-                        let options = await db.options_DB.get_question_options([q.id])
-
-                        return {
-                            id: q.id,
-                            question: q.question,
-                            correctAnswer: q.correct_answer,
-                            ptsPossible: q.points,
-                            answerOptions: options
-                        }
-                    })
-
-                    return {
-                        quizName: quiz.assignment_name,
-                        quizDesc: quiz.explanation,
-                        dueDate: quiz.due_date_offset,
-                        quizQuestions: questions
-                    }
-                })
-
-                return {
-                    dayId: day.id,
-                    dayTopic: day.topic,
-                    dayDesc: day.description,
-                    dayNum: day.day_in_curriculum,
-                    assignments: assignments,
-                    resources: resources,
-                    quizzes: quizzes
-                }
-            })
-
+        let currArr = curricula.map( curr => {
             return {
                 id: curr.id,
                 name: curr.curriculum_name,
-                days: myDays
+                teacherId: curr.teacher_id,
+                curriculumDays: []
+            }
+        })
+
+        let getCurriculumDays = new Promise(function(resolve, reject){
+            currArr.forEach( async (curriculum, i, arr)=>{
+                currArr[i].curriculumDays = await db.days_DB.get_days( [curriculum.id] ) //curr.id
+                if( i === currArr.length-1) resolve()
+            })
+        })
+        await getCurriculumDays
+          
+            let getAssignments = new Promise(function(resolve, reject){
+                // for(let i in currArr; i)
+                currArr.forEach( (curr, i)=>{
+
+                    currArr[i].curriculumDays.forEach(async (day, j, arry)=>{
+                        arry[j].assignments = await db.assignments_DB.get_day_assignments([day.id])
+
+                        arry[j].quizzes = await db.assignments_DB.get_day_quizzes([day.id])
+
+                        arry[j].resources = await db.resources_DB.get_day_resources([day.id])
+
+                        if(arry[j].quizzes.length > 0 ){
+                            for( let quiz of arry[j].quizzes) {
+                                quiz.questions = await db.questions_DB.get_quiz_questions([quiz.id])
+                                
+                                for( let question of quiz.questions ){
+                                    question.options = await db.options_DB.get_question_options([question.id])
+                                }
+                            }
+                        }
+                        if (i === currArr.length-1 && j === arry.length-1) resolve();
+                    })
+                    })
+                // currArr.forEach( (curr, i)=>{
+
+                //     currArr[i].curriculumDays.forEach(async (day, j, arry)=>{
+                //         arry[j].assignments = await db.assignments_DB.get_day_assignments([day.id])
+
+                //         arry[j].quizzes = await db.assignments_DB.get_day_quizzes([day.id])
+
+                //         arry[j].resources = await db.resources_DB.get_day_resources([day.id])
+
+                //         if(arry[j].quizzes.length > 0 ){
+                //             for( let quiz of arry[j].quizzes) {
+                //                 quiz.questions = await db.questions_DB.get_quiz_questions([quiz.id])
+                                
+                //                 for( let question of quiz.questions ){
+                //                     question.options = await db.options_DB.get_question_options([question.id])
+                //                 }
+                //             }
+                //         }
+                //         if (i === currArr.length-1 && j === arry.length-1) resolve();
+                //     })
+                //     })
+            })
+            
+            await getAssignments.catch(err=>console.log(err))
+
+            let testObj = {
+                data: currArr,
+                assign: getAssignments,
+
             }
 
-        })
-    allCurricula[0].then(response => console.log(response))
+            return res.status(200).send(currArr)
+   
     }
 }
