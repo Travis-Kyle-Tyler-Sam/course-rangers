@@ -9,7 +9,7 @@ const express = require("express"),
   ctrl = require("./controller")
   adminctrl = require('./adminctrl'),
   S3 = require("./s3");
-  
+
 const {
     SERVER_PORT,
     SESSION_SECRET,
@@ -139,7 +139,7 @@ app.listen(SERVER_PORT, () => console.log(`Listening on port ${SERVER_PORT}`));
 
 
 ///////   curricula endpoints //////
-app.get('/api/teacherdash/:teacher_id', (req, res) =>{
+app.get('/api/teacherdash/:teacher_id', (req, res) => {
     app
       .get("db")
       .curricula_DB.get_teachers_curricula([req.session.passport.user])
@@ -160,6 +160,8 @@ app.delete('/api/delete_curriculum/:id', (req, res)=>{
 })
 
 app.post('/api/curriculum/new', ctrl.newCurriculum)
+
+app.get('/api/curriculum', ctrl.getCurricula)
 
 
 

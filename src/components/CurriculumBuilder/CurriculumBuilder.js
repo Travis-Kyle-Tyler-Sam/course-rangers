@@ -146,7 +146,7 @@ class CurriculumBuilder extends Component {
             }
 
             axios.post('/api/curriculum/new', curriculumBody)
-            .then( response => console.log(response.data) )
+            .then( response => this.props.history.goBack() )
         }
     }
 
