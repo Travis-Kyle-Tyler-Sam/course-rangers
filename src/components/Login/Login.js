@@ -7,9 +7,9 @@ class Login extends Component {
     }
     render() {
         return (
-            <div>
-                <a href={process.env.REACT_APP_LOGIN}>Login</a>
-            </div>
+        
+               <Button primary size="massive" href={process.env.REACT_APP_LOGIN} id="login_button">Login</Button> 
+           
         )
     }
 }
