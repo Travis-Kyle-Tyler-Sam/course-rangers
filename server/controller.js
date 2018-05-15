@@ -64,48 +64,81 @@ module.exports = {
 
         let db = req.app.get('db')
         // =========== CHANGE THIS TO REQ.USER ===========//
-        let curricula = await db.curricula_DB.get_teachers_curricula([1])
+        let curricula = db.curricula_DB.get_teachers_curricula([1]);
+        let days = db.days_DB.get_days();
+        let quizzes = db.assignments_DB.get_quizzes();
+        let assignments = db.assignments_DB.get_assignments();
+        let resources = db.resources_DB.get_day_resources()
+        let questions = db.questions_DB.get_quiz_questions();
+        let options = db.options_DB.get_question_options();
 
-        let currArr = curricula.map( curr => {
-            return {
-                id: curr.id,
-                name: curr.curriculum_name,
-                teacherId: curr.teacher_id,
-                curriculumDays: []
-            }
-        })
+        let data = await Promise.all( [curricula, days, quizzes, resources, assignments, questions, options] )
 
-        let getCurriculumDays = new Promise(function(resolve, reject){
-            currArr.forEach( async (curriculum, i, arr)=>{
-                currArr[i].curriculumDays = await db.days_DB.get_days( [curriculum.id] ) //curr.id
-                if( i === currArr.length-1) resolve()
+        let [ cur, curDays, qui, reso, assign, ques, opt ] = data
+
+        cur.forEach( (curriculum, i, arr) => {
+            arr[i].days = curDays.filter( day => day.curriculum_id === curriculum.id )
+
+            arr[i].days.forEach( (day, i, arr) => {
+                arr[i].assignments = assign.filter( assignment => assignment.curriculum_day_id === day.id)
+                arr[i].resources = reso.filter( resource => resource.curriculum_day_id === day.id)
+                arr[i].quizzes = qui.filter( quiz => quiz.curriculum_day_id === day.id)
+                arr[i].quizzes.forEach( (quiz, j, quizArr) => {
+                    let qs = ques.filter( q => q.assignment_id === quiz.id)
+                    quizArr[j].questions = qs
+                    quizArr[j].questions.forEach( (question, k, quesArr) => {
+                        quesArr[k].options = opt.filter( option => question.id === option.question_id)
+                    })
+                })
             })
         })
-        await getCurriculumDays
-          
-            let getAssignments = new Promise(function(resolve, reject){
-                // for(let i in currArr; i)
-                currArr.forEach( (curr, i)=>{
 
-                    currArr[i].curriculumDays.forEach(async (day, j, arry)=>{
-                        arry[j].assignments = await db.assignments_DB.get_day_assignments([day.id])
+        return res.status(200).send(cur)
 
-                        arry[j].quizzes = await db.assignments_DB.get_day_quizzes([day.id])
+        // let currArr = curricula.map( curr => {
+        //     return {
+        //         id: curr.id,
+        //         name: curr.curriculum_name,
+        //         teacherId: curr.teacher_id,
+        //         curriculumDays: []
+        //     }
+        // })
 
-                        arry[j].resources = await db.resources_DB.get_day_resources([day.id])
+        // let getCurriculumDays = new Promise(function(resolve, reject){
+        //     currArr.forEach( async (curriculum, i, arr)=>{
+        //         currArr[i].curriculumDays = await db.days_DB.get_days( [curriculum.id] ) //curr.id
+        //         if( i === currArr.length-1) resolve()
+        //     })
+        // })
+        // await getCurriculumDays
 
-                        if(arry[j].quizzes.length > 0 ){
-                            for( let quiz of arry[j].quizzes) {
-                                quiz.questions = await db.questions_DB.get_quiz_questions([quiz.id])
+            // let getAssignments = new Promise( async function(resolve, reject){
+            //     for(let i=0; i<currArr.length; i++){
+            //         let { curriculumDays } = currArr[i]
+
+            //         for(let j=0; j<curriculumDays.length; j++){
+            //             let day = curriculumDays[j]
+
+            //             curriculumDays[j].assignments = await db.assignments_DB.get_day_assignments([day.id])
+                        
+            //             curriculumDays[j].quizzes = await db.assignments_DB.get_day_quizzes([day.id])
+                        
+            //             curriculumDays[j].resources = await db.resources_DB.get_day_resources([day.id])
+                        
+            //             if(curriculumDays[j].quizzes.length > 0 ){
+            //                 for( let quiz of day.quizzes) {
+            //                     quiz.questions = await db.questions_DB.get_quiz_questions([quiz.id])
                                 
-                                for( let question of quiz.questions ){
-                                    question.options = await db.options_DB.get_question_options([question.id])
-                                }
-                            }
-                        }
-                        if (i === currArr.length-1 && j === arry.length-1) resolve();
-                    })
-                    })
+            //                     for( let question of quiz.questions ){
+            //                         question.options = await db.options_DB.get_question_options([question.id])
+            //                     }
+            //                 }
+            //             }
+            //             if (i === currArr.length-1 && j === curriculumDays.length-1) resolve();
+            //         }
+            //     }
+
+            /////////////////////////////////////////////////////////////////////
                 // currArr.forEach( (curr, i)=>{
 
                 //     currArr[i].curriculumDays.forEach(async (day, j, arry)=>{
@@ -127,17 +160,11 @@ module.exports = {
                 //         if (i === currArr.length-1 && j === arry.length-1) resolve();
                 //     })
                 //     })
-            })
+            // })
             
-            await getAssignments.catch(err=>console.log(err))
+            // await getAssignments.catch(err=>console.log(err))
 
-            let testObj = {
-                data: currArr,
-                assign: getAssignments,
 
-            }
-
-            return res.status(200).send(currArr)
    
     }
 }
