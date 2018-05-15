@@ -7,53 +7,56 @@ import { connect } from 'react-redux';
 import Snackbar from 'material-ui/Snackbar';
 import { Button } from 'semantic-ui-react';
 import {getUserInfo} from '../../dux/userReducer';
+import _ from 'lodash';
 
 class AdminDash extends Component {
     constructor(){
         super();
         this.state = {
             students:[
-                {
-                    name: 'Jose Gonzalez',
-                    email: 'jose@jose.jose',
-                    phone:'801-801-8018',
-                    userType:'Student',
-                    id:98234598
-                },
+                // {
+                //     name: 'Jose Gonzalez',
+                //     email: 'jose@jose.jose',
+                //     phone:'801-801-8018',
+                //     userType:'Student',
+                //     id:98234598
+                // },
                 
-                {
-                    name:'Hermione Granger',
-                    email:'ilovebooks55@gmail.com',
-                    phone:'801-801-8017',
-                    userType:'Student',
-                    id:1934875
-                },
-                {
-                    name:'Goku',
-                    email:'supersaiyinlol@capsulecorp.com',
-                    phone:'801-801-8016',
-                    userType:'Student',
-                    id:981357
-                }
+                // {
+                //     name:'Hermione Granger',
+                //     email:'ilovebooks55@gmail.com',
+                //     phone:'801-801-8017',
+                //     userType:'Student',
+                //     id:1934875
+                // },
+                // {
+                //     name:'Goku',
+                //     email:'supersaiyinlol@capsulecorp.com',
+                //     phone:'801-801-8016',
+                //     userType:'Student',
+                //     id:981357
+                // }
             ],
             instructors:[
-                {
-                    name:'The Grandmaster',
-                    email:'fearTheMeltyStick@grandmaster.io',
-                    phone:'801-801-8015',
-                    userType:'Instructor',
-                    id:89734509
-                },
-                {
-                    name:'Albus Dumbledore',
-                    email:'justsendanowl@owlmail.owl',
-                    phone:'801-801-8014',
-                    userType:'Instructor',
-                    id:2359879134
-                }
+                // {
+                //     name:'The Grandmaster',
+                //     email:'fearTheMeltyStick@grandmaster.io',
+                //     phone:'801-801-8015',
+                //     userType:'Instructor',
+                //     id:89734509
+                // },
+                // {
+                //     name:'Albus Dumbledore',
+                //     email:'justsendanowl@owlmail.owl',
+                //     phone:'801-801-8014',
+                //     userType:'Instructor',
+                //     id:2359879134
+                // }
             ],
             adminID:2,
-            snackOpen:false
+            snackOpen:false,
+            action:'',
+            actionName:''
         }
         this.handleUsersChange = handleUsersChange.bind(this);
         this.removeUser = removeUser.bind(this);
@@ -66,11 +69,19 @@ class AdminDash extends Component {
     componentDidMount(){
         
         axios.get('/auth/me').then( response => {
-            this.setState({adminID:response.data.id});
+            if (response.status === 401){
+                this.setState({adminID:3})
+            } else {
+                this.setState({adminID:response.data.id});
+            }
             axios.get(`/api/registry/${this.state.adminID}`).then( response => {
                 this.setState({
-                    students:response.data.students, 
-                    instructors:response.data.instructors
+                    students:_.sortBy(response.data.students, user => {
+                        return user.name.toLowerCase();
+                    }) , 
+                    instructors:_.sortBy(response.data.instructors, user => {
+                        return user.name.toLowerCase();
+                    })
                 });
             });
         });
@@ -81,9 +92,11 @@ class AdminDash extends Component {
         //     });
         // });
     };
-    handleSnack( bool){
+    handleSnack( bool, name, action){
         this.setState({
-            snackOpen:bool
+            snackOpen:bool,
+            actionName:name,
+            action:action
         })
     }
     addUser( name, email, phone, userType, id ){
@@ -91,7 +104,7 @@ class AdminDash extends Component {
         axios.post('/api/registry/addUser', {name, email, phone, userType, id, adminID}).then( response => {
             let { name:newName, email:newEmail, phone:newPhone, userType:newUserType, id:newID } = response.data;
             this.handleUsersChange(newName, newEmail, newPhone, newUserType, newID)
-            
+            this.handleSnack(true,newName, 'added')
         })
     }
     editUser( name, email, phone, userType, id ){
@@ -99,17 +112,18 @@ class AdminDash extends Component {
         axios.put('/api/registry/editUser', {name, email, phone, userType, id, adminID}).then( response => {
             let { name:newName, email:newEmail, phone:newPhone, userType:newUserType, id:newID } = response.data;
             this.handleUsersChange(newName, newEmail, newPhone, newUserType, newID)
+            this.handleSnack(true, newName, 'edited')
         })
     }
     deleteUser(id){
         axios.delete(`/api/registry/deleteUser/${id}`).then( result => {
             let {id} = result.data
             this.removeUser(result.data.id)
-            this.handleSnack(true)
+            this.handleSnack(true, result.data.user_name, 'deleted')
         })
     }
     render(){
-        const { students, instructors } = this.state;
+        const { students, instructors, action, actionName } = this.state;
 
         
 
@@ -143,7 +157,8 @@ class AdminDash extends Component {
                         OK 
                         </Button>
                     ]}
-                    message={<span>User Deleted</span>}
+                    message={<span>{`${actionName} ${action}`}</span>}
+                    anchorOrigin={{vertical:'top', horizontal:'center'}}
                 />
             </div>
         )
