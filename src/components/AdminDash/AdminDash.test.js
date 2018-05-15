@@ -1,6 +1,5 @@
 const fns = require('../../utils/adminfns/adminfns');
 
-
 describe('resetting state with new user info', () => {
     let state
     beforeEach(() => {
@@ -122,10 +121,4 @@ describe('resetting state with new user info', () => {
         expect(newState.students).toContainEqual(objectToAdd)
     })
     
-})
-
-describe('admin can add users to db, as well as edit users in db', () => {
-    test('admin can add user to db', () => {
-        
-    })
 })
