@@ -161,7 +161,7 @@ app.delete('/api/delete_curriculum/:id', (req, res)=>{
 
 app.post('/api/curriculum/new', ctrl.newCurriculum)
 
-app.get('/api/curriculum', ctrl.getCurricula)
+app.get('/api/curriculum/:teacherid', ctrl.getCurricula)
 
 
 
