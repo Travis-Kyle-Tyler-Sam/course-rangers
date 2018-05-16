@@ -4,165 +4,118 @@ import { Table } from "semantic-ui-react";
 import "./CourseBuilderTool.css";
 import BigCalendar from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
+import { connect } from 'react-redux'
+
+import { Button } from 'semantic-ui-react'
 
 
 moment.locale("en");
-BigCalendar.momentLocalizer(moment);
-
-const allViews = Object.keys(BigCalendar.Views).map(k => BigCalendar.Views[k]);
 
 class CourseBuilderTool extends Component {
   constructor(props) {
     super(props);
     this.state = {
       courseInfo: [],
-            startDate: '',
-            endDate: '',
+      startDate: '',
+      endDate: '',
       numberOfDaysTotal: 0,
       numberOfDaysPerWeek: 0,
       selectedDaysArray: [],
-      days_of_week: [
-        {
-          name: "Curriculum Name",
-          desc: "Curriculum Description",
-          curriculumDays: [
-            {
-              dayNum: 1,
-              dayTopic: "Topic of the day",
-              assignments: [
-                {
-                  title: "assignment title",
-                  description: "Description of assignment",
-                  totalPts: 15,
-                  url: "path of file might be blank if its just instructions",
-                  dueOffset: 10
-                }
-              ],
-              quizzes: [
-                {
-                  title: "Quiz title",
-                  description: "Quiz description",
-                  dueDate: 15,
-                  questions: [
-                    {
-                      questionText: "How do you ask a question?",
-                      ptsPossible: 10,
-                      correctAnswer:
-                        "The answer in the form of a string, always one of the answer options",
-                      answerOptions: [
-                        "answer option 1",
-                        "answer option 1",
-                        "answer option 3"
-                      ]
-                    }
-                  ]
-                }
-              ],
-              resources: [
-                {
-                  title: "resource title",
-                  description: "resource description",
-                  type: "link or file",
-                  url: "url of resource"
-                }
-              ]
-            }
-          ]
-        }
-      ],
-      view: "month",
-      date: new Date(),
-      width: 950,
-      events: []
+      popDays: []
     };
   }
 
-
-
-
-
- eventClassConstructor(dayTitle, newThing, newStartDate, newEndDate){
-  let newArray = []
-  
-  function Event(title, allDay, start, end) {
-    this.title = title;
-    this.allDay = allDay;
-    this.startDate = start;
-    this.endDate = end;
-    this.showEvent = ()=>{
-      return {
-        title: this.title,
-        allDay: this.allDay,
-        start: this.startDate,
-        end: this.endDate
-      }
-    }
-  }
-  
-
-
-  let coolVariable = new Event(dayTitle, newThing, newStartDate, newEndDate)
-  newArray.push(coolVariable.showEvent())
-  return newArray
-  }
-  
-
-
-
-
-
-
-
-
   componentDidMount() {
-    this.setState({ 
-      courseInfo: this.props.courseInfo,
-            startDate: this.props.startDateInput,
-            endDate: this.props.endDateInput
-      
-    });
-    this.calculateNumberOfCourseDays();
-    this.createEvents()
-  }
-
-  calculateNumberOfCourseDays() {
-    this.setState({
-      numberOfDaysTotal: this.state.days_of_week.length
-    });
-  }
-
-
-
-
-
-  createEvents(){
-        let newArray = this.state.events
-    let newObject = this.eventClassConstructor('Day1', true, '2018-05-12', '2018-05-12')
-    newArray.push(newObject[0])
-    
-    
-    let object2 = this.eventClassConstructor('Day2', true, '2018-05-16', '2018-05-16')
-    newArray.push(object2[0])
-    
-    let object3 = this.eventClassConstructor('Day3', true, '2018-05-17', '2018-05-17')
-    newArray.push(object3[0])
-    
-    let object4 = this.eventClassConstructor('Day4', true, '2018-05-21', '2018-05-21')
-    newArray.push(object4[0])
-    this.setState({events: newArray})
   }
 
   handleDaySelected(day) {
-    let newArray = this.state.selectedDaysArray;
-    let indexOfSelection = this.state.selectedDaysArray.indexOf(day);
-    if (indexOfSelection != -1) {
-      newArray.splice(indexOfSelection, 1);
+
+    let selDays = [...this.state.selectedDaysArray]
+    let ind = selDays.indexOf(day)
+
+    if( ind === -1 ) {
+      selDays.push(day)
     } else {
-      newArray.push(day);
+      selDays.splice(ind, 1)
+      if(selDays.length === 0 ){
+        return this.setState({
+          selectedDaysArray: selDays,
+          popDays: []
+        })
+        
+      }
     }
-    this.setState({ selectedDaysArray: newArray });
+
+    let selectedCurriculum = this.props.curricula.filter( curr => curr.id === +this.props.template)
+    let selectedCurriculumDays = selectedCurriculum[0].days
+
+    selectedCurriculumDays.sort( (a, b) => {
+      if(a.day_in_curriculum < b.day_in_curriculum) return -1;
+      if(a.day_in_curriculum > b.day_in_curriculum) return 1;
+      return 0
+    })
+
+    let assignedDate = moment(this.props.startDate).subtract(1, 'd').format('YYYY-MM-DD')
+
+
+    let selectedDays = selectedCurriculumDays.map( day => {
+      assignedDate = moment(assignedDate).add(1, 'd').format('YYYY-MM-DD')
+      
+      let dayOfWeek = +moment(assignedDate).format('d')
+      while( !selDays.includes( dayOfWeek )){
+        assignedDate = moment(assignedDate).add(1, 'd').format('YYYY-MM-DD')
+        dayOfWeek = +moment(assignedDate).format('d')
+      }
+
+      return {
+        id: day.id,
+        topic: day.topic,
+        date: assignedDate,
+        dayNum: day.day_in_curriculum
+      }
+
+    })
+
+    let popDate = moment(selectedDays[0].date).startOf('week')
+    let popEnd = moment(selectedDays[ selectedDays.length-1 ].date)
+    let popDateArray = []
+    let dayToPush
+
+    while(popDate <= popEnd){
+      let matchDay = selectedDays.filter( selectedDay => {
+        let aDt = moment(selectedDay.date) - popDate
+        let isMatch = aDt === 0
+        return isMatch
+      })
+
+      if( matchDay.length > 0) {
+        dayToPush = matchDay[0]
+        dayToPush.type = 'attend'
+      } else {
+        dayToPush = {
+          date: popDate.format('YYYY-MM-DD'),
+          type: 'off'
+        }
+      }
+      popDateArray.push( dayToPush )
+      popDate.add(1, 'd')
+    }
+
+    this.setState({
+      selectedDaysArray: selDays,
+      popDays: popDateArray
+    })
   }
 
+  switchMonth = (n) => {
+    if( n ===  -1){
+      let newDate = moment(this.state.date).subtract(1, "M").toDate()
+      this.setState({ date: newDate })
+    } else {
+      let newDate = moment(this.state.date).add(1, "M").toDate()
+      this.setState({ date: newDate })
+    }
+  }
 
 
 
@@ -170,7 +123,33 @@ class CourseBuilderTool extends Component {
 
   render() {
 
-      console.log(this.state.events)
+    let day0style = this.state.selectedDaysArray.includes(0) ? false : true;
+    let day1style = this.state.selectedDaysArray.includes(1) ? false : true;
+    let day2style = this.state.selectedDaysArray.includes(2) ? false : true;
+    let day3style = this.state.selectedDaysArray.includes(3) ? false : true;
+    let day4style = this.state.selectedDaysArray.includes(4) ? false : true;
+    let day5style = this.state.selectedDaysArray.includes(5) ? false : true;
+    let day6style = this.state.selectedDaysArray.includes(6) ? false : true;
+
+    let popDaysDisplay = this.state.popDays.map( (popDay, i) => {
+      if( popDay.type === 'attend') {
+        return (
+          <div className='cb-popday-attend cb-popday-cal' key={ i + popDay.title} >
+            <div className='cb-popday-label'>
+              <strong> { moment(popDay.date).format('MM/DD') }</strong> <br />
+            </div>
+            <p>Day { popDay.dayNum + ': ' + popDay.topic}</p>
+          </div>
+        )
+      } else {
+        return (
+          <div className='cb-popday-off cb-popday-cal' key={ i + popDay.title} >
+            <strong> { moment(popDay.date).format('MM/DD') }</strong> <br />
+          </div>
+        )
+      }
+
+    })
 
 
 
@@ -192,84 +171,101 @@ class CourseBuilderTool extends Component {
             <Table.Body>
               <Table.Row>
                 <Table.Cell>
-                  <button
+                  <Button
+                    className='cb-tool-btn'
+                    primary={ day0style }
                     onClick={() => {
-                      this.handleDaySelected("Sunday");
+                      this.handleDaySelected(0);
                     }}
                   >
                     Select Sunday
-                  </button>
+                  </Button>
                 </Table.Cell>
                 <Table.Cell>
-                  <button
+                  <Button
+                    className='cb-tool-btn'
+                    primary={ day1style }
                     onClick={() => {
-                      this.handleDaySelected("Monday");
+                      this.handleDaySelected(1);
                     }}
                   >
                     Select Monday
-                  </button>
+                  </Button>
                 </Table.Cell>
                 <Table.Cell>
-                  <button
+                  <Button
+                    className='cb-tool-btn'
+                    primary={ day2style }
                     onClick={() => {
-                      this.handleDaySelected("Tuesday");
+                      this.handleDaySelected(2);
                     }}
                   >
                     Select Tuesday
-                  </button>
+                  </Button>
                 </Table.Cell>
                 <Table.Cell>
-                  <button
+                  <Button
+                    className='cb-tool-btn'
+                    primary={ day3style }
                     onClick={() => {
-                      this.handleDaySelected("Wednesday");
+                      this.handleDaySelected(3);
                     }}
                   >
                     Select Wednesday
-                  </button>
+                  </Button>
                 </Table.Cell>
                 <Table.Cell>
-                  <button
+                  <Button
+                    className='cb-tool-btn'
+                    primary={ day4style }
                     onClick={() => {
-                      this.handleDaySelected("Thursday");
+                      this.handleDaySelected(4);
                     }}
                   >
                     Select Thursday
-                  </button>
+                  </Button>
                 </Table.Cell>
                 <Table.Cell>
-                  <button
+                  <Button
+                    className='cb-tool-btn'
+                    primary={ day5style }
                     onClick={() => {
-                      this.handleDaySelected("Friday");
+                      this.handleDaySelected(5);
                     }}
                   >
                     Select Friday
-                  </button>
+                  </Button>
                 </Table.Cell>
                 <Table.Cell>
-                  <button
+                  <Button
+                    className='cb-tool-btn'
+                    primary={ day6style }
                     onClick={() => {
-                      this.handleDaySelected("Saturday");
+                      this.handleDaySelected(6);
                     }}
                   >
                     Select Saturday
-                  </button>
+                  </Button>
                 </Table.Cell>
               </Table.Row>
             </Table.Body>
           </Table>
           <div style={{ height: 700 }}>
-      
-        <BigCalendar
-          style={{ height: 500, width: this.state.width }}
-          toolbar={false}
-          events={this.state.events}
-          step={60}
-          views={allViews}
-          view={this.state.view}
-          onView={() => {}}
-          date={this.state.date}
-          onNavigate={date => this.setState({ date })}
-        />
+
+      {/* <div className="cbt-days-display-header">
+        <div>Sun</div>
+        <div>Mon</div>
+        <div>Tue</div>
+        <div>Wed</div>
+        <div>Thu</div>
+        <div>Fri</div>
+        <div>Sat</div>
+        
+      </div> */}
+      <div className="cbt-days-display-container">
+        { popDaysDisplay}
+      </div>
+
       </div>
        
         </div>
@@ -278,4 +274,10 @@ class CourseBuilderTool extends Component {
   }
 }
 
-export default CourseBuilderTool;
+function mapStateToProps(state){
+  return {
+      curricula: state.teachers.curricula
+  }
+}
+
+export default connect( mapStateToProps )(CourseBuilderTool);
