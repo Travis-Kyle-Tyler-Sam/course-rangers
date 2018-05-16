@@ -7,7 +7,7 @@ import moment from 'moment';
 
 import './CourseBuilder.css'
 
-import { Input, Form, Dropdown } from 'semantic-ui-react'
+import { Input, Form, Dropdown, Button } from 'semantic-ui-react'
 
 import { connect } from 'react-redux'
 import { getCurricula } from '../../dux/teacherReducer'
@@ -45,11 +45,11 @@ class CourseBuilder extends Component {
 
         return ( 
             <div className='cb-home-outer-container'>
-                <h1> Course Builder View </h1>
+                <h1> Course Builder</h1>
                 <div className="cb-home-container">
                 
 
-                <div>
+                <div style={{marginRight: 20}}>
                     <div className='ui segment cb-home-input-group'>
                         <Form className='cb-home-input' >
                             <Form.Group widths='equal'>
@@ -70,7 +70,8 @@ class CourseBuilder extends Component {
                                     placeholder='Start Date' 
                                     onChange={(e) => this.setState({startDateInput: e.target.value})} />
                             </Form.Group>
-                            
+                            <Button primary >Submit Course</Button>
+                            <Button>Cancel</Button>
                         </Form>
                     </div>
                     
@@ -90,8 +91,6 @@ class CourseBuilder extends Component {
                     </div>
                     <div>
 
-        <Link to='/teacherdashboard'><button>Cancel</button></Link>
-        <button>Submit</button>
     </div>
     </div>
 </div>  

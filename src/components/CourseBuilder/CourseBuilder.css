@@ -1,8 +1,12 @@
 .cb-home-container {
-    padding: 50px;
+    padding: 0 50px 50px 50px;
     display: flex;
 }
 
 .cb-home-input-group {
     width: 65vw;
+}
+
+.cb-home-outer-container > h1 {
+    margin: 10px 0 10px 50px;   
 }

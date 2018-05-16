@@ -123,13 +123,13 @@ class CourseBuilderTool extends Component {
 
   render() {
 
-    let day0style = this.state.selectedDaysArray.includes(0) ? false : true;
-    let day1style = this.state.selectedDaysArray.includes(1) ? false : true;
-    let day2style = this.state.selectedDaysArray.includes(2) ? false : true;
-    let day3style = this.state.selectedDaysArray.includes(3) ? false : true;
-    let day4style = this.state.selectedDaysArray.includes(4) ? false : true;
-    let day5style = this.state.selectedDaysArray.includes(5) ? false : true;
-    let day6style = this.state.selectedDaysArray.includes(6) ? false : true;
+    let day0style = this.state.selectedDaysArray.includes(0) ? true : false;
+    let day1style = this.state.selectedDaysArray.includes(1) ? true : false;
+    let day2style = this.state.selectedDaysArray.includes(2) ? true : false;
+    let day3style = this.state.selectedDaysArray.includes(3) ? true : false;
+    let day4style = this.state.selectedDaysArray.includes(4) ? true : false;
+    let day5style = this.state.selectedDaysArray.includes(5) ? true : false;
+    let day6style = this.state.selectedDaysArray.includes(6) ? true : false;
 
     let popDaysDisplay = this.state.popDays.map( (popDay, i) => {
       if( popDay.type === 'attend') {
@@ -154,121 +154,77 @@ class CourseBuilderTool extends Component {
 
 
     return (
-      <div>
-        <div>
-          <Table striped>
-            <Table.Header>
-              <Table.Row>
-                <Table.HeaderCell name="Sunday">Sunday</Table.HeaderCell>
-                <Table.HeaderCell name="Monday">Monday</Table.HeaderCell>
-                <Table.HeaderCell name="Tuesday">Tuesday</Table.HeaderCell>
-                <Table.HeaderCell name="Wednesday">Wednesday</Table.HeaderCell>
-                <Table.HeaderCell name="Thursday">Thursday</Table.HeaderCell>
-                <Table.HeaderCell name="Friday">Friday</Table.HeaderCell>
-                <Table.HeaderCell name="Saturday">Saturday</Table.HeaderCell>
-              </Table.Row>
-            </Table.Header>
-            <Table.Body>
-              <Table.Row>
-                <Table.Cell>
-                  <Button
-                    className='cb-tool-btn'
-                    primary={ day0style }
-                    onClick={() => {
-                      this.handleDaySelected(0);
-                    }}
-                  >
-                    Select Sunday
-                  </Button>
-                </Table.Cell>
-                <Table.Cell>
-                  <Button
-                    className='cb-tool-btn'
-                    primary={ day1style }
-                    onClick={() => {
-                      this.handleDaySelected(1);
-                    }}
-                  >
-                    Select Monday
-                  </Button>
-                </Table.Cell>
-                <Table.Cell>
-                  <Button
-                    className='cb-tool-btn'
-                    primary={ day2style }
-                    onClick={() => {
-                      this.handleDaySelected(2);
-                    }}
-                  >
-                    Select Tuesday
-                  </Button>
-                </Table.Cell>
-                <Table.Cell>
-                  <Button
-                    className='cb-tool-btn'
-                    primary={ day3style }
-                    onClick={() => {
-                      this.handleDaySelected(3);
-                    }}
-                  >
-                    Select Wednesday
-                  </Button>
-                </Table.Cell>
-                <Table.Cell>
-                  <Button
-                    className='cb-tool-btn'
-                    primary={ day4style }
-                    onClick={() => {
-                      this.handleDaySelected(4);
-                    }}
-                  >
-                    Select Thursday
-                  </Button>
-                </Table.Cell>
-                <Table.Cell>
-                  <Button
-                    className='cb-tool-btn'
-                    primary={ day5style }
-                    onClick={() => {
-                      this.handleDaySelected(5);
-                    }}
-                  >
-                    Select Friday
-                  </Button>
-                </Table.Cell>
-                <Table.Cell>
-                  <Button
-                    className='cb-tool-btn'
-                    primary={ day6style }
-                    onClick={() => {
-                      this.handleDaySelected(6);
-                    }}
-                  >
-                    Select Saturday
-                  </Button>
-                </Table.Cell>
-              </Table.Row>
-            </Table.Body>
-          </Table>
-          <div style={{ height: 700 }}>
-
-      {/* <div className="cbt-days-display-header">
-        <div>Sun</div>
-        <div>Mon</div>
-        <div>Tue</div>
-        <div>Wed</div>
-        <div>Thu</div>
-        <div>Fri</div>
-        <div>Sat</div>
-        
-      </div> */}
       <div className="cbt-days-display-container">
-        { popDaysDisplay}
-      </div>
+        <Button
+          className='cb-tool-btn'
+          primary={ day0style }
+          onClick={() => {
+            this.handleDaySelected(0);
+          }}
+        >
+          Select Sunday
+        </Button>
 
-      </div>
-       
-        </div>
+        <Button
+          className='cb-tool-btn'
+          primary={ day1style }
+          onClick={() => {
+            this.handleDaySelected(1);
+          }}
+        >
+          Select Monday
+        </Button>
+
+        <Button
+          className='cb-tool-btn'
+          primary={ day2style }
+          onClick={() => {
+            this.handleDaySelected(2);
+          }}
+        >
+          Select Tuesday
+        </Button>
+
+        <Button
+          className='cb-tool-btn'
+          primary={ day3style }
+          onClick={() => {
+            this.handleDaySelected(3);
+          }}
+        >
+          Select Wednesday
+        </Button>
+
+        <Button
+          className='cb-tool-btn'
+          primary={ day4style }
+          onClick={() => {
+            this.handleDaySelected(4);
+          }}
+        >
+          Select Thursday
+        </Button>
+
+        <Button
+          className='cb-tool-btn'
+          primary={ day5style }
+          onClick={() => {
+            this.handleDaySelected(5);
+          }}
+        >
+          Select Friday
+        </Button>
+
+        <Button
+          className='cb-tool-btn'
+          primary={ day6style }
+          onClick={() => {
+            this.handleDaySelected(6);
+          }}
+        >
+          Select Saturday
+        </Button>
+      { popDaysDisplay}
       </div>
     );
   }
