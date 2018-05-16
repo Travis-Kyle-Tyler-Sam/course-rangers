@@ -191,3 +191,18 @@ app.get('/api/registry/:adminid', adminctrl.getRegistry)
 app.post('/api/registry/addUser', adminctrl.addUser)
 app.put('/api/registry/editUser', adminctrl.editUser)
 app.delete('/api/registry/deleteUser/:userid', adminctrl.deleteUser)
+
+
+
+
+/// student selector endpoints ////
+
+app.get('/api/getAllStudents', (req, res) =>{
+  app
+    .get('db')
+      .users_DB.get_all_students()
+      .then(response =>{
+        res.status(200).send(response);
+      })
+      .catch(err =>{console.log(err)})
+})
