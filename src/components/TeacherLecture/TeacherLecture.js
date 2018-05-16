@@ -47,12 +47,11 @@ class TeacherLecture extends Component {
         })
         socket.on('get student response', studentinput => {
             let studentArray = [...this.state.studentResponses]
-            studentArray.push(studentinput)
+            studentArray.push({question:studentinput[0], studentid:studentinput[2]})
             this.setState({
-                studentResponses:studentArray
+                studentResponses:studentArray,
+                
             })
-
-            
         })
     }
     componentDidMount(){
@@ -114,11 +113,11 @@ class TeacherLecture extends Component {
     }
     sendStudentResponse = (e) =>{
         e.preventDefault()
-        const {classid, studentsurveyinput} = this.state;
+        const {classid, studentsurveyinput, userid} = this.state;
         this.setState({
             studentSurveyText:studentsurveyinput
         })
-        socket.emit('student response', [studentsurveyinput, classid], () => {
+        socket.emit('student response', [studentsurveyinput, classid, userid], () => {
             this.setState({
                 studentsurveyinput:''
             })
@@ -195,8 +194,8 @@ class TeacherLecture extends Component {
                 <div>
                     <p>{teacherSurveyText}</p>
                     <ul>
-                        {studentResponses.map( response => {
-                            return <li>{response}</li>
+                        {studentResponses.map( (response, i) => {
+                            return <li key ={`response ${i}`}>{response.studentid}: {response.question}</li>
                         })}
                     </ul>
                 </div>

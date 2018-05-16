@@ -232,7 +232,7 @@ io.on('connection', socket => {
   })
 
   socket.on('student response', (studentinput, cb) => {
-    socket.to(`Instructor${studentinput[1]}`).emit('get student response', studentinput[0])
+    socket.to(`Instructor${studentinput[1]}`).emit('get student response', studentinput)
     cb()
   })
 
