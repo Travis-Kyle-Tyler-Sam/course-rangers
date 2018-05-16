@@ -26,3 +26,43 @@ body {
     background: #4464a1;
   }
   
+  .cb-btn-selected {
+    border: 3px solid #4464a1;
+  }
+  .cb-btn-unselected {
+    border: none;
+  }
+
+  .cbt-days-display-container {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-gap: 5px;
+  }
+  .cbt-days-display-header {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-gap: 2px;
+  }
+  
+  .cb-popday-cal {
+    padding: 10px;
+    border-radius: 5px;
+    height: 80px;
+  }
+  
+.cb-popday-attend {
+  border: 2px solid blue;
+  background: #56c9f7;
+}
+.cb-popday-off {
+  border: 2px solid #d8d8d8;
+  background: #d8d8d8;
+}
+
+.cb-popday-label {
+  margin-bottom: 10px;
+}
+
+.cb-tool-btn {
+  margin: 0 auto;
+}

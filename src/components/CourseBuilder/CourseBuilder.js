@@ -5,66 +5,103 @@ import StudentSelector from './StudentSelector';
 import CourseBuilderTool from './CourseBuilderTool';
 import moment from 'moment';
 
+import './CourseBuilder.css'
+
+import { Input, Form, Dropdown, Button } from 'semantic-ui-react'
+
+import { connect } from 'react-redux'
+import { getCurricula } from '../../dux/teacherReducer'
 
 class CourseBuilder extends Component {
     constructor(props) {
         super(props);
-        this.state = { 
+        this.state = {
+            days: [],
+            selectedDays: [], 
             courseTemplates: [],
-            startDateInput: ''
+            startDateInput: '',
+            endDateInput: '',
+            templateInput: ''
          }
     }
 
     componentDidMount(){
-        this.getTeachersCourseTemplates()
-        }
-        
-         getTeachersCourseTemplates() {
-            axios.get('/api/teacherdash/:teacher_id').then(response => {
-              this.setState({courseTemplates: response.data})
-            });
-         }
+        this.props.getCurricula(1)
+    }
 
+
+    
     render() {
-       if(this.state.startDateInput != ''){ let momentizedDate = new Date(this.state.startDateInput)
-        
-        console.log(momentizedDate, momentizedDate.getDay())}
-       
-        const curriculumTemplate = this.state.courseTemplates.map(template =>{
-            return <option value={template.curriculum_name} key={template.id + template.curriculum_name}>{template.curriculum_name}</option>
+          const curriculumTemplate = this.props.curricula.map( template => {
+            return {
+                text: template.curriculum_name,
+                value: template.id
+            }
         })
+
+        let buttonsShowing = this.state.templateInput !== '' && this.state.startDateInput !== '';
+
+        let curriculumOptions = this.props.curr
+
         return ( 
-            <div>
-            <h1>
-                Course Builder View
-            </h1>
+            <div className='cb-home-outer-container'>
+                <h1> Course Builder</h1>
+                <div className="cb-home-container">
+                
 
-                <div style={{display:'flex'}}>
-                    <div className='ui segment'>
-                        <input defaultValue={this.props.location.state.course === "" ? "" : this.props.location.state.course.course_name}/>
-                        <p>Curriculum Template: <select>{curriculumTemplate}</select></p>
-                        <p>Start Date: <input type="date" 
-                        onChange={e=>{
-                            this.setState({startDateInput: e.target.value})
-                        }}
-                        /></p>
-                        <p>End Date: <input type="date" /></p>
-                    <CourseBuilderTool courseInfo = {this.props.location.state.course}/>
+                <div style={{marginRight: 20}}>
+                    <div className='ui segment cb-home-input-group'>
+                        <Form className='cb-home-input' >
+                            <Form.Group widths='equal'>
+                                <Form.Input 
+                                    label='Course Name' 
+                                    placeholder='Name of Course' 
+                                    />
+                                <Form.Dropdown 
+                                    label='Select Curriculum'  
+                                    selection 
+                                    options={ curriculumTemplate } 
+                                    onChange={(e, data) => this.setState({templateInput: data.value})}/>
+                            </Form.Group>
+                            <Form.Group>
+                                <Form.Input 
+                                    type='date' 
+                                    label='Start Date' 
+                                    placeholder='Start Date' 
+                                    onChange={(e) => this.setState({startDateInput: e.target.value})} />
+                            </Form.Group>
+                            <Button primary >Submit Course</Button>
+                            <Button>Cancel</Button>
+                        </Form>
                     </div>
+                    
+                    
+                    { buttonsShowing &&
+                    <CourseBuilderTool 
+                        courseInfo = {'course info goes here? how the hell do i get this?'} 
+                        template={ this.state.templateInput }
+                        startDate = {this.state.startDateInput} 
+                        endDate = {this.state.endDateInput} />
+                    }
+
+                </div>
                         
-                    <div className='ui segment'>
-                       <StudentSelector/>
-
-                    </div>
+                    <div className='ui segment' style={{margin: 0}}>
+                    <StudentSelector />
                     </div>
                     <div>
-                        <Link to='/teacherdashboard'><button>Cancel</button></Link>
-                        <button>Submit</button>
-                    </div>
 
-            </div>
+    </div>
+    </div>
+</div>  
          )
+    }
+};
+
+function mapStateToProps(state){
+    return {
+        curricula: state.teachers.curricula
     }
 }
  
-export default CourseBuilder;
+export default connect(mapStateToProps, { getCurricula })(CourseBuilder);

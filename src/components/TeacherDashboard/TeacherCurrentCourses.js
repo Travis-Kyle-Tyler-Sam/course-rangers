@@ -41,7 +41,7 @@ deleteCourse(id){
       <Table.Cell>{course.curriculum_id}</Table.Cell> 
       <Table.Cell>{moment(course.start_date).format('MMMM DD, YYYY')}</Table.Cell>
       <Table.Cell>{moment(course.completion_date).format('MMMM DD, YYYY')}</Table.Cell>      
-      <Table.Cell><button><Link to={{pathname: '/coursebuilder', state: {course:course}}}>
+      <Table.Cell><button><Link to='/coursebuilder'>
             Edit
              </Link></button></Table.Cell>
       <Table.Cell><button onClick={()=>this.deleteCourse(course.id)}>Delete</button></Table.Cell>
@@ -49,7 +49,7 @@ deleteCourse(id){
         })
 
         return ( <div>
-            <Link to={{pathname: '/coursebuilder', state: {course: ""}}}>
+            <Link to='/coursebuilder'>
             <button>Add New Current Course</button>
              </Link>
             <Table striped>
