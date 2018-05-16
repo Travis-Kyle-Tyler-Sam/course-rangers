@@ -61,10 +61,10 @@ module.exports = {
     },
 
     getCurricula: async (req, res) => {
-
+        let id = +req.params.teacherid
         let db = req.app.get('db')
         // =========== CHANGE THIS TO REQ.USER ===========//
-        let curricula = db.curricula_DB.get_teachers_curricula([1]);
+        let curricula = db.curricula_DB.get_teachers_curricula( [id] );
         let days = db.days_DB.get_days();
         let quizzes = db.assignments_DB.get_quizzes();
         let assignments = db.assignments_DB.get_assignments();
