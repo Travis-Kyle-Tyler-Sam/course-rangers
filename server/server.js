@@ -8,8 +8,10 @@ const express = require("express"),
   Auth0Strategy = require("passport-auth0"),
   ctrl = require("./controller")
   adminctrl = require('./adminctrl'),
+  socketctrl = require('./socketctrl'),
+  socketIo = require('socket.io'),
+  http = require('http'),
   S3 = require("./s3");
-
 const {
     SERVER_PORT,
     SESSION_SECRET,
@@ -23,15 +25,17 @@ const {
     REDIRECT_URL,
     LOGOUT_SUCCESS
   } = process.env;
+  
 
 
-
-  const app = express();
-
-
-  app.use(bodyParser.json({ limit: "50MB" }));
-
+const app = express();
+const server = http.createServer(app)
+const io = socketIo(server);
+app.use(bodyParser.json({ limit: "50MB" }));
+// let nsp = io.of('/setup')
 S3(app);
+
+
 
 massive(CONNECTION_STRING)
   .then(db => {
@@ -134,7 +138,7 @@ app.get("/auth/logout", (req, res) => {
     res.redirect(process.env.LOGOUT_SUCCESS);
   });
 
-app.listen(SERVER_PORT, () => console.log(`Listening on port ${SERVER_PORT}`));
+server.listen(SERVER_PORT, () => console.log(`Listening on port ${SERVER_PORT}`));
 
 
 
@@ -206,3 +210,55 @@ app.get('/api/getAllStudents', (req, res) =>{
       })
       .catch(err =>{console.log(err)})
 })
+//// classroom endpoints and sockets ////
+// app.get('/api/startclass/:classid', (req, res, next) => {
+//    req.session.passport.user.classid = req.params.classid
+//    nsp = io.of(`/${req.session.passport.user.classid}`)
+//    res.status(200).send('hello')
+//   }
+// )
+
+let thumbsup = [];
+let thumbsdown = [];
+
+io.on('connection', socket => {
+  console.log('client logged on')
+  // client.join(`${req.session.passport.user.user_type}`)
+  socket.emit('ping', 'ping')
+  
+  socket.on('join', (roomName, cb) => {
+    socket.join(roomName, () => {
+      let rooms = Object.keys(socket.rooms)
+      console.log(rooms)
+      cb(roomName)
+    })
+  })
+
+  socket.on('students send thumbs', (thumbqualityArray, cb) => {
+    socket.to(`Instructor${thumbqualityArray[1]}`).emit('thumbcount',thumbqualityArray[0])
+    cb()
+  })
+
+  socket.on('thumbs launched', (teacherinput, cb) => {
+    socket.to(`Student${teacherinput[1]}`).emit('open thumbs', teacherinput[0])
+    cb()
+  })
+
+  socket.on('student response', (studentinput, cb) => {
+    socket.to(`Instructor${studentinput[1]}`).emit('get student response', studentinput)
+    cb()
+  })
+
+
+  socket.on('hitbutton', (name, fn) => {
+    fn('button hit')
+  })
+  socket.on('hitbutton2', (name, fn) => {
+    fn('BUTTON HIT')
+  })
+  socket.on('disconnect', () => {
+    console.log('user disconnected')
+  })
+
+  socket.on('error', socketctrl.handleError)
+});
