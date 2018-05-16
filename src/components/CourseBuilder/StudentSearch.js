@@ -1,64 +1,82 @@
 import _ from 'lodash'
-import faker from 'faker'
 import React, { Component } from 'react'
-import { Search, Grid, Header } from 'semantic-ui-react'
+import { Search, Grid, Header, List, Form, Input, Button, Dropdown, Icon } from 'semantic-ui-react'
 
-const source = _.times(5, () => ({
-  title: faker.company.companyName(),
- 
-}))
+
 
 export default class SearchExampleStandard extends Component {
-  componentWillMount() {
-    this.resetComponent()
+    constructor(props) {
+        super(props);
+        this.state = { 
+            studentList: [],
+            selectedStudents: [],
+              searchString: ''
+
+
+         }
+    }
+
+
+
+
+componentWillReceiveProps(nextProps) {
+    if (nextProps.students !== this.state.studentList) {
+     this.setState({ studentList: nextProps.students});
+      
+    }
   }
+selectStudent(){
+    let selectedList=this.state.selectedStudents
+    const studentName = this.state.studentList.filter(student => student.id == this.state.searchString);
+    console.log('student name', studentName)
+    selectedList.push(studentName[0])
+   
 
-  resetComponent = () => this.setState({ isLoading: false, results: [], value: '' })
-
-  handleResultSelect = (e, { result }) => this.setState({ value: result.title })
-
-  handleSearchChange = (e, { value }) => {
-    this.setState({ isLoading: true, value })
-
-    setTimeout(() => {
-      if (this.state.value.length < 1) return this.resetComponent()
-
-      const re = new RegExp(_.escapeRegExp(this.state.value), 'i')
-      const isMatch = result => re.test(result.title)
-
-      this.setState({
-        isLoading: false,
-        results: _.filter(source, isMatch),
-      })
-    }, 300)
-  }
-
-
-  iDontKnowWhatTheFuckImDoingAnymore(){
-
-    // take this.props.students and turn it into a long string
-  }
-
-
-
-
+    this.setState({
+        selectedStudents:selectedList,
+        searchString: '',    
+    })
+}
+removeStudent(student){
+    let newArray = this.state.selectedStudents
+    newArray.splice(student, 1)
+    this.setState({selectedStudents: newArray})
+}
 
   render() {
-      console.log((this.props.students))
-      console.log(faker.company.companyName())
-    const { isLoading, value, results } = this.state
+    
+      console.log('Search String', this.state.searchString)
+      console.log('Search List', this.state.selectedStudents)
+    let studentsInTheClass = this.state.selectedStudents.map(student =>{
+        return <li key={student.id + student.user_name}>{`${student.user_name}  `}
+        <Icon name='remove' onClick={()=>{
+           this.removeStudent(student)
+        }}/>
+    </li>
+    })
+    const suggestions = this.state.studentList.map(student=>{
+        return {
+            text: student.user_name,
+            value: student.id
+        }
+    })
+  
 
     return (
+        <div>
+     
+        <Dropdown
+       search selection options={suggestions}
+       onChange={(e, data) => {  
+        this.setState({searchString: data.value})}
+    }/>
+        <Button onClick={ () => {
+            this.selectStudent()
+        }}>Add Student to Class</Button>
+        
     
-          <Search
-            loading={isLoading}
-            onResultSelect={this.handleResultSelect}
-            onSearchChange={_.debounce(this.handleSearchChange, 500, { leading: true })}
-            results={results}
-            value={value}
-            {...this.props}
-          />
-
+    <ol>{studentsInTheClass}</ol>
+    </div>
     )
   }
 }
