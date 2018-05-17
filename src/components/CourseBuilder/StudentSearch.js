@@ -1,54 +1,73 @@
 import _ from 'lodash'
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { updateCourseStudents } from '../../dux/teacherReducer'
 import { Search, Grid, Header, List, Form, Input, Button, Dropdown, Icon } from 'semantic-ui-react'
 
 
 
-export default class StudentSearch extends Component {
+class StudentSearch extends Component {
     constructor(props) {
         super(props);
         this.state = { 
             studentList: [],
-            selectedStudents: [],
-              searchString: ''
+            searchString: ''
+
+
          }
     }
 
-
-
-
 componentWillReceiveProps(nextProps) {
-    if (nextProps.students !== this.state.studentList) {
+    if (this.state.studentList.length === 0 && nextProps.students.length > 0) {
      this.setState({ studentList: nextProps.students});
       
     }
   }
 selectStudent(){
-    let selectedList=this.state.selectedStudents
-    const studentName = this.state.studentList.filter(student => student.id == this.state.searchString);
-    console.log('student name', studentName)
+    let selectedList = [...this.props.selectedStudentList]
+    let studentList = [...this.state.studentList]
+    const studentName = studentList.filter(student => student.id == this.state.searchString);
     selectedList.push(studentName[0])
    
+    
+
+    studentList.forEach( (student, i) => {
+        if( student.id === studentName[0].id){
+            studentList.splice(i, 1)
+        }
+    })
+    
+    this.props.updateCourseStudents(selectedList)
 
     this.setState({
-        selectedStudents:selectedList,
-        searchString: '',    
+        searchString: '',
+        studentList: studentList    
     })
 }
-removeStudent(student){
-    let newArray = this.state.selectedStudents
-    newArray.splice(student, 1)
-    this.setState({selectedStudents: newArray})
+removeStudent(studentId){
+    let newArray = [...this.props.selectedStudentList]
+    let studentList = [...this.state.studentList]
+
+    newArray.forEach( (student, i) => {
+        if( student.id === studentId) {
+            newArray.splice(i, 1)
+            studentList.push(student)
+        }
+    })
+
+    this.props.updateCourseStudents(newArray)
+
+    this.setState({
+        studentList: studentList
+    })
 }
 
   render() {
     
-      console.log('Search String', this.state.searchString)
-      console.log('Search List', this.state.selectedStudents)
-    let studentsInTheClass = this.state.selectedStudents.map(student =>{
-        return <li key={student.id + student.user_name}>{`${student.user_name}  `}
+    let studentsInTheClass = this.props.selectedStudentList.map( (student, i) =>{
+        return <li key={student.id + student.user_name + i}>{`${student.user_name}  `}
         <Icon name='remove' onClick={()=>{
-           this.removeStudent(student)
+           this.removeStudent(student.id)
         }}/>
     </li>
     })
@@ -65,6 +84,7 @@ removeStudent(student){
      
         <Dropdown
        search selection options={suggestions}
+       value={this.state.searchString}
        onChange={(e, data) => {  
         this.setState({searchString: data.value})}
     }/>
@@ -78,3 +98,11 @@ removeStudent(student){
     )
   }
 }
+
+function mapStateToProps(state) {
+    return {
+        selectedStudentList: state.teachers.studentList
+    }
+}
+
+export default connect(mapStateToProps, { updateCourseStudents })(StudentSearch)

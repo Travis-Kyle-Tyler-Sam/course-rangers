@@ -21,12 +21,14 @@ class CourseBuilder extends Component {
             courseTemplates: [],
             startDateInput: '',
             endDateInput: '',
-            templateInput: ''
+            templateInput: '',
+            courseNameInput: ''
          }
     }
 
     componentDidMount(){
-        this.props.getCurricula(1)
+        // Change to get all curricula all over the place
+        this.props.getCurricula()
     }
 
 
@@ -55,7 +57,8 @@ class CourseBuilder extends Component {
                             <Form.Group widths='equal'>
                                 <Form.Input 
                                     label='Course Name' 
-                                    placeholder='Name of Course' 
+                                    placeholder='Name of Course'
+                                    onChange={ (e) => this.setState({courseNameInput: e.target.value})} 
                                     />
                                 <Form.Dropdown 
                                     label='Select Curriculum'  
@@ -70,38 +73,32 @@ class CourseBuilder extends Component {
                                     placeholder='Start Date' 
                                     onChange={(e) => this.setState({startDateInput: e.target.value})} />
                             </Form.Group>
-                            <Button primary >Submit Course</Button>
-                            <Button>Cancel</Button>
                         </Form>
                     </div>
                     
                     
                     { buttonsShowing &&
                     <CourseBuilderTool 
-                        courseInfo = {'course info goes here? how the hell do i get this?'} 
-                        template={ this.state.templateInput }
-                        startDate = {this.state.startDateInput} 
-                        endDate = {this.state.endDateInput} />
-                    }
-
+                    template={ this.state.templateInput }
+                    startDate = {this.state.startDateInput} 
+                    courseName={ this.state.courseNameInput } />
+                }
+                
                 </div>
                         
-                    <div className='ui segment' style={{margin: 0}}>
+                <div className='ui segment' style={{margin: 0}}>
                     <StudentSelector />
-                    </div>
-                    <div>
-
-    </div>
-    </div>
-</div>  
+                </div>
+            </div>
+        </div>  
          )
     }
 };
 
 function mapStateToProps(state){
     return {
-        curricula: state.teachers.curricula
+        curricula: state.teachers.curricula,
     }
 }
- 
+
 export default connect(mapStateToProps, { getCurricula })(CourseBuilder);
