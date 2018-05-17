@@ -86,14 +86,11 @@ class CourseBuilder extends Component {
 
                 </div>
                         
-                    <div className='ui segment' style={{margin: 0}}>
+                <div className='ui segment' style={{margin: 0}}>
                     <StudentSelector />
-                    </div>
-                    <div>
-
-    </div>
-    </div>
-</div>  
+                </div>
+            </div>
+        </div>  
          )
     }
 };
@@ -103,5 +100,5 @@ function mapStateToProps(state){
         curricula: state.teachers.curricula
     }
 }
- 
+
 export default connect(mapStateToProps, { getCurricula })(CourseBuilder);
