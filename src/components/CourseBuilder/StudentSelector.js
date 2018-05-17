@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import _ from 'lodash';
-import { Modal, Button, Header, Table, Pagination, Input, Form } from 'semantic-ui-react';
-
+import StudentSearch from './StudentSearch';
 
 
 
@@ -12,22 +11,20 @@ class StudentSelector extends Component {
         super(props);
         this.state = {  
             students: [],
-            adminID:1
         }
     }
 
 componentDidMount(){
+    axios.get('/api/getAllStudents').then( response=>{
+        this.setState({students: response.data})
+    })
 }
     
     render() { 
         return ( <div>
              <h3>Students</h3>
-             <input placeholder='Auto-Complete list of all students'/>
-             <Pagination
-                defaultActivePage={1}
-                totalPages={this.state.totalPages}
-                onPageChange={(event, data) => this.handlePage(data.activePage)}
-                />
+                <StudentSearch students={this.state.students}/>
+                
         </div> )
     }
 }

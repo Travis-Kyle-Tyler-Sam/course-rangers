@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import axios from 'axios';
+import { Card, Icon, Image, Input, Button, TextArea, Form, Header, Checkbox, Message } from 'semantic-ui-react'
 
 class TeacherCourseTemplates extends Component {
     constructor(props) {
@@ -29,18 +30,18 @@ deleteCourseTemplate(id){
     render() { 
        let currentTemplates = this.state.courseTemplates.map(template=>{
         return <p key={template.id}><span>{template.curriculum_name}</span>
-        <span><Link to= {{pathname: '/curriculumbuilder', state: {currentCurriculum: template}}}>
-            <button>Edit</button>
+        <span><Link to='/curriculumbuilder'>
+            <Button basic icon circular><Icon name="edit"/></Button>
              </Link></span>
-        <span><button onClick={()=>{
+        <span><Button basic icon circular onClick={()=>{
             this.deleteCourseTemplate(template.id)
-        }}>Delete</button></span>
+        }}><Icon name='trash'/></Button></span>
         </p>
         })
         return ( <div>
             
              <Link to= '/curriculumbuilder'>
-            <button>Add New Course Template</button>
+            <Button icon labelPosition='right'>Add New Course Template<Icon name='plus'/></Button>
              </Link>
             {currentTemplates}
 
