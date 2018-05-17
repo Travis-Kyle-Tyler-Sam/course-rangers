@@ -6,8 +6,9 @@ const express = require("express"),
   massive = require("massive"),
   passport = require("passport"),
   Auth0Strategy = require("passport-auth0"),
-  ctrl = require("./controller")
+  curriculumctrl = require("./curriculumctrl")
   adminctrl = require('./adminctrl'),
+  coursectrl = require('./coursectrl')
   socketctrl = require('./socketctrl'),
   socketIo = require('socket.io'),
   http = require('http'),
@@ -143,51 +144,20 @@ server.listen(SERVER_PORT, () => console.log(`Listening on port ${SERVER_PORT}`)
 
 
 ///////   curricula endpoints //////
-app.get('/api/teacherdash/:teacher_id', (req, res) => {
-    app
-      .get("db")
-      .curricula_DB.get_teachers_curricula([req.session.passport.user])
-      .then(response => res.status(200).send(response))
-      .catch(err => console.log(err));
 
-})
+app.delete('/api/curriculum/:id', curriculumctrl.deleteCurriculum)
 
+app.post('/api/curriculum/new', curriculumctrl.newCurriculum)
 
-app.delete('/api/delete_curriculum/:id', (req, res)=>{
-  app
-    .get('db')
-    .curricula_DB.delete_curriculum([req.params.id])
-    .then(response => {
-      res.status(200).send(response);
-    })
-    .catch(err => console.log(err));
-})
-
-app.post('/api/curriculum/new', ctrl.newCurriculum)
-
-app.get('/api/curriculum/:teacherid', ctrl.getCurricula)
-
-
+app.get('/api/curriculum/', curriculumctrl.getCurricula)
 
 //// courses endpoints /////
 
-app.get('/api/teacher_courses/:teacher_id', (req, res) =>{
-  app
-    .get('db')
-    .courses_DB.get_teachers_courses([req.session.passport.user])
-    .then(response => res.status(200).send(response))
-    .catch(err=> console.log(err));
-})
+app.get('/api/teacher_courses/:teacher_id', coursectrl.getCourses)
 
-app.delete('/api/delete_course/:id', (req, res)=>{
-  app
-    .get('db')
-    .courses_DB.delete_course([req.params.id])
-    .then(response => {
-      res.status(200).send(response);
-    })
-    .catch(err => console.log(err));
-})
+app.post('/api/course', coursectrl.addCourse)
+
+app.delete('/api/course/:id', coursectrl.deleteCourse)
 
 //// admin endpoints ////
 

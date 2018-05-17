@@ -24,8 +24,8 @@ export function getUserInfo() {
   };
 }
 
-export function getCurricula(id){
-  const curriculaData = axios.get(`/api/curriculum/${1}`)
+export function getCurricula(){
+  const curriculaData = axios.get(`/api/curriculum/`)
   .then( res => res.data)
 
   return {

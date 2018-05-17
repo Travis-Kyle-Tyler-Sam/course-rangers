@@ -1,5 +1,13 @@
 create table course_days (
     id Serial primary key,
     date DATE,
-    curricula_day_id INTEGER REFERENCES days(id)
+    course_id integer references courses(id);
+    topic varchar(200),
+    description varchar(800),
+    day_in_curriculum integer
 )
+
+insert into course_days
+(date, curricula_day_id, topic, description, day_in_curriculum)
+values
+('2018-05-17', 9, 'Math Functions', 'Learn how to use functions in math', 1);

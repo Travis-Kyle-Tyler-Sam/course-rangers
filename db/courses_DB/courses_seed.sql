@@ -13,4 +13,6 @@ create table courses (
 insert into courses (
 course_name, teacher_id, start_date, completion_date, curriculum_id
 )
-values ('Math stuff', 1, '2018-05-05', '2018-05-05', 1);
+values 
+('Math stuff', 1, '2018-05-05', '2018-05-05', 1),
+('My cool course', 1, '2018-05-17', '2018-05-17', 26);

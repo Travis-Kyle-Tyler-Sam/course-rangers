@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import moment from "moment";
-import { Table } from "semantic-ui-react";
+import axios from 'axios'
 import "./CourseBuilderTool.css";
 import BigCalendar from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { connect } from 'react-redux'
 
-import { Button } from 'semantic-ui-react'
+import { Button, Table, Message, Icon } from 'semantic-ui-react'
 
 
 moment.locale("en");
@@ -15,18 +15,13 @@ class CourseBuilderTool extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      courseInfo: [],
-      startDate: '',
-      endDate: '',
-      numberOfDaysTotal: 0,
-      numberOfDaysPerWeek: 0,
       selectedDaysArray: [],
-      popDays: []
+      popDays: [],
+      errors: []
     };
   }
 
-  componentDidMount() {
-  }
+
 
   handleDaySelected(day) {
 
@@ -117,6 +112,55 @@ class CourseBuilderTool extends Component {
     }
   }
 
+  submitCourse = () => {
+    let errors = [];
+
+    // Empty course name
+    // No selected template
+    // No start date
+    // Student list is empty
+    // No attending days selected
+    if( this.props.courseName === '' ) {
+      errors.push('The course name cannot be empty')
+    }
+
+    if( this.props.template === '' ) {
+      errors.push('Please select a course template')
+    }
+
+    if( this.props.startDate === '' ) {
+      errors.push('The course must have a start date')
+    }
+
+    if( this.props.enrolledStudents.length === 0 ) {
+      errors.push('Please add students to this course')
+    }
+
+    if( this.state.selectedDaysArray.length === 0 ) {
+      errors.push('Please select the days that this course will be held')
+    }
+
+    if( errors.length > 0 ) {
+      this.setState( { errors } )
+    } else {
+      let selectedCurriculum = this.props.curricula.filter( curriculum => curriculum.id === this.props.template)
+      selectedCurriculum = selectedCurriculum[0]
+      let filteredPopDays = this.state.popDays.filter( popDay => popDay.type === 'attend')
+
+      selectedCurriculum.days.forEach( (curDay, i, curArr) => {
+        curArr[i].date = filteredPopDays[i].date
+      })
+
+      selectedCurriculum.name = this.props.courseName;
+      selectedCurriculum.startDate = this.props.startDate;
+      selectedCurriculum.enrolledStudents = this.props.enrolledStudents
+
+      axios.post('/api/course', selectedCurriculum)
+      .then( response => console.log(response.data))
+    }
+
+  }
+
 
 
 
@@ -154,6 +198,9 @@ class CourseBuilderTool extends Component {
 
 
     return (
+      <div>
+
+      
       <div className="cbt-days-display-container">
         <Button
           className='cb-tool-btn'
@@ -226,13 +273,27 @@ class CourseBuilderTool extends Component {
         </Button>
       { popDaysDisplay}
       </div>
+      <Message
+        error
+        header='Error(s)!'
+        list={ this.state.errors }
+        hidden={ this.state.errors.length === 0}
+      />
+        <Button 
+          primary 
+          onClick={ this.submitCourse }>
+        Submit Course
+        </Button>
+        <Button>Cancel</Button>      
+      </div>
     );
   }
 }
 
 function mapStateToProps(state){
   return {
-      curricula: state.teachers.curricula
+      curricula: state.teachers.curricula,
+      enrolledStudents: state.teachers.studentList
   }
 }
 
