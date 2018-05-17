@@ -3,11 +3,13 @@ import axios from "axios";
 
 const initialState = {
   user: {},
-  curricula: []
+  curricula: [],
+  studentList: []
 };
 
 const UPDATE_USER_INFO = "UPDATE_USER_INFO";
 const GET_CURRICULA = "GET CURRICULA"
+const UPDATE_COURSE_STUDENTS = "UPDATE_COURSE_STUDENTS"
 
 
 
@@ -22,13 +24,20 @@ export function getUserInfo() {
   };
 }
 
-export function getCurricula(id){
-  const curriculaData = axios.get(`/api/curriculum/${1}`)
+export function getCurricula(){
+  const curriculaData = axios.get(`/api/curriculum/`)
   .then( res => res.data)
 
   return {
     type: GET_CURRICULA,
     payload: curriculaData
+  }
+}
+
+export function updateCourseStudents (studentArr) {
+  return {
+    type: UPDATE_COURSE_STUDENTS,
+    payload: studentArr
   }
 }
 
@@ -39,6 +48,9 @@ export default function reducer(state = initialState, action) {
 
     case GET_CURRICULA + "_FULFILLED":
       return Object.assign( {}, state, { curricula: action.payload });
+
+    case UPDATE_COURSE_STUDENTS:
+      return Object.assign( {}, state, { studentList: action.payload} )
 
     default:
       return state;
