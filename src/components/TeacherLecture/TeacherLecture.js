@@ -118,12 +118,16 @@ class TeacherLecture extends Component {
                         <p>Thumb Survey Results</p>
                         <p>{teacherThumbText}</p>
                         <div>
-                            <div>
-                                <Icon house outline up size='massive'/>
+                            <p>thumbsup</p>
+                            <div className='thumbsup-count'>
+                                <Icon name='thumbs outline up'size='large' />
+                                <p>{count}</p>
                             </div>
-                            <p>thumbsup {count}</p>
-                            <Icon name='thumbs' outline down />
-                            <p>thumbsdown {count2}</p>
+                            <p>thumbsdown</p>
+                            <div className='thumbsup-count'>
+                                <Icon name='thumbs outline down'size='large' />
+                                <p>{count2}</p>
+                            </div>
                         </div>
                         <Feed events = {studentResponses}>
                             {/* {studentResponses.length > 0

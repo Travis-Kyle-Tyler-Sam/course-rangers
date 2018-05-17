@@ -38,3 +38,6 @@
 .free-section{
 
 }
+.thumbsup-count{
+    display: flex;
+}
