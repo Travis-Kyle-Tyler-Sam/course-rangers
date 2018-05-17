@@ -4,15 +4,13 @@ import { Search, Grid, Header, List, Form, Input, Button, Dropdown, Icon } from 
 
 
 
-export default class SearchExampleStandard extends Component {
+export default class StudentSearch extends Component {
     constructor(props) {
         super(props);
         this.state = { 
             studentList: [],
             selectedStudents: [],
               searchString: ''
-
-
          }
     }
 
