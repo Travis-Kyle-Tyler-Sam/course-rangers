@@ -1,0 +1,43 @@
+.teacher-lecture{
+    display: flex;
+    justify-content: space-around;
+    height:80vh;
+}
+.left-lecture{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+.middle-lecture{
+    display: flex;
+    flex-direction: column;
+}
+.right-lecture{
+    display: flex;
+    flex-direction: column;
+}
+.ui.form {
+    display: flex;
+    flex-direction: column;
+}
+.ui.form textarea{
+    width: 300px;
+}
+.resources{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height:90%;
+}
+.resources>div{
+    height:50%;
+}
+.thumb-section{
+    
+}
+.free-section{
+
+}
+.thumbsup-count{
+    display: flex;
+}
