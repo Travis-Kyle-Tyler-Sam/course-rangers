@@ -8,6 +8,6 @@ create table course_days (
 )
 
 insert into course_days
-(date, curricula_day_id, topic, description, day_in_curriculum)
+(date, course_id, topic, description, day_in_curriculum)
 values
-('2018-05-17', 9, 'Math Functions', 'Learn how to use functions in math', 1);
+('2018-05-17', 13, 'Math Functions', 'Learn how to use functions in math', 1);

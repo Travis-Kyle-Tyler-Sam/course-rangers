@@ -1,4 +1,4 @@
-create table course_options(
+create table course_questions(
     id serial primary key,
     course_assignments_id INTEGER REFERENCES course_assignments(id),
     option_selected VARCHAR(200),
