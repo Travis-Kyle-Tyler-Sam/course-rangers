@@ -16,13 +16,13 @@ this.getTeachersCourseTemplates()
 }
 
  getTeachersCourseTemplates() {
-    axios.get('/api/teacherdash/:teacher_id').then(response => {
+    axios.get('/api/curriculum/').then(response => {
       this.setState({courseTemplates: response.data})
     });
  }
 
 deleteCourseTemplate(id){
-    axios.delete(`/api/delete_curriculum/${id}`).then(response =>{
+    axios.delete(`/api/curriculum/${id}`).then(response =>{
      return this.getTeachersCourseTemplates()
     })
 }

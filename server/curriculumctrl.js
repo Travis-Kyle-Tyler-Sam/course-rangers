@@ -96,7 +96,7 @@ module.exports = {
     },
 
     deleteCurriculum: (req, res)=>{
-        app
+        req.app
           .get('db')
           .curricula_DB.delete_curriculum([req.params.id])
           .then(response => {
