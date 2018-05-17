@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import openSocket from 'socket.io-client';
 import { Button, Input, Form, Icon, Label, List, Loader, Segment, Breadcrumb, Grid, Transition, TextArea} from 'semantic-ui-react';
 import './StudentLecture.css'
-const socket = openSocket('/');
+const socket = openSocket('http://localhost:3030');
 
 class StudentLecture extends Component {
     constructor(){

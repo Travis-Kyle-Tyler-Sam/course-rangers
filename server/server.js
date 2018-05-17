@@ -30,7 +30,7 @@ const {
 
 const app = express();
 const server = http.createServer(app)
-const io = socketIo(server);
+const io = socketIo(server, {wsEngine:'ws'});
 app.use(bodyParser.json({ limit: "50MB" }));
 S3(app);
 
