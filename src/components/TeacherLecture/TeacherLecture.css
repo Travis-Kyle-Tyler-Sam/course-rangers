@@ -11,6 +11,7 @@
 .middle-lecture{
     display: flex;
     flex-direction: column;
+
 }
 .right-lecture{
     display: flex;
@@ -32,12 +33,16 @@
 .resources>div{
     height:50%;
 }
-.thumb-section{
-    
+/* .thumb-section{
 }
 .free-section{
-
-}
+} */
 .thumbsup-count{
     display: flex;
+}
+@media screen and (max-width:480px){
+    .teacher-lecture{
+        display: flex;
+        flex-direction: column-reverse;
+    }
 }

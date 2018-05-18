@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import openSocket from 'socket.io-client';
 import axios from 'axios';
-import { Button, Input, Form, Icon, Label, List, Loader, Segment, Breadcrumb, Grid, Transition, TextArea, Feed} from 'semantic-ui-react';
+import { Button, Input, Form, Icon, Label, List, Loader, Segment, Breadcrumb, Grid, Transition, TextArea, Feed, Header} from 'semantic-ui-react';
 import './TeacherLecture.css';
 const socket = openSocket(`http://localhost:3030`)
 
@@ -21,30 +21,36 @@ class TeacherLecture extends Component {
             teacherthumbinput:'',
             teacherThumbText:'',
             studentResponses:[],
+            thumbVisible:true,
+            thumbDownVisible:false,
+            thumbUpVisible:false
         }
         socket.on('thumbcount', thumbquality => {
             if (thumbquality === 'thumbsup')
                 this.setState({
                     count:this.state.count+1,
-                    thumbsDisable:true
+                    thumbsDisable:true,
+                    thumbUpVisible:true
                 })
             else {
                 this.setState({
                     count2:this.state.count2+1,
-                    thumbsDisable:true
+                    thumbsDisable:true,
+                    thumbDownVisible:true
                 })
             }
+            
         })
         socket.on('get student response', studentinput => {
             let studentArray = [...this.state.studentResponses]
-            studentArray.push({extraText:studentinput[0], summary:studentinput[2]})
+            studentArray.push({question:studentinput[0], studentid:studentinput[2]})
             this.setState({
                 studentResponses:studentArray,
             })
         })
         socket.on('get free response', studentinput => {
             let freeResponsesArray = [...this.state.studentFreeResponses];
-            freeResponsesArray.push({extraText:studentinput[0],summary:studentinput[2]})
+            freeResponsesArray.push({question:studentinput[0],studentid:studentinput[2]})
             this.setState({
                 studentFreeResponses:freeResponsesArray
             })
@@ -71,6 +77,7 @@ class TeacherLecture extends Component {
         })
     }
     launchThumbs = (e) =>{
+        this.toggleVisibility()
         e.preventDefault()
         const {classid, teacherthumbinput} = this.state;
         socket.emit('thumbs launched',[teacherthumbinput, classid], (data) => {
@@ -96,51 +103,35 @@ class TeacherLecture extends Component {
     }
     
     
+    toggleVisibility = (e) => this.setState({thumbVisible:false})
+    toggleThumbsDown = () => this.setState({thumbDownVisible:true})
+    toggleThumbsUp = () => this.setState({thumbUpVisible:true})
     render(){
         const {  count, count2, room, studentResponses, 
             teacherSurveyText, teacherthumbinput, teachersurveyinput, 
-            teacherThumbText, studentFreeResponses} = this.state
+            teacherThumbText, studentFreeResponses, thumbVisible, thumbLeave,
+            thumbUpVisible, thumbDownVisible} = this.state
 
         return(
             <div className='teacher-lecture'>
                 <div className='left-lecture'>
                     <div>
-                        <p>TeacherLecture Room: {room}</p>
+                        <Header as='h3'>TeacherLecture Room: {room}</Header>
                         <p>Topic:</p>
                     </div>
                     <div className='resources'>
-                        <Segment>Resources</Segment>
-                        <Segment>Assignments</Segment>
+                        <Segment>
+                            <Header as='h2'>Resources</Header>
+                        </Segment>
+                        <Segment>
+                            <Header as='h2'>Assignments</Header>
+                        </Segment>
                     </div>
                 </div>
                 <div className='middle-lecture'>
-                    <Segment className='thumb-section'>
-                        <p>Thumb Survey Results</p>
-                        <p>{teacherThumbText}</p>
-                        <div>
-                            <p>thumbsup</p>
-                            <div className='thumbsup-count'>
-                                <Icon name='thumbs outline up'size='large' />
-                                <p>{count}</p>
-                            </div>
-                            <p>thumbsdown</p>
-                            <div className='thumbsup-count'>
-                                <Icon name='thumbs outline down'size='large' />
-                                <p>{count2}</p>
-                            </div>
-                        </div>
-                        <Feed events = {studentResponses}>
-                            {/* {studentResponses.length > 0
-                            ?   studentResponses.map( (response, i) => {
-                                return <List.Item key ={`thumbResponse${i}`}>{response.studentid}: {response.question}</List.Item>
-                            })
-                            :null
-                            } */}
-                        </Feed>
-                    </Segment>
                     <Segment className='free-section'>
-                        <p>Free Responses</p>
-                        <p>{teacherSurveyText}</p>
+                        <Header as='h1'>Free Responses</Header>
+                        <Header as='h3'>{teacherSurveyText}</Header>
                         <Feed events = {studentFreeResponses}>
                             {/* {studentFreeResponses.length > 0
                             ?   studentFreeResponses.map( (response, i) => {
@@ -150,15 +141,56 @@ class TeacherLecture extends Component {
                             } */}
                         </Feed>
                     </Segment>
+                    <Segment className='thumb-section'>
+                        <Header as='h1'>Thumb Survey Results</Header>
+                        <Header as='h3'>{teacherThumbText}</Header>
+                        <div>
+                            
+                                <Header as='h4'>thumbsup</Header>
+                                <div className='thumbsup-count'>
+                                <Transition animation='fly up' duration='500' visible={thumbUpVisible} >
+                                    <Icon name='thumbs outline up'size='large' />
+                                    </Transition>
+                                    <p>{count}</p>
+                                </div>
+                            
+                            
+                                <Header as='h4'>thumbsdown</Header>
+                                <div className='thumbsup-count'>
+                                <Transition animation='fly down' duration='500' visible={thumbDownVisible}>
+                                    <Icon name='thumbs outline down'size='large' />
+                                    </Transition>
+                                    <p>{count2}</p>
+                                </div>
+                            
+                        </div>
+                        <Transition.Group
+                        as={List}
+                        duration={200}
+                        divided
+                        size='huge'>
+                        {/* <Feed events = {studentResponses}> */}
+                            {studentResponses.length > 0
+                            ?   studentResponses.map( (response, i) => {
+                                return <List.Item key ={`thumbResponse${i}`}>{response.studentid}: {response.question}</List.Item>
+                            })
+                            :null
+                            }
+                        {/* </Feed> */}
+                        </Transition.Group>
+                    </Segment>
                 </div>
                 <Segment className='right-lecture'>
                     <Form>
-                        <p>Thumbs Survey</p>
+                        <Transition animation='fly left' duration='500' visible={thumbVisible}>
+                            <Icon name='thumbs outline up'size='large'/>
+                        </Transition>
+                        <Header as='h3'>Thumbs Survey</Header>
                         <TextArea name='teacherthumbinput' value = {teacherthumbinput} onChange={this.handleInput}/>
                         <Button onClick={ this.launchThumbs}>LAUNCH THE THUMBS</Button>
                     </Form>
                     <Form>
-                        <p>Free Response Question</p>
+                        <Header as='h3'>Free Response Question</Header>
                         <TextArea name='teachersurveyinput' value={teachersurveyinput} onChange={this.handleInput}/>
                         <Button onClick={this.freeResponse}>LAUNCH THE QUESTION</Button>
                     </Form>
