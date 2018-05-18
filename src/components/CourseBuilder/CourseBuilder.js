@@ -31,6 +31,13 @@ class CourseBuilder extends Component {
         this.props.getCurricula()
     }
 
+    handleDropdown = (e, data) => {
+      this.setState({
+          templateInput: data.value,
+          selectedDays: [],
+        })
+    }
+
 
     
     render() {
@@ -64,7 +71,7 @@ class CourseBuilder extends Component {
                                     label='Select Curriculum'  
                                     selection 
                                     options={ curriculumTemplate } 
-                                    onChange={(e, data) => this.setState({templateInput: data.value})}/>
+                                    onChange={ this.handleDropdown }/>
                             </Form.Group>
                             <Form.Group>
                                 <Form.Input 
