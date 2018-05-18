@@ -8,3 +8,9 @@ create table course_questions(
     points_possible DECIMAL,
     question_id INTEGER REFERENCES questions(id)
 )
+
+select q.correct_answer, q.question, q.id, o.option_text, a.student_id from course_questions q
+join course_assignments a
+on q.course_assignments_id = a.id
+join options o on o.question_id = q.question_id
+order by a.student_id
