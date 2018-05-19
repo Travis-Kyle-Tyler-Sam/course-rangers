@@ -10,7 +10,6 @@ class AdminAddEdit extends Component {
             email:'',
             id:-1,
             adjust:'Add',
-            snackOpen:false
         }
         this.handleClick = this.handleClick.bind(this);
     }

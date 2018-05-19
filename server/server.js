@@ -12,6 +12,7 @@ const express = require("express"),
   socketctrl = require('./socketctrl'),
   socketIo = require('socket.io'),
   http = require('http'),
+  assignmentctrl = require('./assignmentctrl')
   S3 = require("./s3");
 const {
     SERVER_PORT,
@@ -166,7 +167,9 @@ app.put('/api/registry/editUser', adminctrl.editUser)
 app.delete('/api/registry/deleteUser/:userid', adminctrl.deleteUser)
 
 
+/// assignment endpoints ///
 
+app.get('/api/assignment/:assignmentid', assignmentctrl.getAssignment)
 
 /// student selector endpoints ////
 

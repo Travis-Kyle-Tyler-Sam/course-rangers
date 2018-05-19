@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Navbar from './../Navbar/Navbar';
 import StudentPendingAssign from './studentPendingAssign/StudentPendingAssign';
+import StudentAssignmentDetail from './StudentAssignmentDetail/StudentAssignmentDetail';
 
 class StudentDashboard extends Component {
     constructor(props) {
