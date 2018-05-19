@@ -18,15 +18,16 @@ class StudentLecture extends Component {
             classid:1,
             teacherThumbText:'',
             teacherSurveyText:'',
-            freeresponseinput:''
-            
+            freeresponseinput:'',
+            thumbsVisible:false
         }
         socket.on('open thumbs', teacherinput => {
             this.setState({
                 teacherThumbText:teacherinput,
                 thumbsDisable:false,
                 studentThumbText:'',
-                studentUnderstands:true
+                studentUnderstands:true,
+                thumbsVisible:true
             })
         })
         socket.on('student free response', teacherinput => {
@@ -99,25 +100,37 @@ class StudentLecture extends Component {
     render(){
         const { room, userType, thumbsDisable, studentUnderstands, 
             studentSurveyText, teacherSurveyText, freeresponseinput,
-            studentsurveyinput, teacherThumbText } = this.state;
+            studentsurveyinput, teacherThumbText, thumbsVisible } = this.state;
         return(
             <div>
                 <p>Student Lecture View Room {room}</p>
-                {teacherThumbText
                 
-                ?<Form>
+                <Transition duration='500' animation='fly left' visible={thumbsVisible}>
+                <Form>
+                
+                    
                     <p>{teacherThumbText}</p>
+                    
+                        <Icon name='thumbs outline up' size='large'/>
+                    
                     <Button onClick={this.buttonPress} 
-                        disabled={thumbsDisable}>
+                        disabled={thumbsDisable}
+                        >
                         I get it!
                     </Button>
+                    
+                
+                    
+                        <Icon name='thumbs outline down' size='large'/>
+                    
                     <Button onClick={this.buttonPress2}
-                        disabled={thumbsDisable}>
+                        disabled={thumbsDisable}
+                        >
                         I don't get it.
                     </Button>
+
                 </Form>
-                : null
-                }
+                </Transition>
                 { !studentUnderstands
                 ?<Form>
                     <p>What don't you understand?</p>
