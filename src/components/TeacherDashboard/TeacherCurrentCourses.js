@@ -3,6 +3,8 @@ import { Table } from "semantic-ui-react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import moment from "moment";
+import { connect } from 'react-redux'
+import { updateCourses } from '../../dux/teacherReducer'
 import {
   Card,
   Icon,
@@ -29,19 +31,19 @@ class TeacherCurrentCourses extends Component {
   }
 
   getTeachersCourses() {
-    axios.get("/api/teacher_courses/:teacher_id").then(response => {
-      this.setState({ currentCourses: response.data });
+    axios.get("/api/courses").then(response => {
+      this.props.updateCourses(response.data);
     });
   }
 
   deleteCourse(id) {
-    axios.delete(`/api/delete_course/${id}`).then(response => {
+    axios.delete(`/api/course/${id}`).then(response => {
       return this.getTeachersCourses();
     });
   }
 
   render() {
-    let currentCourseList = this.state.currentCourses.map(course => {
+    let currentCourseList = this.props.courses.map(course => {
       return (
         <Table.Row key={course.id}>
           <Table.Cell>
@@ -57,7 +59,7 @@ class TeacherCurrentCourses extends Component {
           </Table.Cell>
           <Table.Cell>
             <Button basic icon circular>
-              ><Link to="/coursebuilder">
+              <Link to="/coursebuilder">
                 <Icon name="edit" />{" "}
               </Link>
             </Button>
@@ -98,4 +100,10 @@ class TeacherCurrentCourses extends Component {
   }
 }
 
-export default TeacherCurrentCourses;
+function mapStateToProps(state) {
+  return {
+    courses: state.teachers.courses
+  }
+}
+
+export default connect(mapStateToProps, { updateCourses })(TeacherCurrentCourses);

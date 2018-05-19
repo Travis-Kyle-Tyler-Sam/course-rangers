@@ -135,9 +135,9 @@ app.post("/api/add_uploads", (req, res) => {
 
 
 app.get("/auth/logout", (req, res) => {
-    req.logOut();
-    res.redirect(process.env.LOGOUT_SUCCESS);
-  });
+  req.logOut();
+  res.redirect(process.env.LOGOUT_SUCCESS);
+});
 
 server.listen(SERVER_PORT, () => console.log(`Listening on port ${SERVER_PORT}`));
 
@@ -154,6 +154,8 @@ app.get('/api/curriculum/', curriculumctrl.getCurricula)
 //// courses endpoints /////
 
 app.get('/api/teacher_courses/:teacher_id', coursectrl.getCourses)
+
+app.get('/api/courses', coursectrl.getCourses)
 
 app.post('/api/course', coursectrl.addCourse)
 

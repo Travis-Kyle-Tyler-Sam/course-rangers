@@ -62,6 +62,12 @@ removeStudent(studentId){
     })
 }
 
+componentWillUnmount(){
+    this.setState({
+        studentList: []
+    })
+}
+
   render() {
     
     let studentsInTheClass = this.props.selectedStudentList.map( (student, i) =>{

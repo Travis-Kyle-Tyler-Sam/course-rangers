@@ -8,7 +8,6 @@ insert into course_assignments (
     name,
     description,
     type
-
 )
 
 values

@@ -1,0 +1,1 @@
+select * from courses where id in (select class_id from user_courses where user_id = $1);

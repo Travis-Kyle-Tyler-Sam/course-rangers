@@ -5,6 +5,8 @@ import "./CourseBuilderTool.css";
 import BigCalendar from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { connect } from 'react-redux'
+import { updateCourseStudents } from '../../dux/teacherReducer'
+import Snackbar from 'material-ui/Snackbar'
 
 import { Button, Table, Message, Icon } from 'semantic-ui-react'
 
@@ -17,7 +19,10 @@ class CourseBuilderTool extends Component {
     this.state = {
       selectedDaysArray: [],
       popDays: [],
-      errors: []
+      errors: [],
+      loading: false,
+      snackBar: false,
+
     };
   }
 
@@ -112,7 +117,7 @@ class CourseBuilderTool extends Component {
     }
   }
 
-  submitCourse = () => {
+  submitCourse = async () => {
     let errors = [];
 
     // Empty course name
@@ -154,13 +159,35 @@ class CourseBuilderTool extends Component {
       selectedCurriculum.name = this.props.courseName;
       selectedCurriculum.startDate = this.props.startDate;
       selectedCurriculum.enrolledStudents = this.props.enrolledStudents
+      selectedCurriculum.selectedDays = this.state.selectedDaysArray
 
-      axios.post('/api/course', selectedCurriculum)
-      .then( response => console.log(response.data))
+      
+    this.setState({
+      errors: [],
+      loading: true,
+    })
+
+    await axios.post('/api/course', selectedCurriculum)
+
+    this.setState({
+      loading: false,
+      snackBar: true,
+      
+    })
+
+    this.props.updateCourseStudents([])
+
+    this.props.submitFn()
+
     }
-
   }
 
+  handleRequestClose = () => {
+    this.setState({
+      snackBar: false
+    })
+  }
+  
 
 
 
@@ -280,11 +307,19 @@ class CourseBuilderTool extends Component {
         hidden={ this.state.errors.length === 0}
       />
         <Button 
-          primary 
+          primary
+          loading={ this.state.loading } 
           onClick={ this.submitCourse }>
         Submit Course
         </Button>
         <Button>Cancel</Button>      
+
+        <Snackbar
+          open={this.state.snackBar}
+          message="Course Saved!"
+          autoHideDuration={800}
+          onRequestClose={this.handleRequestClose}
+        />
       </div>
     );
   }
@@ -293,8 +328,9 @@ class CourseBuilderTool extends Component {
 function mapStateToProps(state){
   return {
       curricula: state.teachers.curricula,
-      enrolledStudents: state.teachers.studentList
+      enrolledStudents: state.teachers.studentList,
+      courses: state.teachers.courses
   }
 }
 
-export default connect( mapStateToProps )(CourseBuilderTool);
+export default connect( mapStateToProps, { updateCourseStudents } )(CourseBuilderTool);

@@ -22,7 +22,7 @@ class CourseBuilder extends Component {
             startDateInput: '',
             endDateInput: '',
             templateInput: '',
-            courseNameInput: ''
+            courseNameInput: '',
          }
     }
 
@@ -36,6 +36,10 @@ class CourseBuilder extends Component {
           templateInput: data.value,
           selectedDays: [],
         })
+    }
+
+    submitFn = () => {
+        this.props.history.push('/teacherdashboard')
     }
 
 
@@ -86,9 +90,10 @@ class CourseBuilder extends Component {
                     
                     { buttonsShowing &&
                     <CourseBuilderTool 
-                    template={ this.state.templateInput }
-                    startDate = {this.state.startDateInput} 
-                    courseName={ this.state.courseNameInput } />
+                        template={ this.state.templateInput }
+                        startDate = {this.state.startDateInput} 
+                        courseName={ this.state.courseNameInput } 
+                        submitFn={ this.submitFn } />
                 }
                 
                 </div>
