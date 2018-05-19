@@ -65,9 +65,9 @@ class TeacherLecture extends Component {
         })
         
     }
-    componentDidUpdate(prevProps, prevState, snapshot){
-        const { socket, userType } = this.state;
-    }
+    // componentDidUpdate(prevProps, prevState, snapshot){
+    //     const { socket, userType } = this.state;
+    // }
     componentWillUnmount(){
         socket.close()
     }
