@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import openSocket from 'socket.io-client';
 import { Button, Input, Form, Icon, Label, List, Loader, Segment, Breadcrumb, Grid, Transition, TextArea,  Header} from 'semantic-ui-react';
-import './StudentLecture.css'
-import StudentResources from './StudentResources/StudentResources';
+import './LectureGeneral.css'
+import ResourceGeneral from './ResourceGeneral/ResourceGeneral';
 const socket = openSocket('http://localhost:3030');
-
-class StudentLecture extends Component {
+//I wanted to generalize the lecture component, and this is what that is for. I haven't actually changed much from the StudentLecture component yet
+class LectureGeneral extends Component {
     constructor(){
         super()
         this.state = {
@@ -49,7 +49,7 @@ class StudentLecture extends Component {
     }
     buttonPress = (e) => {
         e.preventDefault()
-        const { userType, classid, userid} = this.state;
+        const { userType, classid, userid, } = this.state;
         socket.emit('students send thumbs', ['thumbsup', classid, userid], () => {
             this.setState({
                 thumbsDisable:true
@@ -58,7 +58,7 @@ class StudentLecture extends Component {
     }
     buttonPress2 = (e) => {
         e.preventDefault()
-        const { count2, classid, userid } = this.state;
+        const { classid, userid } = this.state;
         socket.emit('students send thumbs',['thumbsdown', classid, userid], () => {
             this.setState({
                 thumbsDisable:true,
@@ -165,4 +165,4 @@ class StudentLecture extends Component {
     }
 }
 
-export default StudentLecture;
+export default LectureGeneral;

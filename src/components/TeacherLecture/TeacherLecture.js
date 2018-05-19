@@ -50,7 +50,7 @@ class TeacherLecture extends Component {
         })
         socket.on('get free response', studentinput => {
             let freeResponsesArray = [...this.state.studentFreeResponses];
-            freeResponsesArray.push({question:studentinput[0],studentid:studentinput[2]})
+            freeResponsesArray.push({response:studentinput[0],studentid:studentinput[2]})
             this.setState({
                 studentFreeResponses:freeResponsesArray
             })
@@ -65,9 +65,9 @@ class TeacherLecture extends Component {
         })
         
     }
-    componentDidUpdate(prevProps, prevState, snapshot){
-        const { socket, userType } = this.state;
-    }
+    // componentDidUpdate(prevProps, prevState, snapshot){
+    //     const { socket, userType } = this.state;
+    // }
     componentWillUnmount(){
         socket.close()
     }
@@ -130,22 +130,27 @@ class TeacherLecture extends Component {
                 </div>
                 <div className='middle-lecture'>
                     <Segment className='free-section'>
+                    {/* possible icons--comment, comments, talk, help(a question mark, pencil, question) */}
                         <Header as='h1'>Free Responses</Header>
                         <Header as='h3'>{teacherSurveyText}</Header>
-                        <Feed events = {studentFreeResponses}>
-                            {/* {studentFreeResponses.length > 0
-                            ?   studentFreeResponses.map( (response, i) => {
-                                return <List.Item key={`freeResponse${i}`}>{response.studentid}:{response.response}</List.Item>
-                            })
-                            :null
-                            } */}
-                        </Feed>
+                        <Transition.Group
+                        as='list'
+                        duration={200}
+                        divided
+                        size='huge'>
+
+                        {studentFreeResponses.length > 0
+                        ?   studentFreeResponses.map( (response, i) => {
+                            return <List.Item key={`freeResponse${i}`}>{response.studentid}:{response.response}</List.Item>
+                        })
+                        :null
+                        }
+                        </Transition.Group>
                     </Segment>
                     <Segment className='thumb-section'>
                         <Header as='h1'>Thumb Survey Results</Header>
                         <Header as='h3'>{teacherThumbText}</Header>
                         <div>
-                            
                                 <Header as='h4'>thumbsup</Header>
                                 <div className='thumbsup-count'>
                                 <Transition animation='fly up' duration='500' visible={thumbUpVisible} >
@@ -153,8 +158,6 @@ class TeacherLecture extends Component {
                                     </Transition>
                                     <p>{count}</p>
                                 </div>
-                            
-                            
                                 <Header as='h4'>thumbsdown</Header>
                                 <div className='thumbsup-count'>
                                 <Transition animation='fly down' duration='500' visible={thumbDownVisible}>
@@ -162,21 +165,18 @@ class TeacherLecture extends Component {
                                     </Transition>
                                     <p>{count2}</p>
                                 </div>
-                            
                         </div>
                         <Transition.Group
                         as={List}
                         duration={200}
                         divided
                         size='huge'>
-                        {/* <Feed events = {studentResponses}> */}
                             {studentResponses.length > 0
                             ?   studentResponses.map( (response, i) => {
                                 return <List.Item key ={`thumbResponse${i}`}>{response.studentid}: {response.question}</List.Item>
                             })
                             :null
                             }
-                        {/* </Feed> */}
                         </Transition.Group>
                     </Segment>
                 </div>
