@@ -4,12 +4,14 @@ import axios from "axios";
 const initialState = {
   user: {},
   curricula: [],
-  studentList: []
+  studentList: [],
+  courses: []
 };
 
 const UPDATE_USER_INFO = "UPDATE_USER_INFO";
-const GET_CURRICULA = "GET CURRICULA"
-const UPDATE_COURSE_STUDENTS = "UPDATE_COURSE_STUDENTS"
+const GET_CURRICULA = "GET CURRICULA";
+const UPDATE_COURSE_STUDENTS = "UPDATE_COURSE_STUDENTS";
+const UPDATE_COURSES = "UPDATE_COURSES"
 
 
 
@@ -34,10 +36,17 @@ export function getCurricula(){
   }
 }
 
-export function updateCourseStudents (studentArr) {
+export function updateCourseStudents(studentArr) {
   return {
     type: UPDATE_COURSE_STUDENTS,
     payload: studentArr
+  }
+}
+
+export function updateCourses(newCourses) {
+  return {
+    type: UPDATE_COURSES,
+    payload: newCourses
   }
 }
 
@@ -51,6 +60,9 @@ export default function reducer(state = initialState, action) {
 
     case UPDATE_COURSE_STUDENTS:
       return Object.assign( {}, state, { studentList: action.payload} )
+
+    case UPDATE_COURSES: 
+      return Object.assign( {}, state, {courses: action.payload} )
 
     default:
       return state;

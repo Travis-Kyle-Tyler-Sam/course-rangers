@@ -14,16 +14,13 @@ class StudentSelector extends Component {
         }
     }
 
-componentDidMount(){
-    axios.get('/api/getAllStudents').then( response=>{
-        this.setState({students: response.data})
-    })
-}
+
     
     render() { 
         return ( <div>
              <h3>Students</h3>
-                <StudentSearch students={this.state.students}/>
+                <StudentSearch 
+                    studentIds={this.props.studentIds}/>
                 
         </div> )
     }
