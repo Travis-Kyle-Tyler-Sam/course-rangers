@@ -5,6 +5,8 @@ import "./CourseBuilderTool.css";
 import BigCalendar from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { connect } from 'react-redux'
+import { updateCourseStudents } from '../../dux/teacherReducer'
+import Snackbar from 'material-ui/Snackbar'
 
 import { Button, Table, Message, Icon } from 'semantic-ui-react'
 
@@ -14,11 +16,26 @@ moment.locale("en");
 class CourseBuilderTool extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      selectedDaysArray: [],
-      popDays: [],
-      errors: []
-    };
+      this.state = {
+        selectedDaysArray: [],
+        popDays: [],
+        errors: [],
+        loading: false,
+        snackBar: false,
+  
+      };
+  }
+
+  // componentWillReceiveProps(newProps) {
+  //   if(this.props.selectedDays.length !== newProps.selectedDays && newProps.length > 0 ) {
+  //     newProps.selectedDays.forEach( selDay => this.handleDaySelected(selDay) )
+  //   }
+  // }
+
+  componentDidMount() {
+    if(this.props.selectedDays.length > 0 && this.props.selectedDays != this.state.selectedDaysArray ) {
+      this.props.selectedDays.forEach( sD => this.handleDaySelected(sD))
+    }
   }
 
 
@@ -112,7 +129,7 @@ class CourseBuilderTool extends Component {
     }
   }
 
-  submitCourse = () => {
+  submitCourse = async () => {
     let errors = [];
 
     // Empty course name
@@ -153,17 +170,38 @@ class CourseBuilderTool extends Component {
 
       selectedCurriculum.name = this.props.courseName;
       selectedCurriculum.startDate = this.props.startDate;
-      selectedCurriculum.enrolledStudents = this.props.enrolledStudents
+      selectedCurriculum.enrolledStudents = this.props.enrolledStudents;
+      selectedCurriculum.selectedDays = this.state.selectedDaysArray;
 
-      axios.post('/api/course', selectedCurriculum)
-      .then( response => console.log(response.data))
+      
+    this.setState({
+      errors: [],
+      loading: true,
+    })
+
+    if( this.props.routeParams ) {
+      await axios.put('/api/course/'+this.props.routeParams, selectedCurriculum)
+    } else {
+      await axios.post('/api/course', selectedCurriculum)
     }
 
+    this.setState({
+      loading: false,
+      snackBar: true,
+    })
+
+    this.props.updateCourseStudents([])
+
+    this.props.submitFn()
+
+    }
   }
 
-
-
-
+  handleRequestClose = () => {
+    this.setState({
+      snackBar: false
+    })
+  }
 
   render() {
 
@@ -280,11 +318,19 @@ class CourseBuilderTool extends Component {
         hidden={ this.state.errors.length === 0}
       />
         <Button 
-          primary 
+          primary
+          loading={ this.state.loading } 
           onClick={ this.submitCourse }>
         Submit Course
         </Button>
         <Button>Cancel</Button>      
+
+        <Snackbar
+          open={this.state.snackBar}
+          message="Course Saved!"
+          autoHideDuration={800}
+          onRequestClose={this.handleRequestClose}
+        />
       </div>
     );
   }
@@ -293,8 +339,9 @@ class CourseBuilderTool extends Component {
 function mapStateToProps(state){
   return {
       curricula: state.teachers.curricula,
-      enrolledStudents: state.teachers.studentList
+      enrolledStudents: state.teachers.studentList,
+      courses: state.teachers.courses
   }
 }
 
-export default connect( mapStateToProps )(CourseBuilderTool);
+export default connect( mapStateToProps, { updateCourseStudents } )(CourseBuilderTool);

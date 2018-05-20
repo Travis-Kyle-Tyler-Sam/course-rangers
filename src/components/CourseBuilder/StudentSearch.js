@@ -3,26 +3,34 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { updateCourseStudents } from '../../dux/teacherReducer'
 import { Search, Grid, Header, List, Form, Input, Button, Dropdown, Icon } from 'semantic-ui-react'
+import axios from 'axios'
 
 
 
 class StudentSearch extends Component {
     constructor(props) {
         super(props);
+
         this.state = { 
             studentList: [],
             searchString: ''
-
-
          }
     }
 
-componentWillReceiveProps(nextProps) {
-    if (this.state.studentList.length === 0 && nextProps.students.length > 0) {
-     this.setState({ studentList: nextProps.students});
-      
-    }
-  }
+componentDidMount(){
+    axios.get('/api/getAllStudents')
+    .then( response=>{
+
+        let students = response.data
+
+        if( this.props.studentIds !== null) {
+            students = students.filter( student => !this.props.studentIds.includes( student.id ) )
+        }
+        this.setState({studentList: students})
+    })
+}
+
+
 selectStudent(){
     let selectedList = [...this.props.selectedStudentList]
     let studentList = [...this.state.studentList]
@@ -61,6 +69,7 @@ removeStudent(studentId){
         studentList: studentList
     })
 }
+
 
   render() {
     

@@ -29,7 +29,8 @@ class App extends Component {
             <Route path='/teacherdashboard' component={TeacherDashboard} />
             <Route path='/admindashboard' component={AdminDash} />
             <Route path='/curriculumbuilder' component={CurriculumBuilder} />
-            <Route path='/coursebuilder' component={CourseBuilder}/>
+            <Route path='/coursebuilder/:courseid' component={CourseBuilder}/>
+            <Route path='/coursebuilder/' component={CourseBuilder}/>
             <Route path='/logoutscreen' component={LogoutScreen}/>
             <Route path='/teacher/lecture' component={TeacherLecture}/>
             <Route path='/student/lecture' component={StudentLecture}/>
