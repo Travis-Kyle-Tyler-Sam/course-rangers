@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import {Header, Button, Modal, Icon} from 'semantic-ui-react';
+import {Header, Button, Modal, Icon, Table} from 'semantic-ui-react';
 import axios from 'axios';
 import './StudentAssignmentDetail.css';
+import { List } from 'material-ui';
 
 class StudentAssignmentDetail extends Component{
     constructor(){
@@ -35,9 +36,16 @@ class StudentAssignmentDetail extends Component{
         // })
     }
     render(){
-        const { courseName, assignmentName, instructorName, dueDate, instructions } = this.state;
+        const { courseName, assignmentName, instructorName, dueDate, instructions } = this.props;
         return(
-        <Modal trigger={<Button>Assignment</Button>} closeIcon size='mini'>
+        <Modal trigger={
+            <Table.Row>
+            <Table.Cell>{assignmentName}</Table.Cell>
+            <Table.Cell>Due: {dueDate}</Table.Cell>
+            </Table.Row>
+            } 
+            closeIcon 
+            size='mini'>
             <Modal.Header>{courseName}: {assignmentName}</Modal.Header>
             <Modal.Content className='content' >
                 <div className='content'>
