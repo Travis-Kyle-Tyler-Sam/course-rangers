@@ -9,10 +9,7 @@ export default class PendingAssignCard extends Component {
                 <h2>Pending Assignments</h2>
                 <hr/>
                 <StudentAssignmentDetail/>
-                <div className='card2'>
-                    <h2>My Courses</h2>
-                    <hr/>
-                </div>
+                
             </div>
         )
     }

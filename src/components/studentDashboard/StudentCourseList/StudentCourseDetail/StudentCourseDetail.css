@@ -1,0 +1,4 @@
+.student-detail{
+    display: flex;
+    flex-direction: row;
+}
