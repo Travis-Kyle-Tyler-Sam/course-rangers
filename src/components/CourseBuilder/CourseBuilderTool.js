@@ -16,14 +16,26 @@ moment.locale("en");
 class CourseBuilderTool extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      selectedDaysArray: [],
-      popDays: [],
-      errors: [],
-      loading: false,
-      snackBar: false,
+      this.state = {
+        selectedDaysArray: [],
+        popDays: [],
+        errors: [],
+        loading: false,
+        snackBar: false,
+  
+      };
+  }
 
-    };
+  // componentWillReceiveProps(newProps) {
+  //   if(this.props.selectedDays.length !== newProps.selectedDays && newProps.length > 0 ) {
+  //     newProps.selectedDays.forEach( selDay => this.handleDaySelected(selDay) )
+  //   }
+  // }
+
+  componentDidMount() {
+    if(this.props.selectedDays.length > 0 && this.props.selectedDays != this.state.selectedDaysArray ) {
+      this.props.selectedDays.forEach( sD => this.handleDaySelected(sD))
+    }
   }
 
 
@@ -158,8 +170,8 @@ class CourseBuilderTool extends Component {
 
       selectedCurriculum.name = this.props.courseName;
       selectedCurriculum.startDate = this.props.startDate;
-      selectedCurriculum.enrolledStudents = this.props.enrolledStudents
-      selectedCurriculum.selectedDays = this.state.selectedDaysArray
+      selectedCurriculum.enrolledStudents = this.props.enrolledStudents;
+      selectedCurriculum.selectedDays = this.state.selectedDaysArray;
 
       
     this.setState({
@@ -167,12 +179,15 @@ class CourseBuilderTool extends Component {
       loading: true,
     })
 
-    await axios.post('/api/course', selectedCurriculum)
+    if( this.props.routeParams ) {
+      await axios.put('/api/course/'+this.props.routeParams, selectedCurriculum)
+    } else {
+      await axios.post('/api/course', selectedCurriculum)
+    }
 
     this.setState({
       loading: false,
       snackBar: true,
-      
     })
 
     this.props.updateCourseStudents([])
@@ -187,10 +202,6 @@ class CourseBuilderTool extends Component {
       snackBar: false
     })
   }
-  
-
-
-
 
   render() {
 

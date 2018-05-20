@@ -11,10 +11,14 @@ module.exports = {
         let startDate = days[0].date
         
         let db = await req.app.get('db')
-        
-        
-        let course = await db.courses_DB.create_course( [name, id, startDate, completionDate, curId, selectedDays] )
 
+        let course 
+        
+        if( req.params ) {
+            course = await db.courses_DB.update_course( [req.params.id, name, id, startDate, completionDate, curId, selectedDays] )
+        } else {
+            course = await db.courses_DB.create_course( [name, id, startDate, completionDate, curId, selectedDays] )
+        }
         
         course = course[0]
         
@@ -73,6 +77,11 @@ module.exports = {
         return res.sendStatus(200)
     },
 
+    prepDelete: async (req, res, next) => {
+        await req.app.get('db').courses_DB.delete_course( [req.params.id] )
+        next();
+    },
+
     deleteCourse: (req, res)=>{
         req.app
           .get('db')
@@ -105,10 +114,11 @@ module.exports = {
         let courseResources = db.course_resources_DB.get_course_resources()
         let courseQuestions = db.course_questions_DB.get_course_questions();
         let options = db.options_DB.get_question_options();
+        let courseStudents = db.courses_DB.get_course_students()
 
-        let data = await Promise.all( [courses, courseDays, courseQuizzes, courseResources, courseAssignments, courseQuestions, options] )
+        let data = await Promise.all( [courses, courseDays, courseQuizzes, courseResources, courseAssignments, courseQuestions, options, courseStudents] )
 
-        let [ cou, couDays, couQui, couReso, couAssign, couQues, couOpt ] = data
+        let [ cou, couDays, couQui, couReso, couAssign, couQues, couOpt, couStudents ] = data
 
         cou.forEach( (course, i, arr) => {
             arr[i].days = couDays.filter( day => day.course_id === course.id )
@@ -125,6 +135,8 @@ module.exports = {
                 })
                
             })
+
+            arr[i].students = couStudents.filter( student => student.class_id === course.id)
         })
 
         return res.status(200).send(cou)

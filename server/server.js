@@ -159,6 +159,8 @@ app.get('/api/courses', coursectrl.getCourses)
 
 app.post('/api/course', coursectrl.addCourse)
 
+app.put('/api/course/:id', coursectrl.prepDelete, coursectrl.addCourse)
+
 app.delete('/api/course/:id', coursectrl.deleteCourse)
 
 //// admin endpoints ////

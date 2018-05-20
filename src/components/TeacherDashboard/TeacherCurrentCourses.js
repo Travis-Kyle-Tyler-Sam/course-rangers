@@ -59,7 +59,7 @@ class TeacherCurrentCourses extends Component {
           </Table.Cell>
           <Table.Cell>
             <Button basic icon circular>
-              <Link to="/coursebuilder">
+              <Link to={`/coursebuilder/${course.id}`}>
                 <Icon name="edit" />{" "}
               </Link>
             </Button>
