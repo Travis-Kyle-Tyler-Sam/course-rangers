@@ -19,7 +19,7 @@ function PendingAssignmentTable (props){
             <Table.Header>
                 <Table.Row>
                     <Table.HeaderCell>{course}</Table.HeaderCell>
-                    <Table.HeaderCell></Table.HeaderCell>
+                    <Table.HeaderCell>Due Date</Table.HeaderCell>
                 </Table.Row>
             </Table.Header>
             <Table.Body>
