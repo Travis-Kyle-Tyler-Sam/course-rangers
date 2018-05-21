@@ -19,8 +19,6 @@ class App extends Component {
     return (
       <div className="App">
 
-
-
        <HashRouter>
           <Switch>
             <Route exact path='/' component={Home} />
@@ -28,6 +26,7 @@ class App extends Component {
             <Route path='/studentdashboard' component={StudentDashboard} />
             <Route path='/teacherdashboard' component={TeacherDashboard} />
             <Route path='/admindashboard' component={AdminDash} />
+            <Route path='/curriculumbuilder/:curriculumid' component={CurriculumBuilder} />
             <Route path='/curriculumbuilder' component={CurriculumBuilder} />
             <Route path='/coursebuilder/:courseid' component={CourseBuilder}/>
             <Route path='/coursebuilder/' component={CourseBuilder}/>

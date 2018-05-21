@@ -148,7 +148,9 @@ server.listen(SERVER_PORT, () => console.log(`Listening on port ${SERVER_PORT}`)
 
 app.delete('/api/curriculum/:id', curriculumctrl.deleteCurriculum)
 
-app.post('/api/curriculum/new', curriculumctrl.newCurriculum)
+app.put('/api/curriculum/:id', curriculumctrl.prepDelete, curriculumctrl.newCurriculum)
+
+app.post('/api/curriculum/', curriculumctrl.newCurriculum)
 
 app.get('/api/curriculum/', curriculumctrl.getCurricula)
 
