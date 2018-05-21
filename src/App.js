@@ -14,6 +14,7 @@ import TeacherLecture from './components/TeacherLecture/TeacherLecture';
 import StudentLecture from './components/StudentLecture/StudentLecture';
 import StudentCourseDetail from './components/studentDashboard/StudentCourseList/StudentCourseDetail/StudentCourseDetail';
 import TeacherCourseDaySelector from './components/TeacherCourseDaySelector/TeacherCourseDaySelector';
+import TeacherAssignmentsView from './components/TeacherAssignmentsView/TeacherAssignmentsView';
 class App extends Component {
   render() {
     return (
@@ -31,10 +32,12 @@ class App extends Component {
             <Route path='/coursebuilder/:courseid' component={CourseBuilder}/>
             <Route path='/coursebuilder/' component={CourseBuilder}/>
             <Route path='/logoutscreen' component={LogoutScreen}/>
-            <Route path='/teacher/lecture' component={TeacherLecture}/>
+            <Route path='/teacher/lecture/:dayid' component={TeacherLecture}/>
             <Route path='/student/lecture' component={StudentLecture}/>
             <Route path='/student/course' component={StudentCourseDetail}/>
             <Route path='/teacher/dayselector/:courseid' component={TeacherCourseDaySelector}/>
+            <Route path='/teacher/courseassignments/:assignmentid' component={TeacherAssignmentsView}/>
+            
           </Switch>
         </HashRouter>
        </div>

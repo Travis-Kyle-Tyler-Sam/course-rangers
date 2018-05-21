@@ -175,6 +175,15 @@ app.delete('/api/registry/deleteUser/:userid', adminctrl.deleteUser)
 
 
 /// assignment endpoints ///
+app.get('/api/courseassignments/:assignmentid', (req, res)=>{
+  app
+    .get('db')
+    .course_assignments_DB.getassignments(req.params.assignmentid)
+    .then(response =>{
+      res.status(200).send(response)
+    })
+    .catch(err=>{console.log(err)})
+})
 
 app.get('/api/assignment/:assignmentid', assignmentctrl.getAssignment)
 

@@ -38,7 +38,7 @@ class TeacherCourseResources extends Component {
       return (
         <Table.Row key={resource.id + resource.description}>
           <Table.Cell>
-            <a href={resource.url}> {resource.title}</a>
+            <a href={resource.url} target="_blank"> {resource.title}</a>
           </Table.Cell>
           <Table.Cell>{this.findCourseDay(resource.course_day_id)}</Table.Cell>
         </Table.Row>

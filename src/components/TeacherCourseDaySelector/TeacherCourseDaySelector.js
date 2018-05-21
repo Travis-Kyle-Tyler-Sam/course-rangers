@@ -42,7 +42,7 @@ class TeacherCourseDaySelector extends Component {
     } = this.state.course;
     let daysToDisplay = days.map(day => {
       return (
-        <Link to="/teacher/lecture" key={day.id + day.topic}>
+        <Link to={`/teacher/lecture/${day.id}`} key={day.id + day.topic}>
           <div className="item1">
             <h3>{moment(day.date).format("MM/DD")}</h3>
             <h5>{day.topic}</h5>

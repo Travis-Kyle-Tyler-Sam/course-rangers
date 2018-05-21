@@ -3,6 +3,7 @@ import { Header, Segment, List, Table } from "semantic-ui-react";
 import _ from "lodash";
 import { connect } from "react-redux";
 import moment from "moment";
+import {Link} from 'react-router-dom';
 class TeacherCourseAssignments extends Component {
   constructor(props) {
     super(props);
@@ -11,15 +12,14 @@ class TeacherCourseAssignments extends Component {
     )[0];
     this.state = {
       currentCourse: filteredCourse,
-      assignments: []
+
     };
   }
 
   render() {
     const tempAssignments = [];
-    let filteredAssignments = tempAssignments.filter(
-      assignment => assignment.description === tempAssignments.indexOf()
-    )[0];
+    const tempQuizzes = [];
+ 
 
     if (!this.props.days) {
       return "";
@@ -28,19 +28,38 @@ class TeacherCourseAssignments extends Component {
       let assignment = this.props.days.map(day => {
         return day.assignments;
       });
+      
       tempAssignments.push(assignment);
+    
+    }
+    if (this.props.days) {
+      let quiz = this.props.days.map(day => {
+        return day.quizzes;
+      });
+      
+      tempQuizzes.push(quiz);
+    
     }
     const assignmentsToMap = _.flattenDeep(tempAssignments);
-
+    const quizzesToMap = _.flattenDeep(tempQuizzes);
+    var uniqueQuizzes =_.uniqBy(quizzesToMap, "description");
     var uniqueAssignments = _.uniqBy(assignmentsToMap, "description");
 
-    const list = uniqueAssignments.map(assignment => {
+    const assignmentsList = uniqueAssignments.map(assignment => {
       return (
         <Table.Row key={assignment.id + assignment.description}>
-          <Table.Cell> {assignment.name}</Table.Cell>
+          <Table.Cell> <Link to={`/teacher/courseassignments/${assignment.assignment_id}`}>{assignment.name}</Link> </Table.Cell>
           <Table.Cell>{moment(assignment.due_date).format("MM/DD")}</Table.Cell>
         </Table.Row>
       );
+    })
+      const quizzesList = uniqueQuizzes.map(quiz => {
+        return (
+          <Table.Row key={quiz.id + quiz.description}>
+            <Table.Cell> <Link to={`/teacher/courseassignments/${quiz.assignment_id}`}>{quiz.name}</Link> </Table.Cell>
+            <Table.Cell>{moment(quiz.due_date).format("MM/DD")}</Table.Cell>
+          </Table.Row>
+        )
     });
     return (
       <div>
@@ -48,11 +67,20 @@ class TeacherCourseAssignments extends Component {
         <Table>
           <Table.Header>
             <Table.Row>
-              <Table.HeaderCell>Name</Table.HeaderCell>
+              <Table.HeaderCell>Assignment Name</Table.HeaderCell>
               <Table.HeaderCell>Due Date</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
-          <Table.Body>{list}</Table.Body>
+          <Table.Body>{assignmentsList}</Table.Body>
+        </Table>
+        <Table>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell>Quiz Name</Table.HeaderCell>
+              <Table.HeaderCell>Due Date</Table.HeaderCell>
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>{quizzesList}</Table.Body>
         </Table>
       </div>
     );
