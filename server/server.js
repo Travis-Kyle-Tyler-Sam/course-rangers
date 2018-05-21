@@ -8,7 +8,8 @@ const express = require("express"),
   Auth0Strategy = require("passport-auth0"),
   curriculumctrl = require("./curriculumctrl")
   adminctrl = require('./adminctrl'),
-  coursectrl = require('./coursectrl')
+  coursectrl = require('./coursectrl'),
+  studentctrl = require('./studentctrl'),
   socketctrl = require('./socketctrl'),
   socketIo = require('socket.io'),
   http = require('http'),
@@ -175,6 +176,11 @@ app.delete('/api/registry/deleteUser/:userid', adminctrl.deleteUser)
 
 app.get('/api/assignment/:assignmentid', assignmentctrl.getAssignment)
 
+
+/// student dash etc. endpoints ///
+
+app.get('/api/student/getcourse/:studentid', studentctrl.getCourses, studentctrl.getInstructors)
+
 /// student selector endpoints ////
 
 app.get('/api/getAllStudents', (req, res) =>{
@@ -187,9 +193,6 @@ app.get('/api/getAllStudents', (req, res) =>{
       .catch(err =>{console.log(err)})
 })
 
-
-let thumbsup = [];
-let thumbsdown = [];
 
 io.on('connection', socket => {
   console.log('client logged on')
