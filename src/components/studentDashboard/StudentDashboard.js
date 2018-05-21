@@ -33,7 +33,10 @@ class StudentDashboard extends Component {
       <div>
         <Navbar />
         <div className='columns'>
-          <StudentPendingAssign/>
+          <StudentPendingAssign
+          
+          
+          />
           <StudentCourseList 
           id = {studentID}
           studentsCourses = {studentsCourses}
