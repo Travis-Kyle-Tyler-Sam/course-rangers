@@ -18,6 +18,8 @@ class TeacherCourseAssignments extends Component {
 
     render() { 
         const tempAssignments = []    
+        let filteredAssignments = tempAssignments.filter( assignment => assignment.description === tempAssignments.indexOf())[0]
+     
         if(!this.props.days){
             return ''
         }
@@ -28,9 +30,11 @@ class TeacherCourseAssignments extends Component {
             tempAssignments.push(assignment)
         }
         const assignmentsToMap = _.flattenDeep(tempAssignments)
-        console.log(assignmentsToMap)
-        /////////need to find a way to only map over assignments that aren't duplicates
-        const list = assignmentsToMap.map( assignment => {
+        console.log('assignments to map', assignmentsToMap)
+        var uniqueAssignments = _.uniqBy(assignmentsToMap, "description"); 
+        console.log('uniqueAssignments', uniqueAssignments)
+        /////////need to find a way to only map over assignments that aren't duplicates/// don't know how the fuck to do this because i'm a goddammn idiot
+        const list = uniqueAssignments.map( assignment => {
         return(
         <Table.Row key={assignment.id + assignment.description}>
            <Table.Cell> {assignment.name}</Table.Cell>
