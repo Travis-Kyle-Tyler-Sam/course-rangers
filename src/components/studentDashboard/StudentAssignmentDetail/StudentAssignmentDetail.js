@@ -36,12 +36,16 @@ class StudentAssignmentDetail extends Component{
         // })
     }
     render(){
-        const { courseName, assignmentName, instructorName, dueDate, instructions } = this.props;
+        const { courseName, assignmentName, instructorName, dueDate, instructions, status } = this.props;
         return(
         <Modal trigger={
             <Table.Row>
-            <Table.Cell>{assignmentName}</Table.Cell>
-            <Table.Cell>Due: {dueDate}</Table.Cell>
+                <Table.Cell>{assignmentName}</Table.Cell>
+                <Table.Cell>{dueDate}</Table.Cell>
+                {status
+                ?<Table.Cell>{status}</Table.Cell>
+            :null
+            }
             </Table.Row>
             } 
             closeIcon 
