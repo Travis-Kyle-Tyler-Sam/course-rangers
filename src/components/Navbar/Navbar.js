@@ -18,11 +18,10 @@ class Navbar extends Component {
   
         return ( <div id="navbar">
 
-<Button className="secondary" id="logout"> <a href={process.env.REACT_APP_LOGOUT}>
+            <Button className="secondary" id="logout"> <a href={process.env.REACT_APP_LOGOUT}>
                     Logout
-                  </a></Button>
-
-
+                </a>
+            </Button>
         </div> )
     }
 }

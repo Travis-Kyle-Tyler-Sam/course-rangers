@@ -8,10 +8,12 @@ const express = require("express"),
   Auth0Strategy = require("passport-auth0"),
   curriculumctrl = require("./curriculumctrl")
   adminctrl = require('./adminctrl'),
-  coursectrl = require('./coursectrl')
+  coursectrl = require('./coursectrl'),
+  studentctrl = require('./studentctrl'),
   socketctrl = require('./socketctrl'),
   socketIo = require('socket.io'),
   http = require('http'),
+  assignmentctrl = require('./assignmentctrl')
   S3 = require("./s3");
 const {
     SERVER_PORT,
@@ -31,9 +33,8 @@ const {
 
 const app = express();
 const server = http.createServer(app)
-const io = socketIo(server);
+const io = socketIo(server, {wsEngine:'ws'});
 app.use(bodyParser.json({ limit: "50MB" }));
-// let nsp = io.of('/setup')
 S3(app);
 
 
@@ -135,9 +136,9 @@ app.post("/api/add_uploads", (req, res) => {
 
 
 app.get("/auth/logout", (req, res) => {
-    req.logOut();
-    res.redirect(process.env.LOGOUT_SUCCESS);
-  });
+  req.logOut();
+  res.redirect(process.env.LOGOUT_SUCCESS);
+});
 
 server.listen(SERVER_PORT, () => console.log(`Listening on port ${SERVER_PORT}`));
 
@@ -155,7 +156,11 @@ app.get('/api/curriculum/', curriculumctrl.getCurricula)
 
 app.get('/api/teacher_courses/:teacher_id', coursectrl.getCourses)
 
+app.get('/api/courses', coursectrl.getCourses)
+
 app.post('/api/course', coursectrl.addCourse)
+
+app.put('/api/course/:id', coursectrl.prepDelete, coursectrl.addCourse)
 
 app.delete('/api/course/:id', coursectrl.deleteCourse)
 
@@ -167,7 +172,14 @@ app.put('/api/registry/editUser', adminctrl.editUser)
 app.delete('/api/registry/deleteUser/:userid', adminctrl.deleteUser)
 
 
+/// assignment endpoints ///
 
+app.get('/api/assignment/:assignmentid', assignmentctrl.getAssignment)
+
+
+/// student dash etc. endpoints ///
+
+app.get('/api/student/getcourse/:studentid', studentctrl.getCourses, studentctrl.getInstructors)
 
 /// student selector endpoints ////
 
@@ -180,21 +192,10 @@ app.get('/api/getAllStudents', (req, res) =>{
       })
       .catch(err =>{console.log(err)})
 })
-//// classroom endpoints and sockets ////
-// app.get('/api/startclass/:classid', (req, res, next) => {
-//    req.session.passport.user.classid = req.params.classid
-//    nsp = io.of(`/${req.session.passport.user.classid}`)
-//    res.status(200).send('hello')
-//   }
-// )
 
-let thumbsup = [];
-let thumbsdown = [];
 
 io.on('connection', socket => {
   console.log('client logged on')
-  // client.join(`${req.session.passport.user.user_type}`)
-  socket.emit('ping', 'ping')
   
   socket.on('join', (roomName, cb) => {
     socket.join(roomName, () => {
@@ -204,31 +205,37 @@ io.on('connection', socket => {
     })
   })
 
+  
+  socket.on('thumbs launched', (teacherinput, cb) => {
+    socket.to(`Student${teacherinput[1]}`).emit('open thumbs', teacherinput[0])
+    cb()
+  })
+  
   socket.on('students send thumbs', (thumbqualityArray, cb) => {
     socket.to(`Instructor${thumbqualityArray[1]}`).emit('thumbcount',thumbqualityArray[0])
     cb()
   })
 
-  socket.on('thumbs launched', (teacherinput, cb) => {
-    socket.to(`Student${teacherinput[1]}`).emit('open thumbs', teacherinput[0])
-    cb()
-  })
-
-  socket.on('student response', (studentinput, cb) => {
+  socket.on('student thumb response', (studentinput, cb) => {
     socket.to(`Instructor${studentinput[1]}`).emit('get student response', studentinput)
     cb()
   })
 
-
-  socket.on('hitbutton', (name, fn) => {
-    fn('button hit')
-  })
-  socket.on('hitbutton2', (name, fn) => {
-    fn('BUTTON HIT')
-  })
-  socket.on('disconnect', () => {
-    console.log('user disconnected')
+  socket.on('free response', (teacherinput, cb) => {
+    socket.to(`Student${teacherinput[1]}`).emit('student free response', teacherinput[0])
+    cb()
   })
 
-  socket.on('error', socketctrl.handleError)
+  socket.on('student free response', (studentinput, cb) => {
+    socket.to(`Instructor${studentinput[1]}`).emit('get free response', studentinput)
+    cb()
+  })
+  
+  socket.on('disconnect', (reason) => {
+    console.log('user disconnected because ', reason)
+  })
+
+  socket.on('error', (err) => {
+    console.log(err)
+  })
 });

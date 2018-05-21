@@ -10,25 +10,56 @@ import './CourseBuilder.css'
 import { Input, Form, Dropdown, Button } from 'semantic-ui-react'
 
 import { connect } from 'react-redux'
-import { getCurricula } from '../../dux/teacherReducer'
+import { getCurricula, updateCourseStudents } from '../../dux/teacherReducer'
 
 class CourseBuilder extends Component {
+
     constructor(props) {
         super(props);
-        this.state = {
-            days: [],
-            selectedDays: [], 
-            courseTemplates: [],
-            startDateInput: '',
-            endDateInput: '',
-            templateInput: '',
-            courseNameInput: ''
-         }
+
+        let routeParams = this.props.match ? this.props.match.params.courseid : null
+
+        if( routeParams ){
+
+            let filteredCourse = this.props.courses.filter( course => course.id === +routeParams)[0]
+
+            this.props.updateCourseStudents( filteredCourse.students )
+
+            let { days, selected_days: selectedDays, curriculum_id: curriculumId, start_date: startDate, course_name: courseName } = filteredCourse
+            
+            this.state = {
+                days: days,
+                selectedDays: selectedDays, 
+                courseTemplates: this.props.curricula,
+                startDateInput: moment(startDate).format('YYYY-MM-DD'),
+                templateInput: curriculumId,
+                courseNameInput: courseName,
+            }
+
+        } else {
+
+            this.state = {
+                days: [],
+                selectedDays: [], 
+                courseTemplates: [],
+                startDateInput: '',
+                endDateInput: '',
+                templateInput: '',
+                courseNameInput: '',
+            }
+        }
     }
 
-    componentDidMount(){
-        // Change to get all curricula all over the place
-        this.props.getCurricula()
+
+    handleDropdown = (e, data) => {
+      this.setState({
+          templateInput: data.value,
+          selectedDays: [],
+        })
+    }
+
+    submitFn = () => {
+        this.props.history.push('/teacherdashboard')
     }
 
 
@@ -45,6 +76,24 @@ class CourseBuilder extends Component {
 
         let curriculumOptions = this.props.curr
 
+        let routeParams = this.props.match 
+            ? this.props.match.params.courseid
+            : null
+
+        let courseStudentIds = null;
+
+        let editingCourse = null;
+
+        if( this.props.match ) {
+            if( this.props.match.params.courseid ) {
+                editingCourse = this.props.courses
+                .filter( course => course.id === +routeParams)[0]
+                
+                courseStudentIds = editingCourse.students
+                .map( student => student.id )
+            }
+        }
+
         return ( 
             <div className='cb-home-outer-container'>
                 <h1> Course Builder</h1>
@@ -54,24 +103,28 @@ class CourseBuilder extends Component {
                 <div style={{marginRight: 20}}>
                     <div className='ui segment cb-home-input-group'>
                         <Form className='cb-home-input' >
+                            { routeParams && <h3>Editing course #{ `${routeParams}: ${editingCourse.course_name}` }</h3> }
                             <Form.Group widths='equal'>
                                 <Form.Input 
                                     label='Course Name' 
                                     placeholder='Name of Course'
-                                    onChange={ (e) => this.setState({courseNameInput: e.target.value})} 
+                                    onChange={ (e) => this.setState({courseNameInput: e.target.value})}
+                                    value={ this.state.courseNameInput } 
                                     />
                                 <Form.Dropdown 
                                     label='Select Curriculum'  
                                     selection 
                                     options={ curriculumTemplate } 
-                                    onChange={(e, data) => this.setState({templateInput: data.value})}/>
+                                    onChange={ this.handleDropdown }
+                                    value={ this.state.templateInput }/>
                             </Form.Group>
                             <Form.Group>
                                 <Form.Input 
                                     type='date' 
                                     label='Start Date' 
                                     placeholder='Start Date' 
-                                    onChange={(e) => this.setState({startDateInput: e.target.value})} />
+                                    onChange={(e) => this.setState({startDateInput: e.target.value})} 
+                                    value={ this.state.startDateInput } />
                             </Form.Group>
                         </Form>
                     </div>
@@ -79,15 +132,19 @@ class CourseBuilder extends Component {
                     
                     { buttonsShowing &&
                     <CourseBuilderTool 
-                    template={ this.state.templateInput }
-                    startDate = {this.state.startDateInput} 
-                    courseName={ this.state.courseNameInput } />
+                        template={ this.state.templateInput }
+                        startDate = {this.state.startDateInput} 
+                        courseName={ this.state.courseNameInput } 
+                        submitFn={ this.submitFn } 
+                        routeParams={ routeParams } 
+                        selectedDays={ this.state.selectedDays }/>
                 }
                 
                 </div>
                         
                 <div className='ui segment' style={{margin: 0}}>
-                    <StudentSelector />
+                    <StudentSelector 
+                        studentIds={ courseStudentIds } />
                 </div>
             </div>
         </div>  
@@ -98,7 +155,8 @@ class CourseBuilder extends Component {
 function mapStateToProps(state){
     return {
         curricula: state.teachers.curricula,
+        courses: state.teachers.courses
     }
 }
 
-export default connect(mapStateToProps, { getCurricula })(CourseBuilder);
+export default connect(mapStateToProps, { updateCourseStudents })(CourseBuilder);

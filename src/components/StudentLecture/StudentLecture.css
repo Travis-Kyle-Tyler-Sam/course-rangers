@@ -1,0 +1,12 @@
+.student-lecture{
+    display: flex;
+}
+
+.resources{
+    display: flex;
+    flex-direction: column;
+}
+.resources>section{
+    display: flex;
+    flex-direction: column;
+}

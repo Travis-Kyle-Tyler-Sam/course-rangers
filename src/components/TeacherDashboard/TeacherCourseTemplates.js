@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import axios from 'axios';
 import { Card, Icon, Image, Input, Button, TextArea, Form, Header, Checkbox, Message } from 'semantic-ui-react'
 
+import './TeacherCourseTemplates.css'
+
 class TeacherCourseTemplates extends Component {
     constructor(props) {
         super(props);
@@ -29,14 +31,14 @@ deleteCourseTemplate(id){
 
     render() { 
        let currentTemplates = this.state.courseTemplates.map(template=>{
-        return <p key={template.id}><span>{template.curriculum_name}</span>
+        return <div className='ct-list' key={template.id}><span>{template.curriculum_name}</span>
         <span><Link to='/curriculumbuilder'>
             <Button basic icon circular><Icon name="edit"/></Button>
              </Link></span>
         <span><Button basic icon circular onClick={()=>{
             this.deleteCourseTemplate(template.id)
         }}><Icon name='trash'/></Button></span>
-        </p>
+        </div>
         })
         return ( <div>
             

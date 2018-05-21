@@ -1,95 +1,73 @@
 import React, { Component } from 'react';
 import openSocket from 'socket.io-client';
 import axios from 'axios';
-const socket = openSocket(`/`)
+import { Button, Input, Form, Icon, Label, List, Loader, Segment, Breadcrumb, Grid, Transition, TextArea, Feed, Header} from 'semantic-ui-react';
+import './TeacherLecture.css';
+const socket = openSocket(`http://localhost:3030`)
 
 class TeacherLecture extends Component {
     constructor(){
         super();
-
         this.state = {
             userType:'Instructor',
-            thumb:'',
+            name:'',
             count:0,
             response2:'',
             count2:0,
             classid:1,
             room:'',
-            userid:3, 
-            thumbsDisable:false,
             teachersurveyinput:'',
-            teacherSurveyText:'',
-            studentSurveyText:'',
-            studentResponses:['student responses here'],
-            studentUnderstands:true,
-            studentsurveyinput:''
+            studentFreeResponses:[],
+            teacherthumbinput:'',
+            teacherThumbText:'',
+            studentResponses:[],
+            thumbVisible:true,
+            thumbDownVisible:false,
+            thumbUpVisible:false
         }
         socket.on('thumbcount', thumbquality => {
             if (thumbquality === 'thumbsup')
                 this.setState({
                     count:this.state.count+1,
-                    thumbsDisable:true
+                    thumbsDisable:true,
+                    thumbUpVisible:true
                 })
             else {
                 this.setState({
                     count2:this.state.count2+1,
-                    thumbsDisable:true
+                    thumbsDisable:true,
+                    thumbDownVisible:true
                 })
             }
-        })
-        socket.on('open thumbs', teacherinput => {
-            this.setState({
-                teacherSurveyText:teacherinput,
-                thumbsDisable:false,
-                studentSurveyText:'',
-                studentUnderstands:true
-            })
+            
         })
         socket.on('get student response', studentinput => {
             let studentArray = [...this.state.studentResponses]
             studentArray.push({question:studentinput[0], studentid:studentinput[2]})
             this.setState({
                 studentResponses:studentArray,
-                
+            })
+        })
+        socket.on('get free response', studentinput => {
+            let freeResponsesArray = [...this.state.studentFreeResponses];
+            freeResponsesArray.push({response:studentinput[0],studentid:studentinput[2]})
+            this.setState({
+                studentFreeResponses:freeResponsesArray
             })
         })
     }
     componentDidMount(){
-        const { socket, classid, userType, count, count2 } = this.state;
-        // socket.on('ping', data => this.setState({response:data}))
-        
-    }
-    componentDidUpdate(prevProps, prevState, snapshot){
-        const { socket, userType } = this.state;
-        
-    }
-
-    buttonPress = () => {
-        const { count, userType, classid, userid} = this.state;
-        socket.emit('students send thumbs', ['thumbsup', classid, userid], () => {
-            this.setState({
-                thumbsDisable:true
-            })
-        })
-    }
-    buttonPress2 = () => {
-        const { count2, classid, userid } = this.state;
-        socket.emit('students send thumbs',['thumbsdown', classid, userid], () => {
-            this.setState({
-                thumbsDisable:true,
-                studentUnderstands:false
-            })
-        })
-    }
-    joinRoom = () => {
         const { userType, classid } = this.state;
         socket.emit('join',`${userType}${classid}`, room => {
             this.setState({
                 room
             })
         })
+        
     }
-   
+    // componentDidUpdate(prevProps, prevState, snapshot){
+    //     const { socket, userType } = this.state;
+    // }
     componentWillUnmount(){
         socket.close()
     }
@@ -99,11 +77,12 @@ class TeacherLecture extends Component {
         })
     }
     launchThumbs = (e) =>{
+        this.toggleVisibility()
         e.preventDefault()
-        const {classid, teachersurveyinput} = this.state;
-        socket.emit('thumbs launched',[teachersurveyinput, classid], () => {
+        const {classid, teacherthumbinput} = this.state;
+        socket.emit('thumbs launched',[teacherthumbinput, classid], (data) => {
             this.setState({
-                teacherSurveyText:teachersurveyinput,
+                teacherThumbText:teacherthumbinput,
                 count:0,
                 count2:0,
                 teachersurveyinput:'',
@@ -111,96 +90,111 @@ class TeacherLecture extends Component {
             })
         })
     }
-    sendStudentResponse = (e) =>{
+    freeResponse = (e) =>{
         e.preventDefault()
-        const {classid, studentsurveyinput, userid} = this.state;
-        this.setState({
-            studentSurveyText:studentsurveyinput
-        })
-        socket.emit('student response', [studentsurveyinput, classid, userid], () => {
+        const {classid, teachersurveyinput} = this.state;
+        socket.emit('free response', [teachersurveyinput, classid], () => {
             this.setState({
-                studentsurveyinput:''
+                teachersurveyinput:'',
+                studentFreeResponses:[]
             })
         })
+
     }
     
+    
+    toggleVisibility = (e) => this.setState({thumbVisible:false})
+    toggleThumbsDown = () => this.setState({thumbDownVisible:true})
+    toggleThumbsUp = () => this.setState({thumbUpVisible:true})
     render(){
-        const { response, count, response2, count2, room, userType, thumbsDisable, studentUnderstands, studentResponses, teacherSurveyText, studentSurveyText} = this.state
+        const {  count, count2, room, studentResponses, 
+            teacherSurveyText, teacherthumbinput, teachersurveyinput, 
+            teacherThumbText, studentFreeResponses, thumbVisible, thumbLeave,
+            thumbUpVisible, thumbDownVisible} = this.state
 
         return(
-            <div>
-                <p>TeacherLecture</p>
-                
-                
-                <div>
-                    <p>{room}</p>
-                    <button onClick={this.joinRoom}>Join Room</button>
+            <div className='teacher-lecture'>
+                <div className='left-lecture'>
+                    <div>
+                        <Header as='h3'>TeacherLecture Room: {room}</Header>
+                        <p>Topic:</p>
+                    </div>
+                    <div className='resources'>
+                        <Segment>
+                            <Header as='h2'>Resources</Header>
+                        </Segment>
+                        <Segment>
+                            <Header as='h2'>Assignments</Header>
+                        </Segment>
+                    </div>
                 </div>
-                <form>
-                    <input type='radio' value='Student' id='userChoice1' name='userType' onChange={this.handleInput}/>
-                    <label htmlFor='userChoice1'>Student</label>
-                    <input type='radio' value='Instructor' id='userChoice2' name='userType' onChange={this.handleInput}/>
-                    <label htmlFor='userChoice2'>Instructor</label>
-                    <p>userType: {userType}</p>
-                </form>
-                <form>
-                    <input name='userid' value={this.state.userid} id='userid'onChange={this.handleInput} />
-                    <label htmlFor='userid'>Input User ID</label>
-                    <p>User ID: {this.state.userid}</p>
-                </form>
-                { userType === 'Instructor'
-                ?<form>
-                    <input name='teachersurveyinput' value = {this.state.teachersurveyinput} onChange={this.handleInput}/>
-                    <button onClick={ this.launchThumbs}>LAUNCH THE THUMBS</button>
-                </form>
-                : teacherSurveyText
-                
-                    ?<form>
-                        <p>{teacherSurveyText}</p>
-                        
-                    </form>
-                    : null
-                }
-                <div>
-                    { userType === 'Instructor'
-                        ?<p>{response} {count}</p>
-                        : teacherSurveyText
-                            ?<button onClick={this.buttonPress} 
-                            disabled={thumbsDisable}>I get it!</button>
-                            :null
-                    }
-                </div>
-                <div>
-                    {userType === 'Instructor'
-                        ? <p>{response2} {count2}</p>
-                        : teacherSurveyText
-                        ? <button onClick={this.buttonPress2}
-                            disabled={thumbsDisable}
-                            >I don't get it.</button>
+                <div className='middle-lecture'>
+                    <Segment className='free-section'>
+                    {/* possible icons--comment, comments, talk, help(a question mark, pencil, question) */}
+                        <Header as='h1'>Free Responses</Header>
+                        <Header as='h3'>{teacherSurveyText}</Header>
+                        <Transition.Group
+                        as='list'
+                        duration={200}
+                        divided
+                        size='huge'>
+
+                        {studentFreeResponses.length > 0
+                        ?   studentFreeResponses.map( (response, i) => {
+                            return <List.Item key={`freeResponse${i}`}>{response.studentid}:{response.response}</List.Item>
+                        })
                         :null
-                    }
+                        }
+                        </Transition.Group>
+                    </Segment>
+                    <Segment className='thumb-section'>
+                        <Header as='h1'>Thumb Survey Results</Header>
+                        <Header as='h3'>{teacherThumbText}</Header>
+                        <div>
+                                <Header as='h4'>thumbsup</Header>
+                                <div className='thumbsup-count'>
+                                <Transition animation='fly up' duration='500' visible={thumbUpVisible} >
+                                    <Icon name='thumbs outline up'size='large' />
+                                    </Transition>
+                                    <p>{count}</p>
+                                </div>
+                                <Header as='h4'>thumbsdown</Header>
+                                <div className='thumbsup-count'>
+                                <Transition animation='fly down' duration='500' visible={thumbDownVisible}>
+                                    <Icon name='thumbs outline down'size='large' />
+                                    </Transition>
+                                    <p>{count2}</p>
+                                </div>
+                        </div>
+                        <Transition.Group
+                        as={List}
+                        duration={200}
+                        divided
+                        size='huge'>
+                            {studentResponses.length > 0
+                            ?   studentResponses.map( (response, i) => {
+                                return <List.Item key ={`thumbResponse${i}`}>{response.studentid}: {response.question}</List.Item>
+                            })
+                            :null
+                            }
+                        </Transition.Group>
+                    </Segment>
                 </div>
-                { !studentUnderstands
-                ?<form>
-                    <p>What don't you understand?</p>
-                    <input onChange={this.handleInput} name='studentsurveyinput' value={this.state.studentsurveyinput}/>
-                    <button onClick={this.sendStudentResponse}>This is my question</button>
-                    <p>{this.state.studentSurveyText}</p>
-                </form>
-                : null}
-                
-                { userType === 'Instructor'
-                ?
-                <div>
-                    <p>{teacherSurveyText}</p>
-                    <ul>
-                        {studentResponses.map( (response, i) => {
-                            return <li key ={`response ${i}`}>{response.studentid}: {response.question}</li>
-                        })}
-                    </ul>
-                </div>
-                : null
-                }
+                <Segment className='right-lecture'>
+                    <Form>
+                        <Transition animation='fly left' duration='500' visible={thumbVisible}>
+                            <Icon name='thumbs outline up'size='large'/>
+                        </Transition>
+                        <Header as='h3'>Thumbs Survey</Header>
+                        <TextArea name='teacherthumbinput' value = {teacherthumbinput} onChange={this.handleInput}/>
+                        <Button onClick={ this.launchThumbs}>LAUNCH THE THUMBS</Button>
+                    </Form>
+                    <Form>
+                        <Header as='h3'>Free Response Question</Header>
+                        <TextArea name='teachersurveyinput' value={teachersurveyinput} onChange={this.handleInput}/>
+                        <Button onClick={this.freeResponse}>LAUNCH THE QUESTION</Button>
+                    </Form>
+                </Segment>
                 
             </div>
         )

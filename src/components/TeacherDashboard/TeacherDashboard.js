@@ -3,10 +3,18 @@ import TeacherCurrentCourses from './TeacherCurrentCourses';
 import TeacherCourseTemplates from './TeacherCourseTemplates';
 import Navbar from './../Navbar/Navbar';
 
+import { connect } from 'react-redux'
+import { getCurricula } from '../../dux/teacherReducer'
+
 class TeacherDashboard extends Component {
     constructor(props) {
         super(props);
         this.state = {  }
+    }
+
+
+    componentDidMount(){
+        this.props.getCurricula()
     }
     render() { 
         return ( 
@@ -16,11 +24,11 @@ class TeacherDashboard extends Component {
     <div className='ui container'>
 
 
-    <div className='ui segment left floated' ><TeacherCourseTemplates/></div>
+    <div style={{margin: 0}} className='ui segment left floated' ><TeacherCourseTemplates/></div>
 
 
 
- <div className='ui segment right floated'><TeacherCurrentCourses/></div>
+ <div style={{margin: 0}} className='ui segment right floated'><TeacherCurrentCourses/></div>
     
     </div>
     
@@ -30,5 +38,11 @@ class TeacherDashboard extends Component {
          )
     }
 }
+
+function mapStateToProps(state) {
+    return {
+        curricula: state.teachers.curricula
+    }
+}
  
-export default TeacherDashboard;
+export default connect( mapStateToProps, {getCurricula} ) (TeacherDashboard);
