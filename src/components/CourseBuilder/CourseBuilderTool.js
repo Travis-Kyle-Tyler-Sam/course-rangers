@@ -54,7 +54,6 @@ class CourseBuilderTool extends Component {
           selectedDaysArray: selDays,
           popDays: []
         })
-        
       }
     }
 
