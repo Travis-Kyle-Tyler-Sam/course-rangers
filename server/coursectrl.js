@@ -14,7 +14,7 @@ module.exports = {
 
         let course 
         
-        if( req.params ) {
+        if( req.params.id ) {
             course = await db.courses_DB.update_course( [req.params.id, name, id, startDate, completionDate, curId, selectedDays] )
         } else {
             course = await db.courses_DB.create_course( [name, id, startDate, completionDate, curId, selectedDays] )
