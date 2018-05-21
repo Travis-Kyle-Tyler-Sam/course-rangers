@@ -1,0 +1,16 @@
+.container1 {
+    display: inline-grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    grid-gap: 3px;
+    padding: 10px;
+    border-radius: 10px;
+  }
+  .item1 {
+    border: 1px solid gray;
+    padding: 40px;
+    font-size: 30px;
+    text-align: center;
+  }
+  .card_floater {
+    display: flex;
+  }

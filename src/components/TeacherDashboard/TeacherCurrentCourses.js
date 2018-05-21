@@ -47,7 +47,7 @@ class TeacherCurrentCourses extends Component {
       return (
         <Table.Row key={course.id}>
           <Table.Cell>
-            <Button>Today</Button>
+            <Button href='/#/teacher/lecture'>Today</Button>
           </Table.Cell>
           <Table.Cell> <Link to={`/teacher/dayselector/${course.id}`}>{course.course_name}</Link></Table.Cell>
           <Table.Cell>{course.curriculum_id}</Table.Cell>
@@ -59,7 +59,7 @@ class TeacherCurrentCourses extends Component {
           </Table.Cell>
           <Table.Cell>
             <Button basic icon circular>
-              <Link to="/coursebuilder">
+              <Link to={`/coursebuilder/${course.id}`}>
                 <Icon name="edit" />
               </Link>
             </Button>
