@@ -49,7 +49,7 @@ class TeacherCurrentCourses extends Component {
           <Table.Cell>
             <Button>Today</Button>
           </Table.Cell>
-          <Table.Cell> {course.course_name}</Table.Cell>
+          <Table.Cell> <Link to>{course.course_name}</Link></Table.Cell>
           <Table.Cell>{course.curriculum_id}</Table.Cell>
           <Table.Cell>
             {moment(course.start_date).format("MMMM DD, YYYY")}
@@ -59,7 +59,7 @@ class TeacherCurrentCourses extends Component {
           </Table.Cell>
           <Table.Cell>
             <Button basic icon circular>
-              ><Link to="/coursebuilder">
+              <Link to="/coursebuilder">
                 <Icon name="edit" />
               </Link>
             </Button>
