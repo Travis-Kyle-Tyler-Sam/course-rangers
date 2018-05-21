@@ -1,5 +1,5 @@
 import React from 'react'
-import { Header, Segment, List, Table } from 'semantic-ui-react';
+import { Header, Segment, List, Table, Loader, Dimmer } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
 function StudentCourseList (props){
@@ -7,17 +7,29 @@ function StudentCourseList (props){
     const courseList = studentsCourses.map( course => {
                         
         return(
-        <Table.Row onClick={ () => courseRouteFn(course.id)}>
-            <Table.Cell> {course.courseName}</Table.Cell>
-            <Table.Cell>{course.teacherName}</Table.Cell>
-            <Table.Cell>{course.percent}</Table.Cell>
-            <Table.Cell>{course.letterGrade}</Table.Cell>
+        <Table.Row onClick={ () => courseRouteFn(course.course_id)}>
+            <Table.Cell> {course.course_name}</Table.Cell>
+            <Table.Cell>{course.teacher_name}</Table.Cell>
+            {
+                course.percent
+                ?<Table.Cell>{course.percent}</Table.Cell>
+                :null
+            }
+            {
+                course.letterGrade
+                ?<Table.Cell>{course.letterGrade}</Table.Cell>
+                :null
+            }
+
         </Table.Row>)
         
     })
     return(
         <div>
+            
             <Segment>
+            {studentsCourses[0].course_name
+            ?<div>
                 <Header as='h1'>My Courses</Header>
                 <Table>
                     <Table.Header>
@@ -32,7 +44,15 @@ function StudentCourseList (props){
                         {courseList}
                     </Table.Body>
                 </Table>
+                </div>
+            //     :<Dimmer active>
+            //     <Loader/>
+            // </Dimmer>
+            :null
+            }
             </Segment>
+            
+            
         </div>
     )
 }

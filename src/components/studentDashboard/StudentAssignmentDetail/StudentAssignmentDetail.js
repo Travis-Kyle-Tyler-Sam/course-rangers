@@ -67,10 +67,6 @@ class StudentAssignmentDetail extends Component{
                    <Icon name='upload'/> Submit
                 </Button>
             </Modal.Actions>
-            
-            
-
-
         </Modal>
         )
     }

@@ -34,7 +34,7 @@ class App extends Component {
             <Route path='/logoutscreen' component={LogoutScreen}/>
             <Route path='/teacher/lecture' component={TeacherLecture}/>
             <Route path='/student/lecture' component={StudentLecture}/>
-            <Route path='/student/course' component={StudentCourseDetail}/>
+            <Route path='/student/course/:courseid' component={StudentCourseDetail}/>
           </Switch>
         </HashRouter>
        </div>

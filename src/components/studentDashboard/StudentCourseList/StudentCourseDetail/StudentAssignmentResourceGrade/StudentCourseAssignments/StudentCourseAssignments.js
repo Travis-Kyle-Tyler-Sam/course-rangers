@@ -4,36 +4,17 @@ import StudentAssignmentDetail from './../../../../StudentAssignmentDetail/Stude
 import {Header, Segment, List, Table} from 'semantic-ui-react';
 
 function StudentCourseAssignments(props){
-    //assignments will come from props eventually
-    const assignments = [
-        {
-            assignmentName:'assignment1',
-            dueDate:'Friday',
-            status:'incomplete',
-            type:'assignment',
-            courseName:'Math',
-            instructorName:'hank',
-            instructions:'do the thing'
-        },
-        {
-            assignmentName:'assignment1',
-            dueDate:'Friday',
-            status:'incomplete',
-            type:'quiz',
-            courseName:'Math',
-            instructorName:'hank',
-            instructions:'do the other thing'
-        }
-    ]
+    const {assignments, course} = props
+    
     const list = assignments.map( assignment => {
         return(
             <StudentAssignmentDetail
-            courseName = {assignment.courseName}
-                assignmentName = {assignment.assignmentName}
-                instructorName = {assignment.instructorName}
-                dueDate = {assignment.dueDate}
-                instructions = {assignment.instructions}
-                status = {assignment.status}
+                courseName = {course.course_name}
+                assignmentName = {assignment.name}
+                instructorName = {course.user_name}
+                dueDate = {assignment.due_date}
+                instructions = {assignment.description}
+                status = {assignment.date_submitted ? 'Done': 'Incomplete'}
             />
         )
     })

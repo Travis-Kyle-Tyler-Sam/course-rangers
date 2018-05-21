@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import Navbar from './../Navbar/Navbar';
 import StudentPendingAssign from './studentPendingAssign/StudentPendingAssign';
 import StudentCourseList from './StudentCourseList/StudentCourseList'
@@ -16,16 +17,22 @@ class StudentDashboard extends Component {
           id:5
         }],
         studentsAssignments: [],
-        studentID:0,
+        studentID:9,
        }
        this.courseRoute = this.courseRoute.bind(this);
     }
   componentDidMount(){
-
+    const { studentID } = this.state;
+    axios.get(`/api/student/getcourse/${studentID}`).then( results =>
+      this.setState({
+        studentsCourses:results.data.courses,
+        studentsAssignments:results.data.assignments
+      })
+    )
   }
 
   courseRoute( courseid ){
-    this.props.history.push(`/student/course`)
+    this.props.history.push(`/student/course/${courseid}`)
   }
   render() {
     const { studentsCourses, studentsAssignments, studentID } = this.state;
@@ -34,13 +41,16 @@ class StudentDashboard extends Component {
         <Navbar />
         <div className='columns'>
           <StudentPendingAssign
-          
+            courses = {studentsCourses.map( course => {
+              return course.course_name
+            })}
+            assignments = {studentsAssignments}
           
           />
           <StudentCourseList 
-          id = {studentID}
-          studentsCourses = {studentsCourses}
-          courseRouteFn = {this.courseRoute}
+            id = {studentID}
+            studentsCourses = {studentsCourses}
+            courseRouteFn = {this.courseRoute}
           />
         </div>
       </div>

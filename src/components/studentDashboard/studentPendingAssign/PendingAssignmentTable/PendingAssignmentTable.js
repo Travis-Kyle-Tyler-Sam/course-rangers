@@ -6,11 +6,11 @@ function PendingAssignmentTable (props){
     const assignments = list.map( assignment => {
         return (
             <StudentAssignmentDetail
-                courseName = {assignment.courseName}
-                assignmentName = {assignment.assignmentName}
-                instructorName = {assignment.instructorName}
-                dueDate = {assignment.dueDate}
-                instructions = {assignment.instructions}
+                courseName = {assignment.course_name}
+                assignmentName = {assignment.name}
+                instructorName = {assignment.teacher_name}
+                dueDate = {assignment.due_date}
+                instructions = {assignment.description}
             />
         )
     })

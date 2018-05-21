@@ -179,8 +179,8 @@ app.get('/api/assignment/:assignmentid', assignmentctrl.getAssignment)
 
 /// student dash etc. endpoints ///
 
-app.get('/api/student/getcourse/:studentid', studentctrl.getCourses, studentctrl.getInstructors)
-
+app.get('/api/student/getcourse/:studentid', studentctrl.getCourses, studentctrl.getAssignments)
+app.get('/api/student/getcoursedetail/:courseid', studentctrl.getCourseDetail, studentctrl.getCourseDays, studentctrl.getCourseAssignments, studentctrl.getCourseResources)
 /// student selector endpoints ////
 
 app.get('/api/getAllStudents', (req, res) =>{

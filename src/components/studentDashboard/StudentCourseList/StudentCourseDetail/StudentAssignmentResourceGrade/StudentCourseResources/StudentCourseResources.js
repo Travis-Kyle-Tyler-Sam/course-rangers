@@ -2,12 +2,12 @@ import React from 'react';
 import { Table, Header } from 'semantic-ui-react';
 
 function StudentCourseResources (props){
-    //resources will come from props
-    const resources = [{name:'resourceA',date:'Friday'}, {name:'resourceB',date:'Friday'},{name:'resourceC',date:'Friday'},]
+    
+    const { resources } = props;
     const list = resources.map( resource => {
         return(
         <Table.Row>
-            <Table.Cell>{resource.name}</Table.Cell>
+            <Table.Cell>{resource.title}</Table.Cell>
             <Table.Cell>{resource.date}</Table.Cell>
         </Table.Row>
         )
