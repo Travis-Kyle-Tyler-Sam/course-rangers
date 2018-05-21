@@ -9,8 +9,16 @@ module.exports = {
         //======================================================================================//
         //==================== Change this back to req.user ====================================//
         //===================================================================V==================//
-        let curriculum = await db.curricula_DB.create_new_curriculum( [name, 1] )
-        .catch( err => console.log(err))
+        let curriculum 
+        
+        if(req.params.id) {
+            curriculum = await db.curricula_DB.update_curriculum( [req.params.id, name, 1] )
+            .catch( err => console.log(err))
+
+        } else {
+            curriculum = await db.curricula_DB.create_new_curriculum( [name, 1] )
+            .catch( err => console.log(err))
+        }
 
         let curriculumId =  curriculum[0].id
 
@@ -60,6 +68,12 @@ module.exports = {
         } 
     },
 
+    prepDelete: async (req, res, next) => {
+        await req.app.get('db').curricula_DB.delete_curriculum( [req.params.id] )
+
+        next();
+    },
+
     getCurricula: async (req, res) => {
         let db = req.app.get('db')
         // =========== CHANGE THIS TO REQ.USER ===========//
@@ -96,7 +110,7 @@ module.exports = {
     },
 
     deleteCurriculum: (req, res)=>{
-        app
+        req.app
           .get('db')
           .curricula_DB.delete_curriculum([req.params.id])
           .then(response => {
