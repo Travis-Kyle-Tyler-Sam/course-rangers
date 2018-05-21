@@ -13,7 +13,7 @@ import LogoutScreen from './components/Logout/LogoutScreen';
 import TeacherLecture from './components/TeacherLecture/TeacherLecture';
 import StudentLecture from './components/StudentLecture/StudentLecture';
 import StudentCourseDetail from './components/studentDashboard/StudentCourseList/StudentCourseDetail/StudentCourseDetail';
-
+import TeacherCourseDaySelector from './components/TeacherCourseDaySelector/TeacherCourseDaySelector';
 class App extends Component {
   render() {
     return (
@@ -35,6 +35,7 @@ class App extends Component {
             <Route path='/teacher/lecture' component={TeacherLecture}/>
             <Route path='/student/lecture' component={StudentLecture}/>
             <Route path='/student/course' component={StudentCourseDetail}/>
+            <Route path='/teacher/dayselector/:courseid' component={TeacherCourseDaySelector}/>
           </Switch>
         </HashRouter>
        </div>
