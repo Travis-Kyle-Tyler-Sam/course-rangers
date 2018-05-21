@@ -57,6 +57,8 @@ class CourseBuilderTool extends Component {
       }
     }
 
+    let template = this.props.template
+
     let selectedCurriculum = this.props.curricula.filter( curr => curr.id === +this.props.template)
     let selectedCurriculumDays = selectedCurriculum[0].days
 
@@ -215,7 +217,7 @@ class CourseBuilderTool extends Component {
     let popDaysDisplay = this.state.popDays.map( (popDay, i) => {
       if( popDay.type === 'attend') {
         return (
-          <div className='cb-popday-attend cb-popday-cal' key={ i + popDay.title} >
+          <div className='cb-popday-attend cb-popday-cal' key={ i + popDay.date } >
             <div className='cb-popday-label'>
               <strong> { moment(popDay.date).format('MM/DD') }</strong> <br />
             </div>
@@ -224,7 +226,7 @@ class CourseBuilderTool extends Component {
         )
       } else {
         return (
-          <div className='cb-popday-off cb-popday-cal' key={ i + popDay.title} >
+          <div className='cb-popday-off cb-popday-cal' key={ i + popDay.date} >
             <strong> { moment(popDay.date).format('MM/DD') }</strong> <br />
           </div>
         )
