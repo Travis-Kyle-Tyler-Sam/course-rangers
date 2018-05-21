@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
 class TeacherCourseDaySelector extends Component {
     constructor(props) {
         super(props);
-        //// filter by params   +this.props.match.params.courseid
+     
 
         this.state = {  }
     }
     render() { 
         console.log(+this.props.match.params.courseid)
+        console.log(this.props.courses)
         return ( 
             <div>
                 
@@ -18,5 +21,10 @@ class TeacherCourseDaySelector extends Component {
          )
     }
 }
- 
-export default TeacherCourseDaySelector;
+function mapStateToProps(state) {
+    return {
+      courses: state.teachers.courses
+    }
+  }
+  
+  export default connect(mapStateToProps)(TeacherCourseDaySelector);

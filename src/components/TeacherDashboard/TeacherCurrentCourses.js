@@ -3,8 +3,8 @@ import { Table } from "semantic-ui-react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import moment from "moment";
-import { connect } from 'react-redux'
-import { updateCourses } from '../../dux/teacherReducer'
+import { connect } from 'react-redux';
+import { updateCourses } from '../../dux/teacherReducer';
 import {
   Card,
   Icon,
