@@ -27,6 +27,7 @@ class TeacherAssignmentsView extends Component {
     axios
       .get(`/api/courseassignments/${this.props.match.params.assignmentid}`)
       .then(response => {
+        console.log(response)
         this.setState({ assignments: response.data });
       });
   }

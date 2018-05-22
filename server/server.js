@@ -166,6 +166,25 @@ app.put('/api/course/:id', coursectrl.prepDelete, coursectrl.addCourse)
 
 app.delete('/api/course/:id', coursectrl.deleteCourse)
 
+
+
+app.get('/api/gettoday', (req, res)=>{
+//// need to change hard coded date to req.query.date
+  app
+  .get('db')
+  .course_days_DB.get_today(['2018-05-21', req.query.courseid])
+  .then(response=>{
+    res.status(200).send(response)
+  })
+  .catch(err=>console.log(err))
+})
+
+
+
+
+
+
+
 //// admin endpoints ////
 
 app.get('/api/registry/:adminid', adminctrl.getRegistry)
