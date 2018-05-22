@@ -12,11 +12,23 @@ class StudentCourseDetail extends Component {
             // daysArray:[],
             // assignments:[]
         }
+        this.uploadFile = this.uploadFile.bind(this);
     }
 
     componentDidMount(){
         const {courseid} = this.props.match.params;
         axios.get(`/api/student/getcoursedetail/${courseid}`).then( response => {
+            this.setState({
+                course:response.data.course[0],
+                daysArray:response.data.daysArray,
+                resources:response.data.resources,
+                assignments:response.data.assignments
+            })
+        })
+    }
+    uploadFile(url, assignmentID, dateSubmitted){
+        const {courseid} = this.props.match.params;
+        axios.patch('/api/student/courseuploadfile', {url, assignmentID, courseid, dateSubmitted}).then( response => {
             this.setState({
                 course:response.data.course[0],
                 daysArray:response.data.daysArray,
@@ -44,6 +56,7 @@ class StudentCourseDetail extends Component {
                     assignments = {assignments}
                     resources = {resources}
                     course = {course}
+                    uploadFileFn = {this.uploadFile}
                     />
                     </div>
                 </div>

@@ -5,7 +5,7 @@ import {Header, Segment, List, Table} from 'semantic-ui-react';
 import moment from 'moment';
 
 function StudentCourseAssignments(props){
-    const {assignments, course} = props
+    const {assignments, course, uploadFileFn} = props
     
     const list = assignments.map( assignment => {
         return(
@@ -16,6 +16,11 @@ function StudentCourseAssignments(props){
                 dueDate = {moment(assignment.due_date).format('MM/DD')}
                 instructions = {assignment.description}
                 status = {assignment.point_scored ? 'Done': 'Incomplete'}
+                uploadFileFn = {uploadFileFn}
+                assignmentID = {assignment.id}
+                studentID = {assignment.student_id}
+                attachment = {assignment.attachment}
+                dateSubmitted = {assignment.date_submitted}
             />
         )
     })

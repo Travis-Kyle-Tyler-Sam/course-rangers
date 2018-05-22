@@ -18,6 +18,7 @@ function PendingAssignmentTable (props){
                 assignmentID = {assignment.id}
                 studentID = {assignment.studentID}
                 attachment = {assignment.attachment}
+                dateSubmitted = {assignment.date_submitted}
             />
         )
     })
@@ -27,6 +28,7 @@ function PendingAssignmentTable (props){
                 <Table.Row>
                     <Table.HeaderCell>{course}</Table.HeaderCell>
                     <Table.HeaderCell>Due Date</Table.HeaderCell>
+                    <Table.HeaderCell>Status</Table.HeaderCell>
                 </Table.Row>
             </Table.Header>
             <Table.Body>

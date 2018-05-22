@@ -23,17 +23,26 @@ class StudentDashboard extends Component {
        this.uploadFile = this.uploadFile.bind(this);
     }
   componentDidMount(){
-    const { studentID } = this.state;
-    axios.get(`/api/student/getcourse/${studentID}`).then( results =>
+    axios.get(`/auth/me`).then( results => {
       this.setState({
-        studentsCourses:results.data.courses,
-        studentsAssignments:results.data.assignments
+        studentID:results.data.id
       })
-    )
+    })
   }
-  uploadFile( url, assignmentID ){
+  componentDidUpdate(prevProps, prevState, snapshot){
     const { studentID } = this.state;
-    axios.patch('/api/student/uploadfile', { url, assignmentID, studentID }).then( results => {
+    if (prevState.studentID !== studentID){
+      axios.get(`/api/student/getcourse/${studentID}`).then( results =>
+        this.setState({
+          studentsCourses:results.data.courses,
+          studentsAssignments:results.data.assignments
+        })
+      )
+    }
+  }
+  uploadFile( url, assignmentID, dateSubmitted ){
+    const { studentID } = this.state;
+    axios.patch('/api/student/uploadfile', { url, assignmentID, studentID, dateSubmitted }).then( results => {
       this.setState({
         studentsCourses:results.data.courses,
         studentsAssignments:results.data.assignments

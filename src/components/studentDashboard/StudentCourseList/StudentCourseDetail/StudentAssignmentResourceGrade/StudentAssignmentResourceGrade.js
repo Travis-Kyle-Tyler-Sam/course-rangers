@@ -15,6 +15,7 @@ function StudentAssignmentResourceGrade(props) {
             )
             })}
             course = {props.course}
+            uploadFileFn = {props.uploadFileFn}
             />
             </Tab.Pane>},
         {menuItem:'Resources', render: () => <Tab.Pane>

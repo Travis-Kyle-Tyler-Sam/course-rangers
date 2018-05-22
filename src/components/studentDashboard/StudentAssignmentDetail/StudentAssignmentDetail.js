@@ -4,7 +4,7 @@ import axios from 'axios';
 import FileUpload from './../../FileUpload'
 import './StudentAssignmentDetail.css';
 import { List } from 'material-ui';
-
+import moment from 'moment';
 
 class StudentAssignmentDetail extends Component{
     constructor(){
@@ -40,15 +40,15 @@ class StudentAssignmentDetail extends Component{
     render(){
         const { courseName, assignmentName, instructorName, dueDate, 
             instructions, status, uploadFileFn, assignmentID, studentID, 
-            attachment  } = this.props;
+            attachment, dateSubmitted  } = this.props;
         return(
         <Modal trigger={
             <Table.Row>
                 <Table.Cell>{assignmentName}</Table.Cell>
                 <Table.Cell>{dueDate}</Table.Cell>
-                {status
-                ?<Table.Cell>{status}</Table.Cell>
-                :null
+                {dateSubmitted
+                ?<Table.Cell>{`submitted ${moment(dateSubmitted).format('MM/DD')}`}</Table.Cell>
+                :<Table.Cell>Incomplete</Table.Cell>
                 }
             </Table.Row>
             } 
@@ -65,10 +65,10 @@ class StudentAssignmentDetail extends Component{
                         attachment
                         ? <div>
                             <p>Attachment:</p>
-                            <img src = {attachment} style={{height:'100px', width:'100px'}}/>
+                            <a href={attachment} target={'_blank'}><img src = {attachment} style={{height:'100px', width:'100px'}}/></a>
                         </div>
                         :<FileUpload
-                            cb = {url => uploadFileFn(url.Location, assignmentID, studentID )}
+                            cb = {url => uploadFileFn(url.Location, assignmentID, moment().format('YYYY-MM-DD') )}
                         />
                     }
                 </div>

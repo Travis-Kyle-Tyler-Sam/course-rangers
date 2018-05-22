@@ -121,13 +121,21 @@ module.exports = {
 
     },
     uploadFile: async (req, res, next) => {
-        const { url, assignmentID, studentID } = req.body;
-        req.params.studentid = studentID
+        const { url, assignmentID, studentID, dateSubmitted } = req.body;
+        req.params.studentid = studentID;
         let result = await req.app.get('db')
         .course_students_DB
-        .add_file_url([url, assignmentID])
+        .add_file_url([url, assignmentID, dateSubmitted])
         next()
 
+    },
+    courseUploadFile: async (req, res, next) => {
+        const { url, assignmentID, courseid, dateSubmitted } = req.body;
+        req.params.courseid = courseid;
+        let result = await req.app.get('db')
+        .course_students_DB
+        .add_file_url([url, assignmentID, dateSubmitted])
+        next()
     }
 
 }
