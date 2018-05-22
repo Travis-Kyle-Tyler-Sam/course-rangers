@@ -2,38 +2,47 @@ import React from 'react';
 import { Table, Header } from 'semantic-ui-react';
 import GradesTable from './GradesTable/GradesTable';
 function StudentCourseGrades(props){
-    const grades = [
-        {
-            type:'assignment',
-            name:'assignment1',
-            score:'17/20',
-            grade:85
-        },
-        {
-            type:'assignment',
-            name:'assignment2',
-            score:'17/20',
-            grade:85
-        },
-        {
-            type:'quiz',
-            name:'quiz1',
-            score:'17/20',
-            grade:85
-        },
-        {
-            type:'quiz',
-            name:'quiz2',
-            score:'17/20',
-            grade:85
-        }
-    ]
+    // const grades = [
+    //     {
+    //         type:'assignment',
+    //         name:'assignment1',
+    //         score:'17/20',
+    //         grade:85
+    //     },
+    //     {
+    //         type:'assignment',
+    //         name:'assignment2',
+    //         score:'17/20',
+    //         grade:85
+    //     },
+    //     {
+    //         type:'quiz',
+    //         name:'quiz1',
+    //         score:'17/20',
+    //         grade:85
+    //     },
+    //     {
+    //         type:'quiz',
+    //         name:'quiz2',
+    //         score:'17/20',
+    //         grade:85
+    //     }
+    // ]
+    const {grades} = props
     const assignments = grades.filter( assignment => assignment.type==='assignment').map( assignment => {
         return(
             <Table.Row>
                 <Table.Cell>{assignment.name}</Table.Cell>
-                <Table.Cell>{assignment.score}</Table.Cell>
-                <Table.Cell>{assignment.grade}%</Table.Cell>
+                <Table.Cell>{
+                    assignment.point_scored
+                    ?`${assignment.point_scored}/${assignment.points_possible}`
+                    : 'Not yet graded'
+                    }</Table.Cell>
+                <Table.Cell>{
+                    assignment.percentage
+                    ?`${assignment.percentage}%`
+                    : 'Not yet graded'
+                    }</Table.Cell>
             </Table.Row>
         )
     })
@@ -42,8 +51,16 @@ function StudentCourseGrades(props){
         return(
             <Table.Row>
                 <Table.Cell>{assignment.name}</Table.Cell>
-                <Table.Cell>{assignment.score}</Table.Cell>
-                <Table.Cell>{assignment.grade}%</Table.Cell>
+                <Table.Cell>{
+                    assignment.point_scored
+                    ?`${assignment.point_scored}/${assignment.points_possible}`
+                    : 'Not yet graded'
+                    }</Table.Cell>
+                <Table.Cell>{
+                    assignment.percentage
+                    ?`${assignment.percentage}%`
+                    : 'Not yet graded'
+                    }</Table.Cell>
             </Table.Row>
         )
     })
