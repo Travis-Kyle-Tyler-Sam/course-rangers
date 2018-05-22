@@ -22,6 +22,7 @@ class TeacherDashboard extends Component {
     <Navbar/>
     <h1>Teacher Dashboard</h1>
     <div className='ui container'>
+    
 
 
     <div style={{margin: 0}} className='ui segment left floated' ><TeacherCourseTemplates/></div>

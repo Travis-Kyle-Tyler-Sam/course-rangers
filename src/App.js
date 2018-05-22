@@ -15,6 +15,8 @@ import StudentLecture from './components/StudentLecture/StudentLecture';
 import StudentCourseDetail from './components/studentDashboard/StudentCourseList/StudentCourseDetail/StudentCourseDetail';
 import TeacherCourseDaySelector from './components/TeacherCourseDaySelector/TeacherCourseDaySelector';
 import TeacherAssignmentsView from './components/TeacherAssignmentsView/TeacherAssignmentsView';
+import Profile from './components/Profile/Profile';
+import NoClass from './components/NoClass/NoClass';
 class App extends Component {
   render() {
     return (
@@ -36,7 +38,9 @@ class App extends Component {
             <Route path='/student/lecture' component={StudentLecture}/>
             <Route path='/student/course/:courseid' component={StudentCourseDetail}/>
             <Route path='/teacher/dayselector/:courseid' component={TeacherCourseDaySelector}/>
-            <Route path='/teacher/courseassignments/:assignmentid' component={TeacherAssignmentsView}/>
+            <Route path='/teacher/courseassignments/:courseid/:assignmentid' component={TeacherAssignmentsView}/>
+            <Route path='/profile' component={Profile}/>
+            <Route path='/teacher/noclass' component={NoClass}/>
             
           </Switch>
         </HashRouter>

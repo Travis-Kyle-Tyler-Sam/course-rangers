@@ -166,6 +166,22 @@ app.put('/api/course/:id', coursectrl.prepDelete, coursectrl.addCourse)
 
 app.delete('/api/course/:id', coursectrl.deleteCourse)
 
+
+
+app.get('/api/gettoday', (req, res)=>{
+  app
+  .get('db')
+  .course_days_DB.get_today([req.query.date, req.query.courseid])
+  .then(response=>{
+    res.status(200).send(response)
+  })
+  .catch(err=>console.log(err))
+})
+
+
+
+
+
 //// admin endpoints ////
 
 app.get('/api/registry/:adminid', adminctrl.getRegistry)
