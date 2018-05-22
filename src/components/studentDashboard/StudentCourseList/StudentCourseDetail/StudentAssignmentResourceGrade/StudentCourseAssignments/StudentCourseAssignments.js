@@ -2,38 +2,25 @@ import React from 'react';
 import './StudentCourseAssignments.css';
 import StudentAssignmentDetail from './../../../../StudentAssignmentDetail/StudentAssignmentDetail';
 import {Header, Segment, List, Table} from 'semantic-ui-react';
+import moment from 'moment';
 
 function StudentCourseAssignments(props){
-    //assignments will come from props eventually
-    const assignments = [
-        {
-            assignmentName:'assignment1',
-            dueDate:'Friday',
-            status:'incomplete',
-            type:'assignment',
-            courseName:'Math',
-            instructorName:'hank',
-            instructions:'do the thing'
-        },
-        {
-            assignmentName:'assignment1',
-            dueDate:'Friday',
-            status:'incomplete',
-            type:'quiz',
-            courseName:'Math',
-            instructorName:'hank',
-            instructions:'do the other thing'
-        }
-    ]
+    const {assignments, course, uploadFileFn} = props
+    
     const list = assignments.map( assignment => {
         return(
             <StudentAssignmentDetail
-            courseName = {assignment.courseName}
-                assignmentName = {assignment.assignmentName}
-                instructorName = {assignment.instructorName}
-                dueDate = {assignment.dueDate}
-                instructions = {assignment.instructions}
-                status = {assignment.status}
+                courseName = {course.course_name}
+                assignmentName = {assignment.name}
+                instructorName = {course.user_name}
+                dueDate = {moment(assignment.due_date).format('MM/DD')}
+                instructions = {assignment.description}
+                status = {assignment.point_scored ? 'Done': 'Incomplete'}
+                uploadFileFn = {uploadFileFn}
+                assignmentID = {assignment.id}
+                studentID = {assignment.student_id}
+                attachment = {assignment.attachment}
+                dateSubmitted = {assignment.date_submitted}
             />
         )
     })

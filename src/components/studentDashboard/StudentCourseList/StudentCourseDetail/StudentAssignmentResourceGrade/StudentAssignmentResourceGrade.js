@@ -2,16 +2,39 @@ import React, {Component} from 'react';
 import StudentCourseAssignments from './StudentCourseAssignments/StudentCourseAssignments';
 import StudentCourseGrade from './StudentCourseGrades/StudentCourseGrades';
 import StudentCourseResources from './StudentCourseResources/StudentCourseResources';
-import {Segment, Tab} from 'semantic-ui-react';
+import {Segment, Tab, Dimmer, Loader} from 'semantic-ui-react';
 
-function StudentAssignmentResourceGrade() {
+function StudentAssignmentResourceGrade(props) {
     const panes = [
-        {menuItem:'Assignments', render: () => <Tab.Pane><StudentCourseAssignments/></Tab.Pane>},
-        {menuItem:'Resources', render: () => <Tab.Pane><StudentCourseResources/></Tab.Pane>},
-        {menuItem:'Grade', render: () => <Tab.Pane><StudentCourseGrade/></Tab.Pane>}
+        {menuItem:'Assignments', render: () => <Tab.Pane>
+            <StudentCourseAssignments
+            assignments = {props.assignments.filter( assignment => {
+                return (
+                    assignment.point_scored === null
+                    
+            )
+            })}
+            course = {props.course}
+            uploadFileFn = {props.uploadFileFn}
+            />
+            </Tab.Pane>},
+        {menuItem:'Resources', render: () => <Tab.Pane>
+            <StudentCourseResources
+            resources = {props.resources}
+            />
+            </Tab.Pane>},
+        {menuItem:'Grade', render: () => <Tab.Pane>
+            <StudentCourseGrade
+            grades = {props.assignments}
+            />
+            </Tab.Pane>}
     ]
     return(
-        <Tab panes={panes}/>
+        <div>
+            
+            <Tab panes={panes}/>
+            
+        </div>
     )
 }
 export default StudentAssignmentResourceGrade;

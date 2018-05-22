@@ -36,7 +36,7 @@ class App extends Component {
             <Route path='/logoutscreen' component={LogoutScreen}/>
             <Route path='/teacher/lecture/:dayid' component={TeacherLecture}/>
             <Route path='/student/lecture' component={StudentLecture}/>
-            <Route path='/student/course' component={StudentCourseDetail}/>
+            <Route path='/student/course/:courseid' component={StudentCourseDetail}/>
             <Route path='/teacher/dayselector/:courseid' component={TeacherCourseDaySelector}/>
             <Route path='/teacher/courseassignments/:courseid/:assignmentid' component={TeacherAssignmentsView}/>
             <Route path='/profile' component={Profile}/>
