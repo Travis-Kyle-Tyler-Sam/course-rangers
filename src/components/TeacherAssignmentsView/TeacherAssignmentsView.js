@@ -80,8 +80,8 @@ class TeacherAssignmentsView extends Component {
     });
   }
   render() {
-    console.log(this.state);
-    let assignments = this.state.assignments.map(assignment => {
+    console.log(this.props.match.params)
+    let assignments = this.state.assignments.filter(assignment=>assignment.course_id === +this.props.match.params.courseid).map(assignment => {
       return (
         <Table.Row key={assignment.assignment_id + assignment.user_name}>
           <Table.Cell>{assignment.name}</Table.Cell>

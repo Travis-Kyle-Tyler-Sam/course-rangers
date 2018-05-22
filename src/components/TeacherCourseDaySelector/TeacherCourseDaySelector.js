@@ -32,6 +32,7 @@ class TeacherCourseDaySelector extends Component {
       course: filteredCourse
     };
   }
+
   render() {
     const {
       completion_date,
