@@ -1,0 +1,36 @@
+.quiz-taker-container {
+    display: flex;
+    justify-content: flex-start;
+    margin: 20px;
+}
+
+.quiz-taker-container.ui.segment {
+}
+
+.qlist-container {
+    padding: 10px;
+    height: 80vh;
+    overflow: auto;
+}
+    
+.quiz-taker-question-container {
+    padding: 20px;
+}
+
+.quiz-taker-question-guide {
+    margin-left: 28%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.ui.segment.quiz-taker-question-container {
+    padding: 45px;
+    width: 65vw;
+    height: 45vh;
+}
+
+li {
+    line-height: 43px;
+    font-size: 25px;
+}

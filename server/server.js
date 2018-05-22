@@ -180,6 +180,7 @@ app.get('/api/assignment/:assignmentid', assignmentctrl.getAssignment)
 /// student dash etc. endpoints ///
 
 app.get('/api/student/getcourse/:studentid', studentctrl.getCourses, studentctrl.getInstructors)
+app.get('/api/student/quiz/:quizid', studentctrl.getQuiz)
 
 /// student selector endpoints ////
 

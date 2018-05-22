@@ -10,6 +10,25 @@ module.exports = {
         next()
 
     },
+
+    getQuiz: async (req, res) => {
+        let db = req.app.get('db')
+        let quizId = 111
+        let quiz = await db.course_assignments_DB.get_student_quiz( [req.params.quizid] )
+        quiz = quiz[0];
+        let questions = await db.course_assignments_DB.get_student_questions( [quiz.id] )
+
+        
+        for(let i=0; i<questions.length; i++) {
+            let options = await db.course_assignments_DB.get_student_options( [questions[i].question_id] )
+            questions[i].options = options
+        }
+
+        quiz.questions = questions
+
+        return res.status(200).send(quiz)
+    },
+
     getInstructors: async (req, res, next) => {
         let courses = [...req.userCourses]
         let courseReturn = [];
