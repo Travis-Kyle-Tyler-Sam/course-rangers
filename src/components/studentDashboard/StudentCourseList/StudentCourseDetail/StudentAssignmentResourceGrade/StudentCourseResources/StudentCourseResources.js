@@ -6,10 +6,10 @@ function StudentCourseResources (props){
     const { resources } = props;
     const list = resources.map( resource => {
         return(
-        <Table.Row>
+        <a target='_blank' href={resource.url}><Table.Row >
             <Table.Cell>{resource.title}</Table.Cell>
             <Table.Cell>{resource.date}</Table.Cell>
-        </Table.Row>
+        </Table.Row></a>
         )
     })
     return(
