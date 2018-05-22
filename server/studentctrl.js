@@ -119,6 +119,15 @@ module.exports = {
         .get_day_resources([courseid])
         res.status(200).send({course:req.course, daysArray:req.days, assignments:req.courseassignments, resources:result})
 
+    },
+    uploadFile: async (req, res, next) => {
+        const { url, assignmentID, studentID } = req.body;
+        req.params.studentid = studentID
+        let result = await req.app.get('db')
+        .course_students_DB
+        .add_file_url([url, assignmentID])
+        next()
+
     }
 
 }

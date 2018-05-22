@@ -18,7 +18,7 @@ function StudentCourseList (props){
             {
                 course.percent
                 ?<Table.Cell>{course.percent}</Table.Cell>
-                :<Table.Cell>{coursePercent.percent}</Table.Cell>
+                :<Table.Cell>{coursePercent.percent}%</Table.Cell>
             }
             {
                 course.letterGrade

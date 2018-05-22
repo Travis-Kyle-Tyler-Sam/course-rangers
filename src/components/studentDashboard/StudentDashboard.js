@@ -20,6 +20,7 @@ class StudentDashboard extends Component {
         studentID:9,
        }
        this.courseRoute = this.courseRoute.bind(this);
+       this.uploadFile = this.uploadFile.bind(this);
     }
   componentDidMount(){
     const { studentID } = this.state;
@@ -29,6 +30,15 @@ class StudentDashboard extends Component {
         studentsAssignments:results.data.assignments
       })
     )
+  }
+  uploadFile( url, assignmentID ){
+    const { studentID } = this.state;
+    axios.patch('/api/student/uploadfile', { url, assignmentID, studentID }).then( results => {
+      this.setState({
+        studentsCourses:results.data.courses,
+        studentsAssignments:results.data.assignments
+      })
+    })
   }
   calculatePercent( arrOfAssignments ){
     let pointsPossible = arrOfAssignments.reduce( (accumulator, value) => {
@@ -67,7 +77,7 @@ class StudentDashboard extends Component {
               return course.course_name
             })}
             assignments = {studentsAssignments}
-          
+            uploadFileFn = {this.uploadFile}
           />
           <StudentCourseList 
             id = {studentID}

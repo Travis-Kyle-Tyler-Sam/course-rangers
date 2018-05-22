@@ -1,6 +1,7 @@
 import React from 'react';
 import StudentAssignmentDetail from './../../StudentAssignmentDetail/StudentAssignmentDetail'
 import { Table } from 'semantic-ui-react';
+import moment from 'moment';
 function PendingAssignmentTable (props){
     const {list, course} = props;
     const assignments = list.map( assignment => {
@@ -10,9 +11,13 @@ function PendingAssignmentTable (props){
                 courseName = {assignment.course_name}
                 assignmentName = {assignment.name}
                 instructorName = {assignment.teacher_name}
-                dueDate = {assignment.due_date}
+                dueDate = {moment(assignment.due_date).format('MM/DD')}
                 instructions = {assignment.description}
                 key = {`pend-assignment-detail${assignment.id}`}
+                uploadFileFn = {props.uploadFileFn}
+                assignmentID = {assignment.id}
+                studentID = {assignment.studentID}
+                attachment = {assignment.attachment}
             />
         )
     })

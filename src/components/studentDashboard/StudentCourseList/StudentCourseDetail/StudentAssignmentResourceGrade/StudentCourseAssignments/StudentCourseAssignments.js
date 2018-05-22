@@ -2,6 +2,7 @@ import React from 'react';
 import './StudentCourseAssignments.css';
 import StudentAssignmentDetail from './../../../../StudentAssignmentDetail/StudentAssignmentDetail';
 import {Header, Segment, List, Table} from 'semantic-ui-react';
+import moment from 'moment';
 
 function StudentCourseAssignments(props){
     const {assignments, course} = props
@@ -12,9 +13,9 @@ function StudentCourseAssignments(props){
                 courseName = {course.course_name}
                 assignmentName = {assignment.name}
                 instructorName = {course.user_name}
-                dueDate = {assignment.due_date}
+                dueDate = {moment(assignment.due_date).format('MM/DD')}
                 instructions = {assignment.description}
-                status = {assignment.date_submitted ? 'Done': 'Incomplete'}
+                status = {assignment.point_scored ? 'Done': 'Incomplete'}
             />
         )
     })

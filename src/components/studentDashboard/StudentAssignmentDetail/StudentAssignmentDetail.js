@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
 import {Header, Button, Modal, Icon, Table} from 'semantic-ui-react';
 import axios from 'axios';
+import FileUpload from './../../FileUpload'
 import './StudentAssignmentDetail.css';
 import { List } from 'material-ui';
+
 
 class StudentAssignmentDetail extends Component{
     constructor(){
@@ -36,7 +38,9 @@ class StudentAssignmentDetail extends Component{
         // })
     }
     render(){
-        const { courseName, assignmentName, instructorName, dueDate, instructions, status,  } = this.props;
+        const { courseName, assignmentName, instructorName, dueDate, 
+            instructions, status, uploadFileFn, assignmentID, studentID, 
+            attachment  } = this.props;
         return(
         <Modal trigger={
             <Table.Row>
@@ -57,6 +61,16 @@ class StudentAssignmentDetail extends Component{
                     <p>Due: {dueDate}</p><br/>
                     <p>Instructions:</p><br/>
                     <p>{instructions}</p>
+                    {
+                        attachment
+                        ? <div>
+                            <p>Attachment:</p>
+                            <img src = {attachment} style={{height:'100px', width:'100px'}}/>
+                        </div>
+                        :<FileUpload
+                            cb = {url => uploadFileFn(url.Location, assignmentID, studentID )}
+                        />
+                    }
                 </div>
             </Modal.Content >
             <Modal.Actions >

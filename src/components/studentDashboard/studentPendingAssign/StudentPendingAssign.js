@@ -38,6 +38,7 @@ class PendingAssignCard extends Component {
                     course = {course}
                     list = {assignments.filter( assignment => assignment.course_name == course)}
                     key = {`pendingtable${course}`}
+                    uploadFileFn = {this.props.uploadFileFn}
                 />
             )
         })

@@ -8,7 +8,12 @@ function StudentAssignmentResourceGrade(props) {
     const panes = [
         {menuItem:'Assignments', render: () => <Tab.Pane>
             <StudentCourseAssignments
-            assignments = {props.assignments}
+            assignments = {props.assignments.filter( assignment => {
+                return (
+                    assignment.point_scored === null
+                    
+            )
+            })}
             course = {props.course}
             />
             </Tab.Pane>},
