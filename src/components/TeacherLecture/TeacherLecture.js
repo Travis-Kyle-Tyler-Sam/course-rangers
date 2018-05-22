@@ -28,7 +28,9 @@ class TeacherLecture extends Component {
             studentResponses:[],
             thumbVisible:true,
             thumbDownVisible:false,
-            thumbUpVisible:false
+            thumbUpVisible:false,
+            resources: [],
+            assignments: []
         }
         socket.on('thumbcount', thumbquality => {
             if (thumbquality === 'thumbsup')
@@ -65,6 +67,7 @@ class TeacherLecture extends Component {
         if(+this.props.match.params.dayid === 0 ){
             this.props.history.push('/teacher/noclass')
         }
+     
         const { userType, classid } = this.state;
         socket.emit('join',`${userType}${classid}`, room => {
             this.setState({

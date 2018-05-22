@@ -112,7 +112,6 @@ class TeacherCourseDaySelector extends Component {
     ];
     return (
       <div>
-      {console.log(this.props.match)}
         <Header>{course_name}</Header>
         <TodayButton today={this.state.today} courseid={+this.props.match.params.courseid}/>
         <div className="card_floater">

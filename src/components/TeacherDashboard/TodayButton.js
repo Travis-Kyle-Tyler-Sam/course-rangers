@@ -36,13 +36,13 @@ this.getDate()
     render() { 
        
         let routeParam = ()=>{
+            if(this.state.todaysClass[0] !== 1){
+                 return this.state.todaysClass[0].id
+             }
+         }
             if(!this.state.todaysClass[0]){
-                return 0
+                return 'No Class Today'
             }
-            else if(this.state.todaysClass[0]){
-                return this.state.todaysClass[0].id
-            }
-        }
 
         return ( 
             <div>      

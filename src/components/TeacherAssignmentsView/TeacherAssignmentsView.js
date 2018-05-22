@@ -27,7 +27,6 @@ class TeacherAssignmentsView extends Component {
     axios
       .get(`/api/courseassignments/${this.props.match.params.assignmentid}`)
       .then(response => {
-        console.log(response)
         this.setState({ assignments: response.data });
       });
   }
@@ -81,7 +80,6 @@ class TeacherAssignmentsView extends Component {
     });
   }
   render() {
-    console.log(this.props.match.params)
     let assignments = this.state.assignments.filter(assignment=>assignment.course_id === +this.props.match.params.courseid).map(assignment => {
       return (
         <Table.Row key={assignment.assignment_id + assignment.user_name}>
