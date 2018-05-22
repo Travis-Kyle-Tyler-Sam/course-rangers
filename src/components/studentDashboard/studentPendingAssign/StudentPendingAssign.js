@@ -37,6 +37,7 @@ class PendingAssignCard extends Component {
                 <PendingAssignmentTable
                     course = {course}
                     list = {assignments.filter( assignment => assignment.course_name == course)}
+                    key = {`pendingtable${course}`}
                 />
             )
         })

@@ -4,6 +4,7 @@ import { Table } from 'semantic-ui-react';
 function PendingAssignmentTable (props){
     const {list, course} = props;
     const assignments = list.map( assignment => {
+        
         return (
             <StudentAssignmentDetail
                 courseName = {assignment.course_name}
@@ -11,6 +12,7 @@ function PendingAssignmentTable (props){
                 instructorName = {assignment.teacher_name}
                 dueDate = {assignment.due_date}
                 instructions = {assignment.description}
+                key = {`pend-assignment-detail${assignment.id}`}
             />
         )
     })

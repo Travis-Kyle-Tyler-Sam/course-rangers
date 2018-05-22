@@ -30,6 +30,28 @@ class StudentDashboard extends Component {
       })
     )
   }
+  calculatePercent( arrOfAssignments ){
+    let pointsPossible = arrOfAssignments.reduce( (accumulator, value) => {
+      return accumulator += +value.points_possible ? +value.points_possible : 0
+    },0)
+    let pointsEarned = arrOfAssignments.reduce( (accumulator, value) => {
+      return accumulator += +value.point_scored ? +value.point_scored : 0
+    },0)
+    if (pointsPossible !== 0){
+      let percent = Math.floor((pointsEarned / pointsPossible)*100)
+      if (percent >=90){
+        return {percent, letter:'A'}
+      } else if (percent >= 80){
+        return {percent, letter:'B'}
+      } else if (percent>= 70){
+        return {percent, letter:'C'}
+      } else if (percent>= 60){
+        return {percent, letter:'D'}
+      } else return {percent, letter:'F'}
+      
+    }
+    else return 'No Grades Yet'
+  }
 
   courseRoute( courseid ){
     this.props.history.push(`/student/course/${courseid}`)
@@ -51,6 +73,8 @@ class StudentDashboard extends Component {
             id = {studentID}
             studentsCourses = {studentsCourses}
             courseRouteFn = {this.courseRoute}
+            assignments = {studentsAssignments}
+            calculatePercentFn = {this.calculatePercent}
           />
         </div>
       </div>
