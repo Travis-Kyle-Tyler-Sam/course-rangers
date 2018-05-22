@@ -55,7 +55,7 @@ class TeacherCurrentCourses extends Component {
       return (
         <Table.Row key={course.id}>
           <Table.Cell>
-            <TodayButton today={this.state.today} course={course}/>
+            <TodayButton today={this.state.today} courseid={course.id}/>
           </Table.Cell>
           <Table.Cell> <Link to={`/teacher/dayselector/${course.id}`}>{course.course_name}</Link></Table.Cell>
           <Table.Cell>{course.curriculum_id}</Table.Cell>

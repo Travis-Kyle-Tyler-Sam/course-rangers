@@ -40,7 +40,7 @@ class App extends Component {
             <Route path='/teacher/dayselector/:courseid' component={TeacherCourseDaySelector}/>
             <Route path='/teacher/courseassignments/:courseid/:assignmentid' component={TeacherAssignmentsView}/>
             <Route path='/profile' component={Profile}/>
-            <Route path='/teacher/lecture/noclass' component={NoClass}/>
+            <Route path='/teacher/noclass' component={NoClass}/>
             
           </Switch>
         </HashRouter>

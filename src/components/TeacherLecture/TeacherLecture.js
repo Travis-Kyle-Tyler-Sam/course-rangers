@@ -3,11 +3,16 @@ import openSocket from 'socket.io-client';
 import axios from 'axios';
 import { Button, Input, Form, Icon, Label, List, Loader, Segment, Breadcrumb, Grid, Transition, TextArea, Feed, Header} from 'semantic-ui-react';
 import './TeacherLecture.css';
+import { connect } from "react-redux";
+
 const socket = openSocket(`http://localhost:3030`)
 
 class TeacherLecture extends Component {
     constructor(){
         super();
+        // let filteredCourse = this.props.courses.filter(
+        //     course => course.id === +this.props.match.params.dayid
+        //   )[0];
         this.state = {
             userType:'Instructor',
             name:'',
@@ -57,13 +62,16 @@ class TeacherLecture extends Component {
         })
     }
     componentDidMount(){
+        if(+this.props.match.params.dayid === 0 ){
+            this.props.history.push('/teacher/noclass')
+        }
         const { userType, classid } = this.state;
         socket.emit('join',`${userType}${classid}`, room => {
             this.setState({
                 room
             })
         })
-        
+
     }
     // componentDidUpdate(prevProps, prevState, snapshot){
     //     const { socket, userType } = this.state;
@@ -201,4 +209,11 @@ class TeacherLecture extends Component {
     }
 }
 
-export default TeacherLecture
+function mapStateToProps(state) {
+    return {
+      courses: state.teachers.courses
+    };
+  }
+  
+  export default connect(mapStateToProps)(TeacherLecture);
+  
