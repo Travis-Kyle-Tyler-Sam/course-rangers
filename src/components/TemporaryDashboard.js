@@ -4,7 +4,6 @@ import { getUserInfo } from './../dux/userReducer';
 import { Link } from "react-router-dom";
 import Navbar from './Navbar/Navbar';
 
-
 class TemporaryDashboard extends Component {
     constructor(props) {
         super(props);

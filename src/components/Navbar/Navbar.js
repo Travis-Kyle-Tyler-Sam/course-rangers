@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Sidebar, Segment, Button, Menu } from 'semantic-ui-react'
-
+import {Link} from 'react-router-dom';
 
 
 class Navbar extends Component {
@@ -17,8 +17,8 @@ class Navbar extends Component {
 
   
         return ( <div id="navbar">
-
-            <Button className="secondary" id="logout"> <a href={process.env.REACT_APP_LOGOUT}>
+        <Button><Link to="/profile">Profile</Link></Button>
+            <Button id="logout"> <a href={process.env.REACT_APP_LOGOUT}>
                     Logout
                 </a>
             </Button>
