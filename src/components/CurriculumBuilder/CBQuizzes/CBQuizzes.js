@@ -66,9 +66,6 @@ class CBQuizzes extends Component {
             let newQuizQuestions = [...this.state.quizQuestions, questionToAdd ]
 
             this.setState({
-                quizTitleInput: '',
-                quizDescriptionInput: '',
-                quizDueDateInput: '',
                 quizQuestions: newQuizQuestions,
                 quizQuestionInput: '',
                 quizQuestionPtsInput: '',

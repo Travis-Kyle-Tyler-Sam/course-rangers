@@ -15,12 +15,12 @@ import StudentLecture from './components/StudentLecture/StudentLecture';
 import StudentCourseDetail from './components/studentDashboard/StudentCourseList/StudentCourseDetail/StudentCourseDetail';
 import QuizTaker from './components/QuizTaker/QuizTaker'
 
+import TeacherCourseDaySelector from './components/TeacherCourseDaySelector/TeacherCourseDaySelector';
+import TeacherAssignmentsView from './components/TeacherAssignmentsView/TeacherAssignmentsView';
 class App extends Component {
   render() {
     return (
       <div className="App">
-
-
 
        <HashRouter>
           <Switch>
@@ -29,14 +29,18 @@ class App extends Component {
             <Route path='/studentdashboard' component={StudentDashboard} />
             <Route path='/teacherdashboard' component={TeacherDashboard} />
             <Route path='/admindashboard' component={AdminDash} />
+            <Route path='/curriculumbuilder/:curriculumid' component={CurriculumBuilder} />
             <Route path='/curriculumbuilder' component={CurriculumBuilder} />
             <Route path='/coursebuilder/:courseid' component={CourseBuilder}/>
             <Route path='/coursebuilder/' component={CourseBuilder}/>
             <Route path='/logoutscreen' component={LogoutScreen}/>
-            <Route path='/teacher/lecture' component={TeacherLecture}/>
+            <Route path='/teacher/lecture/:dayid' component={TeacherLecture}/>
             <Route path='/student/lecture' component={StudentLecture}/>
             <Route path='/student/course' component={StudentCourseDetail}/>
             <Route path='/quiz/:quizid' component={QuizTaker} />
+            <Route path='/teacher/dayselector/:courseid' component={TeacherCourseDaySelector}/>
+            <Route path='/teacher/courseassignments/:assignmentid' component={TeacherAssignmentsView}/>
+            
           </Switch>
         </HashRouter>
        </div>
