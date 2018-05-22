@@ -3,8 +3,8 @@ import { Table } from "semantic-ui-react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import moment from "moment";
-import { connect } from 'react-redux'
-import { updateCourses } from '../../dux/teacherReducer'
+import { connect } from 'react-redux';
+import { updateCourses } from '../../dux/teacherReducer';
 import {
   Card,
   Icon,
@@ -47,9 +47,9 @@ class TeacherCurrentCourses extends Component {
       return (
         <Table.Row key={course.id}>
           <Table.Cell>
-            <Button>Today</Button>
+            <Button href='/#/teacher/lecture'>Today</Button>
           </Table.Cell>
-          <Table.Cell> {course.course_name}</Table.Cell>
+          <Table.Cell> <Link to={`/teacher/dayselector/${course.id}`}>{course.course_name}</Link></Table.Cell>
           <Table.Cell>{course.curriculum_id}</Table.Cell>
           <Table.Cell>
             {moment(course.start_date).format("MMMM DD, YYYY")}
@@ -60,7 +60,7 @@ class TeacherCurrentCourses extends Component {
           <Table.Cell>
             <Button basic icon circular>
               <Link to={`/coursebuilder/${course.id}`}>
-                <Icon name="edit" />{" "}
+                <Icon name="edit" />
               </Link>
             </Button>
           </Table.Cell>

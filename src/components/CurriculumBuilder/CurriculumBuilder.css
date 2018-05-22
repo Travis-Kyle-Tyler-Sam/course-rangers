@@ -45,3 +45,25 @@
     margin:10px;
     min-height: 400px;
 }
+
+.cbds-day-group {
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: row-reverse;
+    align-items: center;
+    margin-top: 8px;
+}
+
+.cbds-day-group > h3 {
+    margin-bottom: 0;
+    margin-left: 5px;
+    
+}
+
+.cbds-inputs-container {
+    margin-bottom: 42px;
+}
+
+.cbds-list-container {
+    margin: 5px;
+}

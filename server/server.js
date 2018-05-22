@@ -148,7 +148,9 @@ server.listen(SERVER_PORT, () => console.log(`Listening on port ${SERVER_PORT}`)
 
 app.delete('/api/curriculum/:id', curriculumctrl.deleteCurriculum)
 
-app.post('/api/curriculum/new', curriculumctrl.newCurriculum)
+app.put('/api/curriculum/:id', curriculumctrl.prepDelete, curriculumctrl.newCurriculum)
+
+app.post('/api/curriculum/', curriculumctrl.newCurriculum)
 
 app.get('/api/curriculum/', curriculumctrl.getCurricula)
 
@@ -173,9 +175,28 @@ app.delete('/api/registry/deleteUser/:userid', adminctrl.deleteUser)
 
 
 /// assignment endpoints ///
+app.get('/api/courseassignments/:assignmentid', (req, res)=>{
+  app
+    .get('db')
+    .course_assignments_DB.getassignments(req.params.assignmentid)
+    .then(response =>{
+      res.status(200).send(response)
+    })
+    .catch(err=>{console.log(err)})
+})
 
 app.get('/api/assignment/:assignmentid', assignmentctrl.getAssignment)
 
+app.put('/api/gradeassignment/:studentAssignmentId', (req, res)=>{
+  console.log(req.params, req.body)
+  app
+  .get('db')
+  .course_assignments_DB.grade_assignment([req.body.assignmentId, req.body.pointsScored, req.body.percentage, req.body.letterGrade, req.params.studentAssignmentId, ])
+  .then(response =>{
+    res.status(200).send(response)
+    .catch(err=>{console.log(err)})
+  })
+})
 
 /// student dash etc. endpoints ///
 
