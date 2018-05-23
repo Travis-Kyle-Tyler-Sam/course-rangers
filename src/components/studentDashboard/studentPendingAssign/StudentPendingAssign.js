@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Table, Dimmer, Loader } from 'semantic-ui-react'
+import { Table, Dimmer, Loader, Segment, Header } from 'semantic-ui-react'
 import './StudentPendingAssign.css';
 import StudentAssignmentDetail from './../StudentAssignmentDetail/StudentAssignmentDetail';
 import PendingAssignmentTable from './PendingAssignmentTable/PendingAssignmentTable';
@@ -45,14 +45,14 @@ class PendingAssignCard extends Component {
             )
         })
         return (
-            <div className='card'>
+            <div className='pending-assignments'>
             {courses[0]
             ?
-                <div>
-                    <h2>Pending Assignments</h2>
-                    <hr/>
+                <Segment>
+                    <Header as='h1'>Pending Assignments</Header>
+                    
                     {table}
-                </div>
+                </Segment>
             :
                 <Dimmer active>
                     <Loader/>
