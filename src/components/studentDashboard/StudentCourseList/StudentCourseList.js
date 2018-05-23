@@ -1,5 +1,5 @@
 import React from 'react'
-import { Header, Segment, List, Table, Loader, Dimmer } from 'semantic-ui-react';
+import { Header, Segment, List, Table, Loader, Dimmer, Button } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import './StudentCourseList.css'
 
@@ -13,8 +13,10 @@ function StudentCourseList (props){
         })
         let coursePercent = calculatePercentFn(courseAssignments)
         return(
-        <Table.Row onClick={ () => courseRouteFn(course.course_id)} key={`${course.name}${course.id}`}>
-            <Table.Cell> {course.course_name}</Table.Cell>
+        <Table.Row key={`${course.name}${course.id}`}>
+            <Table.Cell onClick={ () => courseRouteFn(course.course_id)} ><Button>View Course</Button></Table.Cell>
+        
+            <Table.Cell >{course.course_name}</Table.Cell>
             <Table.Cell>{course.teacher_name}</Table.Cell>
             {
                 course.percent
@@ -40,7 +42,8 @@ function StudentCourseList (props){
                 <Table>
                     <Table.Header>
                         <Table.Row>
-                            <Table.HeaderCell>Course</Table.HeaderCell>
+                        <Table.HeaderCell>View Course</Table.HeaderCell> 
+                            <Table.HeaderCell>Course Name</Table.HeaderCell>
                             <Table.HeaderCell>Teacher</Table.HeaderCell>
                             <Table.HeaderCell>Percent</Table.HeaderCell>
                             <Table.HeaderCell>Grade</Table.HeaderCell>

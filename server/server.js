@@ -72,7 +72,7 @@ passport.use(
       db.users_DB.find_user([profile.id]).then(userResult => {
         if (!userResult[0]) {
           db.
-            users_DB.create_user([profile.displayName, profile.id, profile.emails[0].value, null, null, null, null, 0, 0 ])
+            users_DB.create_user([profile.displayName, profile.id, profile.emails[0].value, null, null, null, null, 0, 0, profile.picture ])
             .then(createdUser => {
               return done(null, createdUser[0].id)
             })

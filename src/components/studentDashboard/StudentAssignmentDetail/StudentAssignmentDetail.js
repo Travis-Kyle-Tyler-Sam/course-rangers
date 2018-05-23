@@ -37,7 +37,8 @@ class StudentAssignmentDetail extends Component{
                 <Table.Cell>{dueDate}</Table.Cell>
                 {dateSubmitted
                 ?<Table.Cell>{`submitted ${moment(dateSubmitted).format('MM/DD')}`}</Table.Cell>
-                :<Table.Cell>Incomplete</Table.Cell>
+                :<Table.Cell><Button>Submit</Button></Table.Cell>
+                
                 }
             </Table.Row>
             } 
@@ -60,7 +61,7 @@ class StudentAssignmentDetail extends Component{
                         <div>
                             
                             <FileUpload
-                                cb = {url => uploadFileFn(url.Location, assignmentID, moment().format('YYYY-MM-DD'), this.closeModal() )}
+                                cb = {url => uploadFileFn(url.Location, assignmentID, moment().format('YYYY-MM-DD'))}
                             />
                         </div>
                     }
