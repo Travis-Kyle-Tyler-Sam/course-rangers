@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { Table, Dimmer, Loader, Segment, Header } from 'semantic-ui-react'
-import './StudentPendingAssign.css';
+import './../../studentDashboard/StudentDashboard.css'
 import StudentAssignmentDetail from './../StudentAssignmentDetail/StudentAssignmentDetail';
 import PendingAssignmentTable from './PendingAssignmentTable/PendingAssignmentTable';
 class PendingAssignCard extends Component {

@@ -23,7 +23,7 @@ function PendingAssignmentTable (props){
         )
     })
     return(
-        <Table>
+        <Table striped color='brown' >
             <Table.Header>
                 <Table.Row>
                     <Table.HeaderCell>{course}</Table.HeaderCell>

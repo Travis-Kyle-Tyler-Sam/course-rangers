@@ -1,5 +1,13 @@
 .columns {
     display: grid;
     grid-template-columns: 1fr 33% 1fr 33% 1fr;
-    /* grid-template-rows: */
+    grid-template-rows:200px minmax(500px auto) 100px
+}
+.pending-assignments{
+    grid-column: 2 / 3;
+    grid-row: 2;
+}
+.course-list{
+    grid-column: 4;
+    grid-row: 2;
 }
