@@ -1,0 +1,86 @@
+.quiz-taker-container {
+    display: flex;
+    justify-content: flex-start;
+    margin: 20px;
+}
+
+.quiz-taker-btn-container {
+    margin-top: 10px;
+    /* display: flex;
+    justify-content: space-between; */
+}
+
+.qlist-container {
+    padding: 10px;
+    height: 80vh;
+}
+
+.quiz-taker-question-container {
+    padding: 20px;
+}
+
+.quiz-taker-question-guide {
+    margin-left: 20%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.ui.segment.quiz-taker-question-container {
+    padding: 45px;
+    width: 40vw;
+    height: 45vh;
+}
+
+.qt-option {
+    line-height: 43px;
+    font-size: 25px;
+}
+
+.qt-option:hover {
+    border: 2px solid orange;
+    cursor: pointer;
+}
+
+.qlist-inner-container {
+    overflow: auto;
+    height: 90%;
+    margin: 0 20px 20px 0;
+    padding: 0 30px 20px 10px;
+}
+
+.ui.segment.qlist-container {
+    padding: 22px 0 22px 22px;
+}
+
+.qt-qlist-header {
+    margin-left: 10px;
+}
+
+.qt-btn-left {
+    float: left;
+}
+
+.qt-btn-right {
+    float: right;
+}
+
+.qt-option-selected {
+    border: 5px solid orange;
+}
+.qt-option-selected:hover {
+    border: 5px solid orange;
+}
+
+.qt-option-notselected {
+    border: none;
+}
+
+.qt-q-item {
+    cursor: pointer;
+}
+
+.qt-submit-btn {
+    display: flex;
+    justify-content: center;
+}

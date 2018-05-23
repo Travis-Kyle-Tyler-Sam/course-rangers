@@ -321,10 +321,11 @@ class CourseBuilderTool extends Component {
         <Button 
           primary
           loading={ this.state.loading } 
-          onClick={ this.submitCourse }>
+          onClick={ this.submitCourse } >
         Submit Course
         </Button>
-        <Button>Cancel</Button>      
+        <Button 
+          href='/#/teacherdashboard'>Cancel</Button>      
 
         <Snackbar
           open={this.state.snackBar}
