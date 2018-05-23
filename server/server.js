@@ -180,6 +180,16 @@ app.put('/api/course/:id', coursectrl.prepDelete, coursectrl.addCourse)
 
 app.delete('/api/course/:id', coursectrl.deleteCourse)
 
+app.get('/api/student/lecture_material/:course_day_id', (req, res)=>{
+  console.log(req.params)
+  app
+    .get('db')
+    .course_days_DB.get_student_lecture_material([req.params.course_day_id, req.user.id])
+    .then(response => {
+      res.status(200).send(response)
+    })
+    .catch(err=>console.log(err))
+})
 
 
 app.get('/api/gettoday', (req, res)=>{
@@ -214,7 +224,6 @@ app.get('/api/courseassignments/:assignmentid', (req, res)=>{
 app.get('/api/assignment/:assignmentid', assignmentctrl.getAssignment)
 
 app.put('/api/gradeassignment/:studentAssignmentId', (req, res)=>{
-  console.log(req.params, req.body)
   app
   .get('db')
   .course_assignments_DB.grade_assignment([req.body.assignmentId, req.body.pointsScored, req.body.percentage, req.body.letterGrade, req.params.studentAssignmentId, ])
@@ -251,7 +260,6 @@ io.on('connection', socket => {
   socket.on('join', (roomName, cb) => {
     socket.join(roomName, () => {
       let rooms = Object.keys(socket.rooms)
-      console.log(rooms)
       cb(roomName)
     })
   })
