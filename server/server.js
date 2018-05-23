@@ -216,6 +216,10 @@ app.put('/api/gradeassignment/:studentAssignmentId', (req, res)=>{
 
 /// student dash etc. endpoints ///
 
+app.get('/api/student/getcourse/:studentid', studentctrl.getCourses, studentctrl.getInstructors)
+app.get('/api/student/quiz/:quizid', studentctrl.getQuiz)
+app.patch('/api/student/quiz/:quizid', studentctrl.updateQuiz)
+
 app.get('/api/student/getcourse/:studentid', studentctrl.getCourses, studentctrl.getAssignments)
 app.get('/api/student/getcoursedetail/:courseid', studentctrl.getCourseDetail, studentctrl.getCourseDays, studentctrl.getCourseAssignments, studentctrl.getCourseResources)
 app.patch('/api/student/uploadfile', studentctrl.uploadFile, studentctrl.getCourses, studentctrl.getAssignments)
