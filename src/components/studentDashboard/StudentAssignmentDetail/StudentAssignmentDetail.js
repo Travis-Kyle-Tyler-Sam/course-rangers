@@ -5,6 +5,7 @@ import FileUpload from './../../FileUpload'
 import './StudentAssignmentDetail.css';
 import { List } from 'material-ui';
 import moment from 'moment';
+import Dropzone from 'react-dropzone';
 
 class StudentAssignmentDetail extends Component{
     constructor(){
@@ -36,6 +37,9 @@ class StudentAssignmentDetail extends Component{
         //         courseName:assignment.data.name
         //     })
         // })
+    }
+    onDrop = (acceptedFiles) => {
+        
     }
     render(){
         const { courseName, assignmentName, instructorName, dueDate, 
