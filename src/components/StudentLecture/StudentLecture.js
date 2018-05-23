@@ -139,7 +139,7 @@ class StudentLecture extends Component {
                     <div className='assignments'>
                         <Header as="h2">Assignments</Header>
                         <Table>
-                            <Table.Header>
+                            <Table.Header>                           
                                 <Table.Row>
                                 <Table.HeaderCell>Assignment</Table.HeaderCell>
                                     <Table.HeaderCell>Grade</Table.HeaderCell>
