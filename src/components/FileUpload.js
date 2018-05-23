@@ -3,6 +3,8 @@ import axios from "axios";
 import { connect } from "react-redux";
 import { getUserInfo } from './../dux/userReducer'
 import { truncate } from "fs";
+import Dropzone from 'react-dropzone';
+import { Button, Icon } from 'semantic-ui-react';
 
 class FileUpload extends Component {
   constructor() {
@@ -46,7 +48,7 @@ class FileUpload extends Component {
 
   handlePhoto(event) {
     const reader = new FileReader(),
-      file = event.target.files[0],
+      file = event[0],
       _this = this;
 
     reader.onload = photo => {
@@ -95,7 +97,7 @@ class FileUpload extends Component {
     return (
       <div>
          <h3>My Documents</h3>
-        <button
+        {/* <button
           type="button"
           className="btn btn-light mb-2"
           onClick={() => this.updateState()}
@@ -111,18 +113,36 @@ class FileUpload extends Component {
         >
         <i className="fas fa-times mr-2" />
           Cancel
-        </button>
+        </button> */}
+        
         <span>
-          <form hidden={this.state.displayFileUpload === false}>
+          
+          {/* <form hidden={this.state.displayFileUpload === false}>
             <div className="input-group-append">
               <input type="file" onChange={this.handlePhoto} />
               <button className="btn-default mt-1" onClick={this.sendPhoto}>
                 Submit
               </button>
             </div>
-          </form>
+          </form> */}
 
-          {this.state.file && (
+          
+        </span>
+        <Dropzone onDrop={ (accepted) => {
+          this.handlePhoto(accepted)
+        }}>{({accepted}) => {
+          return this.state.file
+          ? <img
+          src={this.state.file}
+          alt="file preview"
+          className="file-preview img-thumbnail"
+          height="150px"
+          width="150px"
+          />
+          :'Drop a file here!'
+        }}
+        </Dropzone>
+        {/* {this.state.file && (
             <img
               src={this.state.file}
               alt="file preview"
@@ -130,8 +150,10 @@ class FileUpload extends Component {
               height="150px"
               width="150px"
             />
-          )}
-        </span>
+          )} */}
+        <Button onClick={this.sendPhoto}>
+          <Icon name='upload'/> Submit
+        </Button>
         <span className="container">
           <div className="container">
             {this.props.component === "work"

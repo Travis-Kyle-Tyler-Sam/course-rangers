@@ -37,7 +37,8 @@ class App extends Component {
             <Route path='/coursebuilder/' component={CourseBuilder}/>
             <Route path='/logoutscreen' component={LogoutScreen}/>
             <Route path='/teacher/lecture/:dayid' component={TeacherLecture}/>
-            <Route path='/student/lecture' component={StudentLecture}/>
+            <Route path='/student/lecture/:dayid' component={StudentLecture}/>
+            {/* <Route path='/student/course' component={StudentCourseDetail}/> */}
             <Route path='/student/quiz/:quizid' component={QuizTaker} />
             <Route path='/student/course/:courseid' component={StudentCourseDetail}/>
             <Route path='/teacher/dayselector/:courseid' component={TeacherCourseDaySelector}/>
