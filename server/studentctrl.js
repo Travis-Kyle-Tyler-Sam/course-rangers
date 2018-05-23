@@ -42,33 +42,6 @@ module.exports = {
         return res.sendStatus(200)
     },
 
-    getInstructors: async (req, res, next) => {
-        let courses = [...req.userCourses]
-        let courseReturn = [];
-        let result
-        let course
-        let newCourse
-        // for (let i = 0; i<courses.length; i++){
-        //     course = courses[i];
-    // getInstructors: async (req, res, next) => {
-    //     let courses = [...req.userCourses]
-    //     let instructorReturn = [];
-    //     let result
-    //     let course
-    //     for (let i = 0; i<courses.length; i++){
-    //         course = courses[i];
-            
-    //         result = await req.app.get('db')
-    //         .course_students_DB
-    //         .get_course_instructor([course.class_id])
-    //         instructorReturn.push(result)
-            
-    //     }
-    //    req.userInstructors = instructorReturn
-       
-    //     next()
-        
-    },
     getAssignments: async (req, res, next) => {
         // let courses = [...req.userCourses]
         // let assignmentReturn = [];

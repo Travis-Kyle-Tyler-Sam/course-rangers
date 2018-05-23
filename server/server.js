@@ -102,7 +102,8 @@ app.get("/auth", passport.authenticate("auth0"));
 app.get(
   "/auth/callback",
   passport.authenticate("auth0", {
-    successRedirect: SUCCESS_REDIRECT,
+    // successRedirect: SUCCESS_REDIRECT,
+    successRedirect: '/auth/route',
     failureRedirect: FAILURE_REDIRECT
   })
 );
@@ -114,6 +115,19 @@ app.get("/auth/me", function(req, res) {
     res.status(200).send(req.user);
   }
 });
+
+app.get("/auth/route", (req, res) => {
+  switch( req.user.user_type ) {
+    case "admin":
+      return res.redirect(process.env.ADMIN_ROUTE)
+    case "Instructor":
+      return res.redirect(process.env.TEACHER_ROUTE)
+    case "Student":
+      return res.redirect(process.env.STUDENT_ROUTE)
+    default:
+      return res.redirect('/#/Woops')
+  }
+})
 
 
 ///s3 uploader
@@ -178,10 +192,6 @@ app.get('/api/gettoday', (req, res)=>{
   .catch(err=>console.log(err))
 })
 
-
-
-
-
 //// admin endpoints ////
 
 app.get('/api/registry/:adminid', adminctrl.getRegistry)
@@ -216,10 +226,8 @@ app.put('/api/gradeassignment/:studentAssignmentId', (req, res)=>{
 
 /// student dash etc. endpoints ///
 
-app.get('/api/student/getcourse/:studentid', studentctrl.getCourses, studentctrl.getInstructors)
 app.get('/api/student/quiz/:quizid', studentctrl.getQuiz)
 app.patch('/api/student/quiz/:quizid', studentctrl.updateQuiz)
-
 app.get('/api/student/getcourse/:studentid', studentctrl.getCourses, studentctrl.getAssignments)
 app.get('/api/student/getcoursedetail/:courseid', studentctrl.getCourseDetail, studentctrl.getCourseDays, studentctrl.getCourseAssignments, studentctrl.getCourseResources)
 app.patch('/api/student/uploadfile', studentctrl.uploadFile, studentctrl.getCourses, studentctrl.getAssignments)
