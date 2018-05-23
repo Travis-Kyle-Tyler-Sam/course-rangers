@@ -21,6 +21,7 @@
     "material-ui": "^1.0.0-beta.47",
     "moment": "^2.22.1",
     "monitor.io": "^0.1.0",
+    "nodemon": "^1.17.5",
     "passport": "^0.4.0",
     "passport-auth0": "^0.6.1",
     "react": "^16.3.2",
