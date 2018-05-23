@@ -6,7 +6,6 @@ import FileUpload from './../FileUpload';
 import './Profile.css';
 
 
-
 class Profile extends Component {
     constructor(props) {
         super(props);
