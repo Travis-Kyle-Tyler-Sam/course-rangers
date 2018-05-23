@@ -1,12 +1,18 @@
 .cb-home-container {
-    padding: 0 50px 50px 50px;
-    display: flex;
+  display: flex;
+  justify-content: space-between;
 }
 
-.cb-home-input-group {
-    width: 65vw;
+.cb-home-outer-container {
+  padding: 110px 50px;
 }
 
-.cb-home-outer-container > h1 {
-    margin: 10px 0 10px 50px;   
+.cb-home-container {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+}
+
+.ss-searchbox-container {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
 }
