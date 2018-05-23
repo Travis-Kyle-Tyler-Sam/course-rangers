@@ -42,14 +42,14 @@ module.exports = {
         return res.sendStatus(200)
     },
 
-    // getInstructors: async (req, res, next) => {
-    //     let courses = [...req.userCourses]
-    //     let courseReturn = [];
-    //     let result
-    //     let course
-    //     let newCourse
-    //     for (let i = 0; i<courses.length; i++){
-    //         course = courses[i];
+    getInstructors: async (req, res, next) => {
+        let courses = [...req.userCourses]
+        let courseReturn = [];
+        let result
+        let course
+        let newCourse
+        // for (let i = 0; i<courses.length; i++){
+        //     course = courses[i];
     // getInstructors: async (req, res, next) => {
     //     let courses = [...req.userCourses]
     //     let instructorReturn = [];
@@ -68,7 +68,7 @@ module.exports = {
        
     //     next()
         
-    // },
+    },
     getAssignments: async (req, res, next) => {
         // let courses = [...req.userCourses]
         // let assignmentReturn = [];
