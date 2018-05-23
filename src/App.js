@@ -13,6 +13,8 @@ import LogoutScreen from './components/Logout/LogoutScreen';
 import TeacherLecture from './components/TeacherLecture/TeacherLecture';
 import StudentLecture from './components/StudentLecture/StudentLecture';
 import StudentCourseDetail from './components/studentDashboard/StudentCourseList/StudentCourseDetail/StudentCourseDetail';
+import QuizTaker from './components/QuizTaker/QuizTaker'
+
 import TeacherCourseDaySelector from './components/TeacherCourseDaySelector/TeacherCourseDaySelector';
 import TeacherAssignmentsView from './components/TeacherAssignmentsView/TeacherAssignmentsView';
 import Profile from './components/Profile/Profile';
@@ -36,6 +38,8 @@ class App extends Component {
             <Route path='/logoutscreen' component={LogoutScreen}/>
             <Route path='/teacher/lecture/:dayid' component={TeacherLecture}/>
             <Route path='/student/lecture' component={StudentLecture}/>
+            <Route path='/student/course' component={StudentCourseDetail}/>
+            <Route path='/student/quiz/:quizid' component={QuizTaker} />
             <Route path='/student/course/:courseid' component={StudentCourseDetail}/>
             <Route path='/teacher/dayselector/:courseid' component={TeacherCourseDaySelector}/>
             <Route path='/teacher/courseassignments/:courseid/:assignmentid' component={TeacherAssignmentsView}/>

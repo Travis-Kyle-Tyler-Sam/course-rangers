@@ -55,7 +55,7 @@ module.exports = {
 
                 for( let k=0; k<students.length; k++) {
                     let sId = students[k].id
-                    let quiz = await db.course_assignments_DB.add_course_assignment( [sId, course.id, qId, null, courseDayId, dueDate, qName, desc, 'quiz'])
+                    let quiz = await db.course_assignments_DB.add_course_assignment( [sId, course.id, qId, tPts, courseDayId, dueDate, qName, desc, 'quiz'])
 
                     // START HERE -- ITERATE AND INSERT QUESTIONS FROM QUIZ
                     for( let m=0; m<questions.length; m++ ) {
