@@ -113,7 +113,6 @@ class TeacherCourseDaySelector extends Component {
     return (
       <div>
         <Header>{course_name}</Header>
-        <TodayButton today={this.state.today} courseid={+this.props.match.params.courseid}/>
         <div className="card_floater">
           <Card style={{ width: "600px" }}>
             <div className="container1">{daysToDisplay}</div>
