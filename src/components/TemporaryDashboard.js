@@ -18,7 +18,6 @@ class TemporaryDashboard extends Component {
     render() { 
         return ( 
             <div>
-                <Navbar/>
                 Hello {this.props.user.user_name}
             <section>
                 

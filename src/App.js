@@ -19,12 +19,16 @@ import TeacherCourseDaySelector from './components/TeacherCourseDaySelector/Teac
 import TeacherAssignmentsView from './components/TeacherAssignmentsView/TeacherAssignmentsView';
 import Profile from './components/Profile/Profile';
 import NoClass from './components/NoClass/NoClass';
+
+import Navbar from './components/Navbar/Navbar'
 class App extends Component {
   render() {
     return (
       <div className="App">
 
        <HashRouter>
+         <div>
+          <Navbar />
           <Switch>
             <Route exact path='/' component={Home} />
             <Route path='/temporarydashboard' component={TemporaryDashboard} />
@@ -47,6 +51,7 @@ class App extends Component {
             <Route path='/teacher/noclass' component={NoClass}/>
             
           </Switch>
+         </div>
         </HashRouter>
        </div>
     );
