@@ -1,4 +1,5 @@
 .columns {
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: 1fr 33% 1fr 33% 1fr;
+    grid-template-rows:
 }

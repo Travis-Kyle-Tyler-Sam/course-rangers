@@ -1,4 +1,4 @@
-.card {
+/* .card {
     width: 500px;
     height: 800px;
     border-color: #e2e9e6;
@@ -28,4 +28,7 @@
 .card2 h2 {
     text-align: center;
     margin-top: 10px;
+} */
+.pending-assignments{
+    grid-column: 2 / 3
 }
