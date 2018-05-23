@@ -24,13 +24,14 @@ class TodayButton extends Component {
 
 
     componentDidMount(){
-this.getDate()
+        this.getDate()
     }
-    getDate(){
 
-            axios.get(`/api/gettoday/?date=${this.props.today}&courseid=${this.props.courseid}`)
-            .then(response => this.setState({todaysClass: response.data}))
-            .catch(err=>console.log(err))
+    getDate() {
+
+        axios.get(`/api/gettoday/?date=${this.props.today}&courseid=${this.props.courseid}`)
+        .then(response => this.setState({todaysClass: response.data}))
+        .catch(err=>console.log(err))
     }
 
     render() { 

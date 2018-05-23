@@ -2,6 +2,11 @@ import React, { Component } from 'react';
 import { Sidebar, Segment, Button, Menu } from 'semantic-ui-react'
 import {Link} from 'react-router-dom';
 
+import { connect } from 'react-redux'
+import { getUserInfo } from '../../dux/userReducer'
+
+import './Navbar.css'
+
 
 class Navbar extends Component {
     constructor(props) {
@@ -11,19 +16,31 @@ class Navbar extends Component {
         }
     }
 
+    componentDidMount() {
+        this.props.getUserInfo();
+    }
+
 
     render() { 
 
 
   
-        return ( <div id="navbar">
-        <Button><Link to="/profile">Profile</Link></Button>
-            <Button id="logout"> <a href={process.env.REACT_APP_LOGOUT}>
-                    Logout
-                </a>
-            </Button>
-        </div> )
+        return ( 
+
+        <div className="navbar">
+            <a href="/#/profile">Profile</a>
+
+            <a href={process.env.REACT_APP_LOGOUT}>
+                Logout
+            </a>
+    </div> )
+    }
+}
+
+function mapStateToProps(state) {
+    return {
+        user: state.users.user
     }
 }
  
-export default Navbar;
+export default connect( mapStateToProps, { getUserInfo } )(Navbar);

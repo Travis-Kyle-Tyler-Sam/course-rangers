@@ -19,7 +19,6 @@ class TeacherDashboard extends Component {
     render() { 
         return ( 
 <div>
-    <Navbar/>
     <h1>Teacher Dashboard</h1>
     <div className='ui container'>
     
