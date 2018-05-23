@@ -1,0 +1,12 @@
+.td-container {
+    height: 100vh;
+    padding: 116px 90px 100px 90px;
+}
+
+.td-segment-container {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-gap: 50px;
+    grid-template-rows: 1fr;
+    height: 100%;
+}

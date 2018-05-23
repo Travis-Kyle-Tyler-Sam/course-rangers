@@ -1,16 +1,16 @@
 .navbar {
-    background: white;
-    height: 85px;
-    width: 100%;
-    margin-bottom: 20px;
-    box-shadow: 0px 3px 13px 0px rgba(0, 0, 0, 0.5);
-    display:flex;
-    align-items: center;
-    position: fixed;
+  background: white;
+  height: 85px;
+  width: 100%;
+  margin-bottom: 20px;
+  box-shadow: 0px 3px 13px 0px rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  position: fixed;
+  z-index: 10;
 }
 
 .navbar > a {
-    font-size: 30px;
-    margin: 0 10px;
-
+  font-size: 30px;
+  margin: 0 10px;
 }
