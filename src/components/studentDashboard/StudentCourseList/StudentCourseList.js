@@ -54,7 +54,7 @@ function StudentCourseList (props){
             //     :<Dimmer active>
             //     <Loader/>
             // </Dimmer>
-            :null
+            :<div>No classes yet!</div>
             }
             </Segment>
             

@@ -17,14 +17,37 @@ class StudentCourseDetail extends Component {
 
     componentDidMount(){
         const {courseid} = this.props.match.params;
-        axios.get(`/api/student/getcoursedetail/${courseid}`).then( response => {
+        if (courseid === 'undefined'){
             this.setState({
-                course:response.data.course[0],
-                daysArray:response.data.daysArray,
-                resources:response.data.resources,
-                assignments:response.data.assignments
+                course:{
+                    course_name:'No courses yet!',
+                    teacher_name:'Check with an admin',
+                    letterGrade:'No grades yet!',
+                    percent:'No grades yet!'
+                },
+                daysArray:[
+                    {
+                        date:'No school days yet!'
+                    }
+                ],
+                assignments:[{
+                    name:'No assignments yet!'
+                }],
+                resources:[{
+                    name:'No resources yet!'
+                }]
             })
-        })
+        }
+        else {
+            axios.get(`/api/student/getcoursedetail/${courseid}`).then( response => {
+                this.setState({
+                    course:response.data.course[0],
+                    daysArray:response.data.daysArray,
+                    resources:response.data.resources,
+                    assignments:response.data.assignments
+                })
+            })
+        }
     }
     uploadFile(url, assignmentID, dateSubmitted){
         const {courseid} = this.props.match.params;

@@ -11,7 +11,9 @@ module.exports = {
         let results = await req.app.get('db')
         .course_students_DB
         .get_course_students([studentid])
-        
+        if (results.length === 0){
+            results = [{course_name:'No courses yet!'}]
+        }
         req.session.userCourses = results
         next()
 
@@ -42,49 +44,7 @@ module.exports = {
         return res.sendStatus(200)
     },
 
-    // getInstructors: async (req, res, next) => {
-    //     let courses = [...req.userCourses]
-    //     let courseReturn = [];
-    //     let result
-    //     let course
-    //     let newCourse
-    //     for (let i = 0; i<courses.length; i++){
-    //         course = courses[i];
-    // getInstructors: async (req, res, next) => {
-    //     let courses = [...req.userCourses]
-    //     let instructorReturn = [];
-    //     let result
-    //     let course
-    //     for (let i = 0; i<courses.length; i++){
-    //         course = courses[i];
-            
-    //         result = await req.app.get('db')
-    //         .course_students_DB
-    //         .get_course_instructor([course.class_id])
-    //         instructorReturn.push(result)
-            
-    //     }
-    //    req.userInstructors = instructorReturn
-       
-    //     next()
-        
-    // },
     getAssignments: async (req, res, next) => {
-        // let courses = [...req.userCourses]
-        // let assignmentReturn = [];
-        // let result 
-        // let course
-        // for (let i =0; i<courses.length;i++){
-        //     course = courses[i];
-
-        //     result = await req.app.get('db')
-        //     .course_students_DB
-        //     .get_course_assignments([course.user_id])
-        //     assignmentReturn.push(result)
-        // }
-        // req.userAssignments = assignmentReturn
-        
-        // next()
         const {studentid} = req.params;
         let results = await req.app.get('db')
         .course_students_DB
@@ -93,37 +53,15 @@ module.exports = {
         req.session.userAssignments = results
         res.status(200).send({courses:req.session.userCourses, assignments:results})
     },
-    // organizeEverything: (req, res, next) => {
-    //     let instructor
-    //     let newCourses = map(userCourses, course => {
-    //         instructor = req.userInstructors.filter( instructor => {
-    //             return instructor.course_name === course.course_name
-    //         })[0];
-    //         return Object.assign({}, course, 
-    //             {
-    //                 instructorName:instructor.user_name,
-    //                 instructorID: instructor.teacher_id
-    //             }
-    //         )
-    //     })
-
-
-
-
-    //     let everything = {
-    //         assignments:req.userAssignments[0],
-    //         courses:req.userCourses,
-    //         instructors:req.userInstructors[0]
-    //     }
-        
-    //     res.status(200).send(everything)
-    // },
     getCourseDetail: async (req, res, next) => {
         const { courseid } = req.params;
 
         let result = await req.app.get('db')
         .courses_DB
         .get_course([courseid])
+        if (result.length === 0){
+            result = [{course_name:'No courses yet!'}]
+        }
         req.course = result;
         next()
     },
