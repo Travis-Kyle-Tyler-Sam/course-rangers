@@ -79,7 +79,6 @@ class StudentDashboard extends Component {
     const { studentsCourses, studentsAssignments, studentID } = this.state;
     return (
       <div>
-        <Navbar />
         <div className='columns'>
           <StudentPendingAssign
             courses = {studentsCourses.map( course => {
