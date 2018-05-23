@@ -21,6 +21,7 @@ function StudentCourseAssignments(props){
                 studentID = {assignment.student_id}
                 attachment = {assignment.attachment}
                 dateSubmitted = {assignment.date_submitted}
+                key={assignment.id + assignment.name}
             />
         )
     })
