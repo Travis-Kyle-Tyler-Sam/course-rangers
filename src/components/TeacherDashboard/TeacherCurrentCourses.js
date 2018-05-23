@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import moment from "moment";
 import { connect } from 'react-redux';
 import { updateCourses } from '../../dux/teacherReducer';
+import TodayButton from './TodayButton';
 import {
   Card,
   Icon,
@@ -22,12 +23,14 @@ class TeacherCurrentCourses extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentCourses: []
+      currentCourses: [],
+      today: ''
     };
   }
 
   componentDidMount() {
     this.getTeachersCourses();
+    this.populateToday()
   }
 
   getTeachersCourses() {
@@ -41,13 +44,18 @@ class TeacherCurrentCourses extends Component {
       return this.getTeachersCourses();
     });
   }
+  populateToday(){
+    this.setState({today: moment().format('YYYY-MM-DD')}) 
+  }
 
   render() {
+
+
     let currentCourseList = this.props.courses.map(course => {
       return (
         <Table.Row key={course.id}>
           <Table.Cell>
-            <Button href='/#/teacher/lecture'>Today</Button>
+            <TodayButton today={this.state.today} courseid={course.id}/>
           </Table.Cell>
           <Table.Cell> <Link to={`/teacher/dayselector/${course.id}`}>{course.course_name}</Link></Table.Cell>
           <Table.Cell>{course.curriculum_id}</Table.Cell>

@@ -6,6 +6,8 @@ import "./TeacherCourseDaySelector.css";
 import TeacherCourseResources from "./TeacherCourseResources";
 import TeacherCourseAssignments from "./TeacherCourseAssignments";
 import _ from "lodash";
+import TodayButton from './../TeacherDashboard/TodayButton';
+import axios from 'axios';
 import {
   Card,
   Icon,
@@ -21,6 +23,12 @@ import {
   Pane,
   Segment
 } from "semantic-ui-react";
+import { updateCourses } from '../../dux/teacherReducer';
+
+
+
+
+
 class TeacherCourseDaySelector extends Component {
   constructor(props) {
     super(props);
@@ -29,9 +37,26 @@ class TeacherCourseDaySelector extends Component {
     )[0];
 
     this.state = {
-      course: filteredCourse
+      course: filteredCourse,
+      today: '',
+      currentCourses: []
     };
   }
+
+
+
+  componentDidMount() {
+    this.populateToday()
+  }
+
+
+
+
+  populateToday(){
+    this.setState({today: moment().format('YYYY-MM-DD')}) 
+  }
+
+
   render() {
     const {
       completion_date,
@@ -88,8 +113,7 @@ class TeacherCourseDaySelector extends Component {
     return (
       <div>
         <Header>{course_name}</Header>
-
-        <Button href="/#/teacher/lecture">Today</Button>
+        <TodayButton today={this.state.today} courseid={+this.props.match.params.courseid}/>
         <div className="card_floater">
           <Card style={{ width: "600px" }}>
             <div className="container1">{daysToDisplay}</div>

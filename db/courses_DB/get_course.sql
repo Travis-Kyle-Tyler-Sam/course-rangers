@@ -1,5 +1,3 @@
--- gets instructor information from courseid
-
 select * from courses as c
 join users as u
 on u.id = c.teacher_id

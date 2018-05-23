@@ -166,6 +166,22 @@ app.put('/api/course/:id', coursectrl.prepDelete, coursectrl.addCourse)
 
 app.delete('/api/course/:id', coursectrl.deleteCourse)
 
+
+
+app.get('/api/gettoday', (req, res)=>{
+  app
+  .get('db')
+  .course_days_DB.get_today([req.query.date, req.query.courseid])
+  .then(response=>{
+    res.status(200).send(response)
+  })
+  .catch(err=>console.log(err))
+})
+
+
+
+
+
 //// admin endpoints ////
 
 app.get('/api/registry/:adminid', adminctrl.getRegistry)
@@ -204,6 +220,10 @@ app.get('/api/student/getcourse/:studentid', studentctrl.getCourses, studentctrl
 app.get('/api/student/quiz/:quizid', studentctrl.getQuiz)
 app.patch('/api/student/quiz/:quizid', studentctrl.updateQuiz)
 
+app.get('/api/student/getcourse/:studentid', studentctrl.getCourses, studentctrl.getAssignments)
+app.get('/api/student/getcoursedetail/:courseid', studentctrl.getCourseDetail, studentctrl.getCourseDays, studentctrl.getCourseAssignments, studentctrl.getCourseResources)
+app.patch('/api/student/uploadfile', studentctrl.uploadFile, studentctrl.getCourses, studentctrl.getAssignments)
+app.patch('/api/student/courseuploadfile', studentctrl.courseUploadFile, studentctrl.getCourseDetail, studentctrl.getCourseDays, studentctrl.getCourseAssignments, studentctrl.getCourseResources)
 /// student selector endpoints ////
 
 app.get('/api/getAllStudents', (req, res) =>{

@@ -1,30 +1,69 @@
 import React, { Component } from 'react';
-import { Segment} from 'semantic-ui-react';
+import { Segment, Loader, Dimmer} from 'semantic-ui-react';
 import StudentDaySelector from './StudentDaySelector/StudentDaySelector';
 import StudentAssignmentResourceGrade from './StudentAssignmentResourceGrade/StudentAssignmentResourceGrade';
+import axios from 'axios';
 import './StudentCourseDetail.css'
 class StudentCourseDetail extends Component {
     constructor(){
         super();
         this.state = {
-            courseName:'MATH',
-            daysArray:[],
-
+            // course:'MATH',
+            // daysArray:[],
+            // assignments:[]
         }
+        this.uploadFile = this.uploadFile.bind(this);
     }
 
+    componentDidMount(){
+        const {courseid} = this.props.match.params;
+        axios.get(`/api/student/getcoursedetail/${courseid}`).then( response => {
+            this.setState({
+                course:response.data.course[0],
+                daysArray:response.data.daysArray,
+                resources:response.data.resources,
+                assignments:response.data.assignments
+            })
+        })
+    }
+    uploadFile(url, assignmentID, dateSubmitted){
+        const {courseid} = this.props.match.params;
+        axios.patch('/api/student/courseuploadfile', {url, assignmentID, courseid, dateSubmitted}).then( response => {
+            this.setState({
+                course:response.data.course[0],
+                daysArray:response.data.daysArray,
+                resources:response.data.resources,
+                assignments:response.data.assignments
+            })
+        })
+    }
     render(){
-        const { courseName } = this.state;
+        const { assignments, resources, daysArray, course } = this.state;
+        
         return(
             <div>
-                <h1>{courseName}</h1>
-                <div className='student-detail'>
+                { course
+                ?
+                <div>
+                <h1>{course.course_name}</h1>
+                    <div className='student-detail'>
                     <Segment>
-                        <StudentDaySelector/>
+                        <StudentDaySelector
+                        daysArray = {daysArray}
+                        />
                     </Segment>
-                    <StudentAssignmentResourceGrade/>
+                    <StudentAssignmentResourceGrade
+                    assignments = {assignments}
+                    resources = {resources}
+                    course = {course}
+                    uploadFileFn = {this.uploadFile}
+                    />
+                    </div>
                 </div>
-
+                : <Dimmer active>
+                    <Loader/>
+                </Dimmer>
+                }
             </div>
         )
     }
