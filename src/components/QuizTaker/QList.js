@@ -11,31 +11,40 @@ class QList extends Component {
     }
 
     render() { 
+        
 
-        let questions = this.props.questions.map( (question, i) => <div key={question.id}> <Icon name='circle outline' color='red' /> Question {i+1} </div>)
+        let questions = this.props.questions.map( (question, i) => { 
+
+            let qIcon = question.option_selected !== null
+                ? <Icon name='check circle outline' color='blue' /> 
+                : <Icon name='circle outline' color='red' /> 
+
+            return (
+
+
+            <div className='qt-q-item' key={question.id} onClick={ () => this.props.changeQ(i) }>
+                { this.props.index === i && <Icon name='chevron right' primary /> } 
+              
+                    Question {i+1} 
+                { qIcon }
+            </div> 
+            )
+        })
 
         return ( 
                 <Segment 
                     className='qlist-container'
                     style={{margin: 0}} >
-                    <Header>Questions</Header>
-                    { questions }
-                    { questions }
-                    { questions }
-                    { questions }
-                    { questions }
-                    { questions }
-                    { questions }
-                    { questions }
-                    { questions }
-                    { questions }
-                    { questions }
-                    { questions }
-                    { questions }
-                    { questions }
-                    { questions }
-                    { questions }
+                    <Header
+                        className='qt-qlist-header' >Questions</Header>
+                    <div className='qlist-inner-container'>
+
+                        { questions }
+                      
+
+                    </div>
                 </Segment>
+
          )
     }
 }

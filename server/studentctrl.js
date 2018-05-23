@@ -29,6 +29,13 @@ module.exports = {
         return res.status(200).send(quiz)
     },
 
+    updateQuiz: async (req, res, next) => {
+        let id = req.params.quizid
+        let { ptsScored, percent, date, letterGrade } = req.body
+        await req.app.get('db').course_assignments_DB.update_course_quiz( [ptsScored, percent, date, letterGrade, id] )
+        return res.sendStatus(200)
+    },
+
     getInstructors: async (req, res, next) => {
         let courses = [...req.userCourses]
         let courseReturn = [];

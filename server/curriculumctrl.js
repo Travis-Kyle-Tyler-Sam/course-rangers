@@ -43,7 +43,12 @@ module.exports = {
 
             quizzes.forEach( async quiz =>{
                 let { description, dueDate, title, questions } = quiz
-                let quizId = await db.assignments_DB.create_assignment( [title, description, dueDate, 'quiz', null, dayId, curriculumId, null] )
+
+                let totPoints = questions.reduce( (total, current) => {
+                    return total + current.ptsPossible
+                }, 0)
+
+                let quizId = await db.assignments_DB.create_assignment( [title, description, dueDate, 'quiz', null, dayId, curriculumId, totPoints] )
                 .catch( err => console.log(err))
 
                 quizId = quizId[0].id
@@ -60,6 +65,9 @@ module.exports = {
                         .catch( err => console.log(err))
                     })
                 })
+
+                
+
             })
         })
             return res.sendStatus(200)
