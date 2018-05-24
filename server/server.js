@@ -34,10 +34,11 @@ const {
 const app = express();
 const server = http.createServer(app)
 const io = socketIo(server, {wsEngine:'ws'});
+
+app.use(express.static(__dirname + './../build'));
+
 app.use(bodyParser.json({ limit: "50MB" }));
 S3(app);
-
-
 
 massive(CONNECTION_STRING)
   .then(db => {
