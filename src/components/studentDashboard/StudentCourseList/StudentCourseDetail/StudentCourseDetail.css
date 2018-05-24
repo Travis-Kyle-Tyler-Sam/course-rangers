@@ -49,3 +49,6 @@ h1{
   display:grid;
   grid-template-columns: auto auto auto auto auto auto auto;
 }
+.table-row-pointer{
+  cursor: pointer;
+}

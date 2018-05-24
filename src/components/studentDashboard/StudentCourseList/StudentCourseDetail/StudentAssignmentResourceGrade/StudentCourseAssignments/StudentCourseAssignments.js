@@ -51,9 +51,9 @@ class StudentCourseAssignments extends Component{
             
             <div className='student-course-assignments'>
                 <Header as='h2'>Upcoming Assignments/Quizzes</Header>
-                <Table>
+                <Table fixed columns={3}>
                     <Table.Header>
-                        <Table.Row>
+                        <Table.Row >
                             <Table.HeaderCell>Name</Table.HeaderCell>
                             <Table.HeaderCell>Due Date</Table.HeaderCell>
                             <Table.HeaderCell>Status</Table.HeaderCell>

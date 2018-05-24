@@ -1,7 +1,7 @@
 import React, {Component}from 'react';
 import AdminAddEdit from '../AdminAddEdit/AdminAddEdit';
-import { Modal, Button, Header, Table, Pagination, Input, Form } from 'semantic-ui-react';
-import './AdminList.css';
+import { Modal, Button, Header, Table, Pagination, Input, Form, Loader, Dimmer } from 'semantic-ui-react';
+import '../AdminDash/AdminDash.css'
 import _ from 'lodash';
 
 class AdminList extends Component{
@@ -144,7 +144,7 @@ class AdminList extends Component{
             }
         })
         return (
-            <div>
+            <div className='user-table'>
                 <div>
                     <h2>{type}</h2>
                     <div className='topOfTable'>
@@ -163,7 +163,7 @@ class AdminList extends Component{
                     </div>
                 </div>
                 
-                <Table striped={true} compact={true} sortable={true} celled fixed>
+                <Table striped={true} compact={true} sortable={true} celled fixed attached>
                     <Table.Header>
                         <Table.Row>
                             <Table.HeaderCell sorted={column === 'name' ? direction: null} onClick={this.handleSort('name')}>Name</Table.HeaderCell>

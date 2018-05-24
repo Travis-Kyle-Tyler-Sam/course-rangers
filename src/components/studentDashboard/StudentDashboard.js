@@ -78,7 +78,7 @@ class StudentDashboard extends Component {
   render() {
     const { studentsCourses, studentsAssignments, studentID } = this.state;
     return (
-      <div>
+      <div className='dashboard'>
         <div className='columns'>
           <StudentPendingAssign
             courses = {studentsCourses.map( course => {
