@@ -94,7 +94,7 @@ class TeacherAssignmentsView extends Component {
             {assignment.percentage ? (
               `Completed Grade: ${assignment.percentage}%`
             ) : assignment.type === "assignment" ? (
-              <Modal closeIcon trigger={<Button> Grade</Button>}>
+              <Modal closeIcon trigger={<Button primary> Grade</Button>}>
                 <Header
                   content={`${assignment.name} for ${assignment.user_name}`}
                 />
@@ -146,7 +146,7 @@ class TeacherAssignmentsView extends Component {
     });
     return (
       <div className='tav-container' >
-        <Header as="h2" />
+        <Header as="h2" id="grading-page">Student Assignments and Quizzes</Header>
         <Table striped>
           <Table.Header>
             <Table.Row>
