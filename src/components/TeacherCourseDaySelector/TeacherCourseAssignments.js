@@ -61,7 +61,7 @@ class TeacherCourseAssignments extends Component {
       return (
         <Table.Row key={quiz.id + quiz.description}>
           <Table.Cell>
-            <Link to={`/teacher/courseassignments/${quiz.assignment_id}`}>
+            <Link to={`/teacher/courseassignments/${quiz.course_id}/${quiz.assignment_id}`}>
               {quiz.name}
             </Link>
           </Table.Cell>
