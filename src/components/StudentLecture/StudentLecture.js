@@ -118,11 +118,11 @@ class StudentLecture extends Component {
     }
     render() {
         let uniqueResources = _.uniqBy(this.state.courseMaterial, "title");
-
+        let uniqueAssignments = _.uniqBy(this.state.courseMaterial, "name");
         let resources = uniqueResources.map(resource => {
             return <Table.Row key={resource.id}><Table.Cell><a href={resource.url} target='_.blank'>{resource.title}</a></Table.Cell></Table.Row>
         })
-        let assignments = this.state.courseMaterial.map(assignment => {
+        let assignments = uniqueAssignments.map(assignment => {
             return <Table.Row key={assignment.id + assignment.name}>
                 <Table.Cell>{assignment.name}</Table.Cell>
                 <Table.Cell>{assignment.percentage ? (`${assignment.percentage}%`): ('Not Taken')}</Table.Cell>
