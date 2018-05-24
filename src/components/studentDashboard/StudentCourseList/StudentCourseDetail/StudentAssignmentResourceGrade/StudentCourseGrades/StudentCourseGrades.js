@@ -1,6 +1,7 @@
 import React from 'react';
 import { Table, Header } from 'semantic-ui-react';
 import GradesTable from './GradesTable/GradesTable';
+import '../../StudentCourseDetail.css';
 function StudentCourseGrades(props){
     // const grades = [
     //     {
@@ -65,7 +66,7 @@ function StudentCourseGrades(props){
         )
     })
     return(
-        <div>
+        <div className='student-course-grades'>
             <Header as='h2'>Grades</Header>
             <GradesTable
             type='Assignments'

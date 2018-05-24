@@ -1,5 +1,5 @@
 import React from 'react';
-import './StudentDaySelector.css';
+import '../StudentCourseDetail.css'
 import { Card } from 'semantic-ui-react';
 import sortBy from 'lodash/sortBy'
 
@@ -15,7 +15,7 @@ function StudentDaySelector (props){
         </Card>
     })
     return(
-        <div className='grid-container'>
+        <div className='day-grid-container'>
             {daysBoxes}
         </div>
     )

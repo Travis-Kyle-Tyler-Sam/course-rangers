@@ -34,7 +34,8 @@ class PendingAssignCard extends Component {
         
         const table = courses.map( course => {
             return(
-                <PendingAssignmentTable
+                assignments.length !== 0
+                ?<PendingAssignmentTable
                     course = {course}
                     list = {assignments.filter( assignment => {
                         return assignment.course_name == course && !assignment.date_submitted
@@ -42,6 +43,8 @@ class PendingAssignCard extends Component {
                     key = {`pendingtable${course}`}
                     uploadFileFn = {this.props.uploadFileFn}
                 />
+                :null
+                
             )
         })
         return (
