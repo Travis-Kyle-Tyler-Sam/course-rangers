@@ -81,6 +81,7 @@ class TeacherAssignmentsView extends Component {
   }
   render() {
     let assignments = this.state.assignments.filter(assignment=>assignment.course_id === +this.props.match.params.courseid).map(assignment => {
+     
       return (
         <Table.Row key={assignment.assignment_id + assignment.user_name}>
           <Table.Cell>{assignment.name}</Table.Cell>
@@ -96,7 +97,7 @@ class TeacherAssignmentsView extends Component {
                 />
                 <Modal.Content>
                   <p>{`Assignment Description: ${assignment.description}`}</p>
-                  <p>{`Attachment: ${assignment.attachment} `}</p>
+                  <p><a href='assignment.attachment' target="_.blank">{`Attachment: ${assignment.user_name}'s Assignment Submission `}</a></p>
                   <p>{`Date Submitted: ${moment(
                     assignment.date_submitted
                   ).format("MM/DD")}`}</p>
