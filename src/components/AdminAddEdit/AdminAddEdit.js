@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Button, Header, Input, Form, Label, Modal, Checkbox, Radio } from 'semantic-ui-react';
-
+import { Button, Header, Input, Form, Label, Modal, Checkbox, Radio, Icon } from 'semantic-ui-react';
+import './../AdminDash/AdminDash.css';
 class AdminAddEdit extends Component {
     constructor(){
         super();
@@ -89,23 +89,24 @@ class AdminAddEdit extends Component {
                 return <p>{id}</p>
             }
         }
-        
         return(
             <div>
-                <Modal trigger={<Button onClick={ () => this.handleClick(true)} id={`${phone}`}>{adjust}</Button>}
-            open={this.state.modalOpen}
-            >
-                <Modal.Header>{adjust}</Modal.Header>
-                <Modal.Content>
-                    <Modal.Description>
-                <Modal.Content>
-                    <Modal.Description>
+                <Modal trigger={<Button onClick={ () => this.handleClick(true)} 
+                    id={`${phone}`}>
+                    {adjust}
+                    </Button>}
+                    open={this.state.modalOpen}
+                    size='mini'
+                    style={{padding:'2rem'}}
+                >
+                <Modal.Header style={ {paddingTop:'1rem', fontSize:'2.3em'} }>{adjust}</Modal.Header>
+                <Modal.Content style={{paddingTop:'0.5rem'}}>
                         <Form>
+                            <p>Name: </p>
+                            <Input value={name} id='name_input' onChange = { e=> this.handleChange('name',e.target.value)}/>
                             
-                                <p>Name: </p>
-                                <Input value={name} id='name_input' onChange = { e=> this.handleChange('name',e.target.value)}/>
-                                <p>Role: </p>
-                                
+                            <p>Role:    </p>
+                            <div className='radio'>
                                     <Radio value='Student' name='role' id='studentChoice' onChange = { e => this.handleChange('value',e.target.value)}
                                     checked={this.state.value === 'Student'}/>
                                     <Label htmlFor='studentChoice'>Student</Label>
@@ -113,24 +114,50 @@ class AdminAddEdit extends Component {
                                     <Radio value='Instructor' name='role' id='instructorChoice' onChange = { e => this.handleChange('value',e.target.value)}
                                     checked={this.state.value==='Instructor'}/>
                                     <Label htmlFor='instructorChoice'>Instructor</Label>
-
-                                <p>Phone: </p>
-                                <Input value={phone} id='input_phone' onChange={ e=> this.handleChange('phone',e.target.value)}/>
-                            
-                            
-                                <p>Email: </p>
-                                <Input value={email} id='input_email' onChange = { e=> this.handleChange('email',e.target.value)}/>
-                            
-                            
+                                </div>
+                            <p>Phone: </p>
+                            <Input value={phone} id='input_phone' onChange={ e=> this.handleChange('phone',e.target.value)}/>
+                        
+                        
+                            <p>Email: </p>
+                            <Input value={email} id='input_email' onChange = { e=> this.handleChange('email',e.target.value)}/>
+                        
+                            <div className='radio'>
                                 <p>{value} ID: </p> {displayID()}
-                            <Button onClick={() => this.saveFunctions(name, email, phone, value, id, callbackFn, this.handleClick, false) 
-                            }>Save</Button>
-                            <Button onClick={() => this.deleteFunctions(id)}>Delete</Button>
-                            <Button onClick={() => this.handleClick(false)}>Close</Button>
+                            </div>
+                            
                         </Form>
-                    </Modal.Description>
-                </Modal.Content>
-                </Modal.Description>
+                        <Modal.Actions className='radio'>
+                            <Button onClick={() => this.saveFunctions(name, email, phone, value, id, callbackFn, this.handleClick, false)}
+                            positive
+                            animated>
+                                <Button.Content visible>
+                                    <Icon name='save'/>
+                                </Button.Content>
+                                <Button.Content hidden>
+                                    Save 
+                                </Button.Content>
+                            </Button>
+                            <Button onClick={() => this.deleteFunctions(id)}
+                                negative
+                                animated>
+                                <Button.Content visible>
+                                    <Icon name='trash'/>
+                                </Button.Content>
+                                <Button.Content hidden>
+                                    Delete 
+                                </Button.Content>
+                            </Button>
+                            <Button onClick={() => this.handleClick(false)}
+                                animated>
+                                <Button.Content visible>
+                                    <Icon name='close'/>
+                                </Button.Content>
+                                <Button.Content hidden>
+                                    Close
+                                </Button.Content>
+                            </Button>
+                        </Modal.Actions>
                 </Modal.Content>
             </Modal>
            

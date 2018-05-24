@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import StudentAssignmentDetail from './../../StudentAssignmentDetail/StudentAssignmentDetail'
-import { Table, Pagination } from 'semantic-ui-react';
+import { Table, Pagination, Button } from 'semantic-ui-react';
 import moment from 'moment';
+import { withRouter } from 'react-router-dom';
+
 class PendingAssignmentTable extends Component{
     constructor(props){
         super(props);
@@ -29,30 +31,56 @@ class PendingAssignmentTable extends Component{
         const assignments = list.map( (assignment, i) => {
             if (Math.ceil((i+1)/3)===currentPage){
                 return (
-                    <StudentAssignmentDetail
-                        courseName = {assignment.course_name}
-                        assignmentName = {assignment.name}
-                        instructorName = {assignment.teacher_name}
-                        dueDate = {moment(assignment.due_date).format('MM/DD')}
-                        instructions = {assignment.description}
-                        key = {`pend-assignment-detail${assignment.id}`}
-                        uploadFileFn = {this.props.uploadFileFn}
-                        assignmentID = {assignment.id}
-                        studentID = {assignment.studentID}
-                        attachment = {assignment.attachment}
-                        dateSubmitted = {assignment.date_submitted}
-                    />
+                    <Table.Row>
+                        <Table.Cell >{assignment.name}</Table.Cell>
+                        <Table.Cell >{moment(assignment.due_date).format('MM/DD')}</Table.Cell>
+                        {
+                            assignment.date_submitted
+                                ?<Table.Cell >
+                                    {`submitted ${moment(assignment.date_submitted).format('MM/DD')}`}
+                                    {/* <Icon name='target'/> */}
+                                </Table.Cell>
+                                :<Table.Cell >
+                                    Incomplete 
+                                    {/* <Icon name='protect'/> */}
+                                </Table.Cell>
+                        }
+                        {
+                            assignment.type === 'quiz'
+                                ?<Table.Cell >
+                                    <Button onClick={() => this.props.history.push(`/student/quiz/${assignment.id}`)}>
+                                        Take Quiz!
+                                    </Button>
+                                </Table.Cell>
+                                
+                                :<StudentAssignmentDetail
+                                    courseName = {assignment.course_name}
+                                    assignmentName = {assignment.name}
+                                    instructorName = {assignment.teacher_name}
+                                    dueDate = {moment(assignment.due_date).format('MM/DD')}
+                                    instructions = {assignment.description}
+                                    key = {`pend-assignment-detail${assignment.id}`}
+                                    uploadFileFn = {this.props.uploadFileFn}
+                                    assignmentID = {assignment.id}
+                                    studentID = {assignment.studentID}
+                                    attachment = {assignment.attachment}
+                                    dateSubmitted = {assignment.date_submitted}
+                                    type = {assignment.type}
+                                />
+                        }
+                    </Table.Row>
                 )
             }
         })
         return(
             <div>
-                <Table striped color='brown' >
+                <Table striped color='brown' compact fixed singleLine>
                     <Table.Header>
                         <Table.Row>
                             <Table.HeaderCell>{course}</Table.HeaderCell>
                             <Table.HeaderCell>Due Date</Table.HeaderCell>
                             <Table.HeaderCell>Status</Table.HeaderCell>
+                            <Table.HeaderCell></Table.HeaderCell>
                         </Table.Row>
                     </Table.Header>
                     <Table.Body>
@@ -67,4 +95,4 @@ class PendingAssignmentTable extends Component{
         )
     }
 }
-export default PendingAssignmentTable
+export default withRouter(PendingAssignmentTable)
