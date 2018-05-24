@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import moment from "moment";
 import { Link } from "react-router-dom";
 import "./TeacherCourseDaySelector.css";
+
 import TeacherCourseResources from "./TeacherCourseResources";
 import TeacherCourseAssignments from "./TeacherCourseAssignments";
 import _ from "lodash";
@@ -112,13 +113,13 @@ class TeacherCourseDaySelector extends Component {
     ];
     return (
       <div>
-        <Header>{course_name}</Header>
+        <h1>{course_name}</h1>
         <div className="card_floater">
-          <Card style={{ width: "600px" }}>
+          <Card style={{ width: 700, padding: 15 }}>
             <div className="container1">{daysToDisplay}</div>
           </Card>
 
-          <Card style={{ width: "auto", height: "auto" }}>
+          <Card style={{ width: "auto", height: "auto", margin: 0 }}>
             <Tab panes={panes} />
           </Card>
         </div>

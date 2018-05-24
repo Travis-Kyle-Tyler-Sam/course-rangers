@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import '../../StudentCourseDetail.css'
 import StudentAssignmentDetail from './../../../../StudentAssignmentDetail/StudentAssignmentDetail';
-import {Header, Segment, List, Table, Pagination} from 'semantic-ui-react';
+import {Header, Segment, List, Table, Pagination, Button} from 'semantic-ui-react';
 import moment from 'moment';
+import {withRouter} from 'react-router-dom';
 
 class StudentCourseAssignments extends Component{
     constructor(props){
@@ -28,20 +29,50 @@ class StudentCourseAssignments extends Component{
         const {assignments, course, uploadFileFn} = this.props
         const list = assignments.map( (assignment, i) => {
             if (Math.ceil((i+1)/5) === this.state.currentPage){
+                let disabled = false;
+                if (assignment.date_submitted){
+                    disabled = true;
+                }
                 return(
-                    <StudentAssignmentDetail
-                        courseName = {course.course_name}
-                        assignmentName = {assignment.name}
-                        instructorName = {course.user_name}
-                        dueDate = {moment(assignment.due_date).format('MM/DD')}
-                        instructions = {assignment.description}
-                        status = {assignment.point_scored ? 'Done': 'Incomplete'}
-                        uploadFileFn = {uploadFileFn}
-                        assignmentID = {assignment.id}
-                        studentID = {assignment.student_id}
-                        attachment = {assignment.attachment}
-                        dateSubmitted = {assignment.date_submitted}
-                    />
+                    <Table.Row>
+                        <Table.Cell>{assignment.name}</Table.Cell>
+                        <Table.Cell>{moment(assignment.due_date).format('MM/DD')}</Table.Cell>
+                        {
+                            assignment.date_submitted
+                                ?<Table.Cell >
+                                    {`submitted ${moment(assignment.date_submitted).format('MM/DD')}`}
+                                    {/* <Icon name='target'/> */}
+                                </Table.Cell>
+                                :<Table.Cell >
+                                    Incomplete 
+                                    {/* <Icon name='protect'/> */}
+                                </Table.Cell>
+                        }
+                        {
+                            assignment.type === 'quiz'
+                                ?<Table.Cell>
+                                    <Button onClick={() => this.props.history.push(`/student/quiz/${assignment.id}`)}
+                                    disabled={disabled}
+                                    >
+                                        Take Quiz!
+                                    </Button>
+                                </Table.Cell>
+                                :<StudentAssignmentDetail
+                                    courseName = {course.course_name}
+                                    assignmentName = {assignment.name}
+                                    instructorName = {course.user_name}
+                                    dueDate = {moment(assignment.due_date).format('MM/DD')}
+                                    instructions = {assignment.description}
+                                    status = {assignment.point_scored ? 'Done': 'Incomplete'}
+                                    uploadFileFn = {uploadFileFn}
+                                    assignmentID = {assignment.id}
+                                    studentID = {assignment.student_id}
+                                    attachment = {assignment.attachment}
+                                    dateSubmitted = {assignment.date_submitted}
+                                    type = {assignment.type}
+                                />
+                        }
+                    </Table.Row>
                 )
             }}
         )
@@ -50,13 +81,13 @@ class StudentCourseAssignments extends Component{
       
             
             <div className='student-course-assignments'>
-                <Header as='h2'>Upcoming Assignments/Quizzes</Header>
-                <Table fixed columns={3}>
+                <Table fixed compact fixed singleLine>
                     <Table.Header>
                         <Table.Row >
                             <Table.HeaderCell>Name</Table.HeaderCell>
                             <Table.HeaderCell>Due Date</Table.HeaderCell>
                             <Table.HeaderCell>Status</Table.HeaderCell>
+                            <Table.HeaderCell></Table.HeaderCell>
                         </Table.Row>
                     </Table.Header>
                     <Table.Body>
@@ -72,4 +103,4 @@ class StudentCourseAssignments extends Component{
         )
     }
 }
-export default StudentCourseAssignments
+export default withRouter(StudentCourseAssignments)

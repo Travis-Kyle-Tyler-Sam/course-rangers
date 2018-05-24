@@ -124,7 +124,7 @@ class CourseBuilderTool extends Component {
     });
   }
 
-  switchMonth = n => {
+  switchMonth = ( n ) => {
     if (n === -1) {
       let newDate = moment(this.state.date)
         .subtract(1, "M")
