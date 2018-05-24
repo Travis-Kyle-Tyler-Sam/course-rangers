@@ -164,6 +164,7 @@ class CBDaySelect extends Component {
                 placeholder="Topic"
                 fluid
               />
+
               <Form>
                 <TextArea
                   name="dayDescriptionInput"
@@ -198,6 +199,7 @@ class CBDaySelect extends Component {
                 <Icon name="plus" />
               </Button>
             </div>
+
             <div className="cbds-list-container">{resourceList}</div>
 
             <div className="cbds-day-group">
