@@ -1,7 +1,9 @@
 .teacher-lecture{
-    display: flex;
-    justify-content: space-around;
-    height:80vh;
+    display: grid;
+    height: 100vh;
+    padding: 120px 50px 20px 50px;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 41px;
 }
 .left-lecture{
     display: flex;
@@ -11,10 +13,9 @@
     grid-row:2/4 */
 }
 .middle-lecture{
-    display: flex;
-    flex-direction: column;
-    /* grid-column: 2/3;
-    grid-row:2/4; */
+    display: grid;
+    padding-top: 51px;
+    grid-template-rows: 1fr 1fr;
 
 }
 .right-lecture{
@@ -23,10 +24,18 @@
     /* grid-column: 3/4;
     grid-row:2/4; */
 }
+.ui.segment.right-lecture {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
 .ui.form {
     display: flex;
     flex-direction: column;
+    justify-content: space-evenly;
 }
+
 .ui.form textarea{
     width: 300px;
 }
@@ -40,11 +49,6 @@
     height:50%;
 }
 
-/* .teacher-lecture{
-    display: grid;
-    grid-template-columns:1fr 1fr 1fr;
-    grid-template-rows:100px 1fr 1fr;
-} */
 /* .thumb-section{
 }
 .free-section{

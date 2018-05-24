@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import _ from 'lodash';
 import moment from 'moment';
 
-const socket = openSocket(`http://localhost:3030`)
+const socket = openSocket(process.env.REACT_APP_SOCKET)
 
 class TeacherLecture extends Component {
     constructor(){

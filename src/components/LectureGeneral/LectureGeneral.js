@@ -3,7 +3,7 @@ import openSocket from 'socket.io-client';
 import { Button, Input, Form, Icon, Label, List, Loader, Segment, Breadcrumb, Grid, Transition, TextArea,  Header} from 'semantic-ui-react';
 import './LectureGeneral.css'
 import ResourceGeneral from './ResourceGeneral/ResourceGeneral';
-const socket = openSocket('http://localhost:3030');
+const socket = openSocket(process.env.REACT_APP_SOCKET);
 //I wanted to generalize the lecture component, and this is what that is for. I haven't actually changed much from the StudentLecture component yet
 class LectureGeneral extends Component {
     constructor(){

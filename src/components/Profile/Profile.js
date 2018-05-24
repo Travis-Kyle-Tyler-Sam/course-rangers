@@ -16,19 +16,31 @@ class Profile extends Component {
         this.props.getUserInfo();
       }
 
+    
+    goBack = () => {
+        this.props.history.goBack();
+    }
 
 
     render() { 
-        console.log(this.props.user)
         return ( 
-            <div className="profile_parent_div">
-        <Card id='profile_card'>
-                <h1>{this.props.user.user_name}</h1>
-  <Image src={this.props.user.user_image} size='small' circular alt=""/>
-            <p>Email: {this.props.user.email}</p>
-            <p>Phone Number: {this.props.user.phone_number}</p>
-            
-        </Card> 
+        <div className="profile_parent_div">
+            <Card id='profile_card'>
+                <div>
+                    <Image src={this.props.user.user_image} size='small' circular alt=""/>
+                </div>
+
+                <div className='profile-text-container'>
+                    <h1>{this.props.user.user_name}</h1>
+                    <p><strong>Email:</strong> {this.props.user.email}</p>
+                    <p> <strong>Phone: </strong> {this.props.user.phone_number}</p>
+                </div>
+                
+            </Card> 
+                <div className='profile-btn-container'>
+                    <Button onClick={ this.goBack } size='large'>Cancel</Button>
+                    <Button onClick={ this.goBack } size='large' primary>Edit</Button>
+                </div>
         </div>
         )
     }
