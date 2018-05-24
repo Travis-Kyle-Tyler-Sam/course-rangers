@@ -85,9 +85,10 @@ class TeacherCurrentCourses extends Component {
 
     return (
       <div className='tct-template-container'>
+      <h2>My Courses</h2>
         <Link to="/coursebuilder">
           <Button icon labelPosition="right">
-            Add New Current Course<Icon name="plus" />
+            Add New<Icon name="plus" />
           </Button>
         </Link>
         <Table 

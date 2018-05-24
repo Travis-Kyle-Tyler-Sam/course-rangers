@@ -85,12 +85,10 @@ class StudentCourseDetail extends Component {
                 { course
                 ?
                 <div className='student-course-detail'>
-                    <Card style={{ width: "600px" }} className='day-selector'>
+                    <Card style={{ width: "600px"}} className='day-selector'>
                         <h1 className='course-name'>{course.course_name}</h1>
                         <div className="container1">{daysToDisplay}</div>
                     </Card> 
-
-                
                     <StudentAssignmentResourceGrade
                         assignments = {assignments}
                         resources = {resources}

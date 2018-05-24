@@ -47,7 +47,7 @@ class StudentCourseAssignments extends Component{
         )
         
         return(
-            //this view should give me assignments and quizzes in order of due date
+      
             
             <div className='student-course-assignments'>
                 <Header as='h2'>Upcoming Assignments/Quizzes</Header>

@@ -1,52 +1,41 @@
-import React, { Component } from 'react';
-import { Icon, Segment, Header } from 'semantic-ui-react'
-
+import React, { Component } from "react";
+import { Icon, Segment, Header } from "semantic-ui-react";
 
 class QList extends Component {
-    constructor(props) {
-        super(props);
-        this.state = { 
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
 
-         }
-    }
+  render() {
+    let questions = this.props.questions.map((question, i) => {
+      let qIcon =
+        question.option_selected !== null ? (
+          <Icon name="check circle outline" color="blue" />
+        ) : (
+          <Icon name="circle outline" color="red" />
+        );
 
-    render() { 
-        
+      return (
+        <div
+          className="qt-q-item"
+          key={question.id}
+          onClick={() => this.props.changeQ(i)}
+        >
+          {this.props.index === i && <Icon name="chevron right" primary />}
+          Question {i + 1}
+          {qIcon}
+        </div>
+      );
+    });
 
-        let questions = this.props.questions.map( (question, i) => { 
-
-            let qIcon = question.option_selected !== null
-                ? <Icon name='check circle outline' color='blue' /> 
-                : <Icon name='circle outline' color='red' /> 
-
-            return (
-
-
-            <div className='qt-q-item' key={question.id} onClick={ () => this.props.changeQ(i) }>
-                { this.props.index === i && <Icon name='chevron right' primary /> } 
-              
-                    Question {i+1} 
-                { qIcon }
-            </div> 
-            )
-        })
-
-        return ( 
-                <Segment 
-                    className='qlist-container'
-                    style={{margin: 0}} >
-                    <Header
-                        className='qt-qlist-header' >Questions</Header>
-                    <div className='qlist-inner-container'>
-
-                        { questions }
-                      
-
-                    </div>
-                </Segment>
-
-         )
-    }
+    return (
+      <Segment className="qlist-container" style={{ margin: 0 }}>
+        <h2 className="qt-qlist-h2">Questions</h2>
+        <div className="qlist-inner-container">{questions}</div>
+      </Segment>
+    );
+  }
 }
- 
+
 export default QList;
