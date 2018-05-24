@@ -7,10 +7,10 @@
   }
   .item1 {
     border: 1px solid gray;
-    padding: 40px;
+    padding: 40px 10px;
     font-size: 30px;
     text-align: center;
-  }
+}
   .card_floater {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -21,5 +21,5 @@
   }
 
   .tca-container {
-    padding: 118px 150px 0 150px;
+    padding: 20px;
   }

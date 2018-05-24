@@ -112,7 +112,7 @@ class TeacherCourseDaySelector extends Component {
       }
     ];
     return (
-      <div>
+      <div className='tcds-container'>
         <h1>{course_name}</h1>
         <div className="card_floater">
           <Card style={{ width: 700, padding: 15 }}>
