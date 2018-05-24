@@ -69,6 +69,7 @@ class AdminList extends Component{
         })
     }
     searchList(){
+        
         const { list, searchString } = this.state;
         let filteredList = list.filter( user => {
             return user.name.toLowerCase().includes(searchString) === true
@@ -144,25 +145,21 @@ class AdminList extends Component{
             }
         })
         return (
-            <div className='user-table'>
+            <div> 
                 <div>
-                    <h2>{type}</h2>
-                    <div className='topOfTable'>
+                    
+                    <Form>
+                        <Input onChange={ e => this.setState({
+                            searchString:e.target.value}
+                            )}
+                            />
+                        <Button onClick={ () => {
+                            this.searchList()
+                        }}>Search</Button>
                         
-                        <Form>
-                            <Input onChange={ e => this.setState({
-                                searchString:e.target.value}
-                                )}
-                                />
-                            <Button onClick={ () => {
-                                this.searchList()
-                            }}>Search</Button>
-                            
-                        </Form>
-                        {editModal()}
-                    </div>
+                    </Form>
+                    
                 </div>
-                
                 <Table striped={true} compact={true} sortable={true} celled fixed attached>
                     <Table.Header>
                         <Table.Row>
@@ -177,11 +174,14 @@ class AdminList extends Component{
                         {listItems}
                     </Table.Body>
                 </Table>
-                <Pagination
-                defaultActivePage={1}
-                totalPages={this.state.totalPages}
-                onPageChange={(event, data) => this.handlePage(data.activePage)}
-                />
+                <div>
+                    <Pagination
+                        defaultActivePage={1}
+                        totalPages={this.state.totalPages}
+                        onPageChange={(event, data) => this.handlePage(data.activePage)}
+                    />
+                    {editModal()}
+                </div>
             </div>
         )
 

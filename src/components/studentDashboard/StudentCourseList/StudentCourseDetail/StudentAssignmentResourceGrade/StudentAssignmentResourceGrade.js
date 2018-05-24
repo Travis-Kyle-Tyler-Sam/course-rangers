@@ -24,7 +24,7 @@ function StudentAssignmentResourceGrade(props) {
             resources = {props.resources}
             />
             </Tab.Pane>},
-        {menuItem:'Grade', render: () => <Tab.Pane>
+        {menuItem:'Grades', render: () => <Tab.Pane>
             <StudentCourseGrade
             grades = {props.assignments}
             />
