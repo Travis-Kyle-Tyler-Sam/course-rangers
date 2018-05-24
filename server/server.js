@@ -193,6 +193,20 @@ app.get('/api/student/lecture_material/:course_day_id', (req, res)=>{
 })
 
 
+
+app.get('/api/teacher/lecture_material/:course_day_id', (req, res)=>{
+  app
+  .get('db')
+  .course_days_DB.get_teacher_lecture_material([req.params.course_day_id])
+.then(response => {
+   res.status(200).send(response)
+})
+.catch(err => console.log(err))
+})
+
+
+
+
 app.get('/api/gettoday', (req, res)=>{
   app
   .get('db')
