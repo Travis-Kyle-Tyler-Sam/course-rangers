@@ -1,42 +1,13 @@
 #navbar {
   width: 100vw;
   height: 100px;
-  background: linear-gradient(to left, #24C6DC, #514A9D);
-color: white;
-display: flex;
-justify-content: flex-end;
-
-}
-#logout {
-  height: 100%;
-  margin-right: 0px;
-  width: 150px;
-  font-size: 20px;
-}
-.mainDiv {
-  margin-top: 250px;
-display: flex;
-justify-content: center;
-border-color: black;
-border-width: 2px;
-border-style: solid;
-padding: 100px;
-width: 50%;
-margin-left: 25%;
-padding-top: 100px;
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;
-box-shadow: 5px;
-}
-
-#login_button{
-margin-top: 25px;
+  background: linear-gradient(to left, #24c6dc, #514a9d);
+  color: white;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .App {
   width: 100vw;
   height: 100vh;
 }
-
