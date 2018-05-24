@@ -1,69 +1,96 @@
-.cb-num-days-input {
-    width: 64px;
-}
-
 .cb-container {
-    padding: 10px;
-    display: flex;
-    justify-content:center;
-    align-items: flex-start;
+  padding: 104px 50px 20px 50px;
+  display: grid;
+  grid-template-columns: 4fr 2fr 2fr 4fr;
 }
 
 .cb-daysquare {
-    border: 1px solid black;
-    padding: 8px;
-    width: 100px;
-    height: 100px;
-    position: relative;
-    border-radius: 5px;
-    margin: 4px;
+  border: 1px solid black;
+  padding: 8px;
+  width: 30%;
+  height: 16vh;
+  position: relative;
+  border-radius: 5px;
+  margin: 4px;
+  font-size: 18px;
 }
 
 .cb-days-container {
-    display:flex;
-    flex-wrap:wrap;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .cb-resource-radios {
-    display: flex;
-    width:35%;
-    align-items: flex-start;
-    flex-direction: column;
-    margin: 1em auto;
+  display: flex;
+  width: 35%;
+  align-items: flex-start;
+  flex-direction: column;
+  margin: 1em auto;
 }
 
 .cb-day-counters {
-    display: flex;
-    justify-content: space-evenly;
-    position: absolute;
-    bottom: 0;
-    width: 85%;
+  display: flex;
+  justify-content: space-evenly;
+  position: absolute;
+  bottom: 4px;
+  width: 85%;
+}
+
+.cb-day-counters {
+  display: flex;
+  justify-content: space-evenly;
+  position: absolute;
+  bottom: 4px;
+  width: 90%;
+  font-size: 15px;
 }
 
 .cb-pane {
-    width: 350px;
-    margin:10px;
-    min-height: 400px;
+  width: 350px;
+  margin: 10px;
+  min-height: 400px;
 }
 
 .cbds-day-group {
-    display: flex;
-    justify-content: flex-end;
-    flex-direction: row-reverse;
-    align-items: center;
-    margin-top: 8px;
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: row-reverse;
+  align-items: center;
+  margin-top: 8px;
 }
 
 .cbds-day-group > h3 {
-    margin-bottom: 0;
-    margin-left: 5px;
-    
+  margin-bottom: 0;
+  margin-left: 5px;
 }
 
 .cbds-inputs-container {
-    margin-bottom: 42px;
+  margin-bottom: 42px;
 }
 
 .cbds-list-container {
-    margin: 5px;
+  margin: 5px;
+}
+
+.cb-submit-btn-container {
+  display: flex;
+  flex-direction: column;
+  padding-top: 15px;
+  align-items: center;
+}
+
+.cb-inputs {
+  width: 305px;
+  margin: 5px 0;
+}
+
+.cb-num-days-input {
+  margin: 5px 0;
+  width: 305px;
+}
+
+.cb-name-header {
+  display: inline-block;
+  font-size: 24px;
+  width: 305px;
 }
