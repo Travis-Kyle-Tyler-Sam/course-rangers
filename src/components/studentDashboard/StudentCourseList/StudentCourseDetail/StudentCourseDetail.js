@@ -84,21 +84,17 @@ class StudentCourseDetail extends Component {
             <div>
                 { course
                 ?
-                <div>
-               <h1>{course.course_name}</h1>
-                    <div className='student-detail'>
-                    <Card style={{ width: "600px" }}>
-            <div className="container1">{daysToDisplay}</div>
-          </Card> 
-
-                 
+                <div className='student-course-detail'>
+                    <Card style={{ width: "600px"}} className='day-selector'>
+                        <h1 className='course-name'>{course.course_name}</h1>
+                        <div className="container1">{daysToDisplay}</div>
+                    </Card> 
                     <StudentAssignmentResourceGrade
-                    assignments = {assignments}
-                    resources = {resources}
-                    course = {course}
-                    uploadFileFn = {this.uploadFile}
+                        assignments = {assignments}
+                        resources = {resources}
+                        course = {course}
+                        uploadFileFn = {this.uploadFile}
                     />
-                    </div>
                 </div>
                 : <Dimmer active>
                     <Loader/>

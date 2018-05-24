@@ -1,24 +1,38 @@
-import React from 'react';
-import { Table, Header } from 'semantic-ui-react';
-
-function GradesTable(props){
+import React, { Component } from 'react';
+import { Table, Header, Pagination } from 'semantic-ui-react';
+import '../../../StudentCourseDetail.css'
+class GradesTable extends Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            currentPage:1,
+            totalPages:Math.ceil(this.props.list.length/5)
+        }
+    }
     
-    return(
-        <div>
-            <Header as='h3'>{props.type}</Header>
-            <Table>
-                <Table.Header>
-                    <Table.Row>
-                        <Table.HeaderCell>{props.singular}</Table.HeaderCell>
-                        <Table.HeaderCell>Score</Table.HeaderCell>
-                        <Table.HeaderCell>Grade</Table.HeaderCell>
-                    </Table.Row>
-                </Table.Header>
-                <Table.Body>
-                    {props.list}
-                </Table.Body>
-            </Table>
-        </div>
-    )
+    render(){
+        return(
+            <div className='grades-table'>
+                <Header as='h3'>{this.props.type}</Header>
+                <Table fixed columns={3}>
+                    <Table.Header>
+                        <Table.Row>
+                            <Table.HeaderCell>{this.props.singular}</Table.HeaderCell>
+                            <Table.HeaderCell>Score</Table.HeaderCell>
+                            <Table.HeaderCell>Grade</Table.HeaderCell>
+                        </Table.Row>
+                    </Table.Header>
+                    <Table.Body>
+                        {this.props.list}
+                    </Table.Body>
+                </Table>
+                <Pagination
+                defaultActivePage={1}
+                totalPages={this.state.totalPages}
+                onPageChange={(event, data) => this.handlePage(data.activePage)}
+                />
+            </div>
+        )
+    }
 }
 export default GradesTable;

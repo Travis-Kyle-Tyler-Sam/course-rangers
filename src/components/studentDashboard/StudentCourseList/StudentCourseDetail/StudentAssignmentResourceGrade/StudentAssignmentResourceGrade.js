@@ -3,6 +3,7 @@ import StudentCourseAssignments from './StudentCourseAssignments/StudentCourseAs
 import StudentCourseGrade from './StudentCourseGrades/StudentCourseGrades';
 import StudentCourseResources from './StudentCourseResources/StudentCourseResources';
 import {Segment, Tab, Dimmer, Loader} from 'semantic-ui-react';
+import '../StudentCourseDetail';
 
 function StudentAssignmentResourceGrade(props) {
     const panes = [
@@ -30,7 +31,7 @@ function StudentAssignmentResourceGrade(props) {
             </Tab.Pane>}
     ]
     return(
-        <div>
+        <div className='assignment-resource-grade'>
             
             <Tab panes={panes}/>
             
