@@ -75,9 +75,17 @@ class TeacherCurrentCourses extends Component {
             </Button>
           </Table.Cell>
           <Table.Cell>
-            <Button basic icon circular onClick={() => this.deleteCourse(course.id)}>
-              <Icon name="trash" />
-            </Button>
+  
+            <Button onClick={() => this.deleteCourse(course.id)}
+                                negative
+                                animated>
+                                <Button.Content visible>
+                                    <Icon name='trash'/>
+                                </Button.Content>
+                                <Button.Content hidden>
+                                    Delete 
+                                </Button.Content>
+                            </Button>
           </Table.Cell>
         </Table.Row>
       );
