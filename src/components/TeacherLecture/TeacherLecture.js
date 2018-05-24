@@ -236,6 +236,8 @@ class TeacherLecture extends Component {
                     </Segment>
                 </div>
                 <Segment className='right-lecture'>
+                <Header as='h1'>In Class Surveys</Header>
+                
                     <Form>
                         <Transition animation='fly left' duration='500' visible={thumbVisible}>
                             <Icon name='thumbs outline up'size='large'/>
