@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import openSocket from 'socket.io-client';
 import axios from 'axios';
-import { Button, Input, Form, Icon, Label, List, Loader, Segment, Breadcrumb, Grid, Transition, TextArea, Feed, Header} from 'semantic-ui-react';
+import { Table, Button, Input, Form, Icon, Label, List, Loader, Segment, Breadcrumb, Grid, Transition, TextArea, Feed, Header} from 'semantic-ui-react';
 import './TeacherLecture.css';
 import { connect } from "react-redux";
+import _ from 'lodash';
+import moment from 'moment';
 
 const socket = openSocket(`http://localhost:3030`)
 
@@ -30,7 +32,8 @@ class TeacherLecture extends Component {
             thumbDownVisible:false,
             thumbUpVisible:false,
             resources: [],
-            assignments: []
+            assignments: [],
+            courseMaterial: []
         }
         socket.on('thumbcount', thumbquality => {
             if (thumbquality === 'thumbsup')
@@ -74,6 +77,7 @@ class TeacherLecture extends Component {
                 room
             })
         })
+        this.getCourseMaterial() 
 
     }
     // componentDidUpdate(prevProps, prevState, snapshot){
@@ -82,6 +86,15 @@ class TeacherLecture extends Component {
     componentWillUnmount(){
         socket.close()
     }
+
+    getCourseMaterial() {
+        axios.get(`/api/teacher/lecture_material/${this.props.match.params.dayid}`)
+            .then(response => {
+                this.setState({ courseMaterial: response.data })
+            })
+            .catch(err => console.log(err))
+    }
+
     handleInput = (e) =>{
         this.setState({
             [e.target.name]:e.target.value
@@ -118,6 +131,20 @@ class TeacherLecture extends Component {
     toggleThumbsDown = () => this.setState({thumbDownVisible:true})
     toggleThumbsUp = () => this.setState({thumbUpVisible:true})
     render(){
+        console.log(this.state.courseMaterial)
+        
+        let uniqueResources = _.uniqBy(this.state.courseMaterial, "title");
+        let uniqueAssignments= _.uniqBy(this.state.courseMaterial, "name");
+        let resources = uniqueResources.map(resource => {
+            return <Table.Row key={resource.id}><Table.Cell><a href={resource.url} target='_.blank'>{resource.title}</a></Table.Cell></Table.Row>
+        })
+        let assignments = uniqueAssignments.map(assignment => {
+            return <Table.Row key={assignment.id + assignment.name}>
+                <Table.Cell>{assignment.name}</Table.Cell>
+               
+                <Table.Cell>{moment(assignment.due_date).format('MM/DD')}</Table.Cell>
+            </Table.Row>
+        })
         const {  count, count2, room, studentResponses, 
             teacherSurveyText, teacherthumbinput, teachersurveyinput, 
             teacherThumbText, studentFreeResponses, thumbVisible, thumbLeave,
@@ -133,9 +160,26 @@ class TeacherLecture extends Component {
                     <div className='resources'>
                         <Segment>
                             <Header as='h2'>Resources</Header>
+                            <Table>
+                            <Table.Header>
+                                <Table.Row>
+                                <Table.HeaderCell>Resource</Table.HeaderCell>                                   
+                                </Table.Row>
+                            </Table.Header>
+                            <Table.Body>{resources}</Table.Body>
+                        </Table>
                         </Segment>
                         <Segment>
-                            <Header as='h2'>Assignments</Header>
+                        <Header as="h2">Assignments</Header>
+                        <Table>
+                            <Table.Header>                           
+                                <Table.Row>
+                                <Table.HeaderCell>Assignment</Table.HeaderCell>
+                                    <Table.HeaderCell>Due Date</Table.HeaderCell>
+                                </Table.Row>
+                            </Table.Header>
+                            <Table.Body>{assignments}</Table.Body>
+                        </Table>
                         </Segment>
                     </div>
                 </div>
