@@ -24,7 +24,7 @@ class Profile extends Component {
             <div className="profile_parent_div">
         <Card id='profile_card'>
                 <h1>{this.props.user.user_name}</h1>
-  <Image src='https://www.nationalgeographic.com/content/dam/animals/thumbs/rights-exempt/fish/group/hammerhead-sharks_thumb.jpg' size='small' circular alt=""/>
+  <Image src={this.props.user.user_image} size='small' circular alt=""/>
             <p>Email: {this.props.user.email}</p>
             <p>Phone Number: {this.props.user.phone_number}</p>
             

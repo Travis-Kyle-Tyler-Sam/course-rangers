@@ -89,17 +89,18 @@ removeStudent(studentId){
   
 
     return (
-        <div>
+        <div className='ss-searchbox-container'>
      
         <Dropdown
-       search selection options={suggestions}
-       value={this.state.searchString}
-       onChange={(e, data) => {  
-        this.setState({searchString: data.value})}
-    }/>
+            search selection options={suggestions}
+            value={this.state.searchString}
+            onChange={(e, data) => {  
+                this.setState({searchString: data.value})}
+        }/> 
         <Button onClick={ () => {
-            this.selectStudent()
-        }}>Add Student to Class</Button>
+            this.selectStudent() }}>
+            Add Student to Class
+        </Button>
         
     
     <ol>{studentsInTheClass}</ol>

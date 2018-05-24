@@ -19,6 +19,8 @@ import {
   Message
 } from "semantic-ui-react";
 
+import './TeacherCourseTemplates.css'
+
 class TeacherCurrentCourses extends Component {
   constructor(props) {
     super(props);
@@ -82,13 +84,15 @@ class TeacherCurrentCourses extends Component {
     });
 
     return (
-      <div>
+      <div className='tct-template-container'>
         <Link to="/coursebuilder">
           <Button icon labelPosition="right">
             Add New Current Course<Icon name="plus" />
           </Button>
         </Link>
-        <Table striped>
+        <Table 
+          striped 
+          className='tct-table'>
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>Today</Table.HeaderCell>

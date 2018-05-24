@@ -6,6 +6,8 @@ import Navbar from './../Navbar/Navbar';
 import { connect } from 'react-redux'
 import { getCurricula } from '../../dux/teacherReducer'
 
+import './TeacherDashboard.css'
+
 class TeacherDashboard extends Component {
     constructor(props) {
         super(props);
@@ -18,17 +20,14 @@ class TeacherDashboard extends Component {
     }
     render() { 
         return ( 
-<div>
+<div className='td-container'>
     <h1>Teacher Dashboard</h1>
-    <div className='ui container'>
+    <div className='td-segment-container'>
     
 
+        <div style={{margin: 0}} className='ui segment' ><TeacherCourseTemplates/></div>
 
-    <div style={{margin: 0}} className='ui segment left floated' ><TeacherCourseTemplates/></div>
-
-
-
- <div style={{margin: 0}} className='ui segment right floated'><TeacherCurrentCourses/></div>
+        <div style={{margin: 0}} className='ui segment'><TeacherCurrentCourses/></div>
     
     </div>
     
