@@ -77,7 +77,7 @@ module.exports = {
     },
     getCourseAssignments: async (req, res, next) => {
         const { courseid }= req.params;
-        console.log('studentid: ',req.session.studentid)
+        
         let result = await req.app.get('db')
         .course_students_DB
         .get_course_assignments([courseid, req.session.studentid])

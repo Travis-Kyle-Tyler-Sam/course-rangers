@@ -5,7 +5,7 @@ import './AdminDash.css';
 import { handleUsersChange, removeUser } from '../../utils/adminfns/adminfns';
 import { connect } from 'react-redux';
 import Snackbar from 'material-ui/Snackbar';
-import { Button } from 'semantic-ui-react';
+import { Button, Tab } from 'semantic-ui-react';
 import {getUserInfo} from '../../dux/userReducer';
 import _ from 'lodash';
 
@@ -56,7 +56,8 @@ class AdminDash extends Component {
             adminID:2,
             snackOpen:false,
             action:'',
-            actionName:''
+            actionName:'',
+            displayStudents:true
         }
         this.handleUsersChange = handleUsersChange.bind(this);
         this.removeUser = removeUser.bind(this);
@@ -123,13 +124,10 @@ class AdminDash extends Component {
         })
     }
     render(){
-        const { students, instructors, action, actionName } = this.state;
-
-        
-
-        return(
-            <div className='dash'>
-                <div className='lists'>
+        const { students, instructors, action, actionName, displayStudents } = this.state;
+        const panes = [
+            {
+                menuItem:'Students', render: () => <Tab.Pane>
                     <AdminList
                         type = 'Students'
                         list = {students}
@@ -139,6 +137,10 @@ class AdminDash extends Component {
                         deleteUserFn = {this.deleteUser}
                         adminID = {this.state.adminID}
                     />
+                </Tab.Pane>
+            },
+            {
+                menuItem:'Instructors', render: () => <Tab.Pane>
                     <AdminList
                         type = 'Instructors'
                         list = {instructors}
@@ -147,6 +149,17 @@ class AdminDash extends Component {
                         editUserFn = {this.editUser}
                         deleteUserFn = {this.deleteUser}
                     />
+                </Tab.Pane>
+            }
+        ]
+        
+
+        return(
+            <div className='admin-dash'>
+                <div className='lists'>
+                    <Tab panes={panes}/>
+                    
+                
                 </div>
                 <Snackbar 
                     open = {this.state.snackOpen}

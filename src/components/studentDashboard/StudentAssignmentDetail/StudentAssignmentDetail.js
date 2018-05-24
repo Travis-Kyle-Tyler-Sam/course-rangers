@@ -32,13 +32,12 @@ class StudentAssignmentDetail extends Component{
             attachment, dateSubmitted  } = this.props;
         return(
         <Modal trigger={
-            <Table.Row>
+            <Table.Row className='table-row-pointer'>
                 <Table.Cell>{assignmentName}</Table.Cell>
                 <Table.Cell>{dueDate}</Table.Cell>
                 {dateSubmitted
-                ?<Table.Cell>{`submitted ${moment(dateSubmitted).format('MM/DD')}`}</Table.Cell>
-                :<Table.Cell><Button>Submit</Button></Table.Cell>
-                
+                ?<Table.Cell >{`submitted ${moment(dateSubmitted).format('MM/DD')}`}<Icon name='target'/></Table.Cell>
+                :<Table.Cell >Incomplete <Icon name='protect'/></Table.Cell>
                 }
             </Table.Row>
             } 

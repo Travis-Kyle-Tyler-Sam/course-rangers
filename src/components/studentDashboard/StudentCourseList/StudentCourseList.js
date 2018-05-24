@@ -1,7 +1,7 @@
 import React from 'react'
 import { Header, Segment, List, Table, Loader, Dimmer, Button } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
-import './StudentCourseList.css'
+import '../StudentDashboard.css'
 
 function StudentCourseList (props){
     const { id, studentsCourses, courseRouteFn, calculatePercentFn, assignments } = props;
@@ -39,7 +39,7 @@ function StudentCourseList (props){
             {studentsCourses.length !== 0
             ?<div>
                 <Header as='h1'>My Courses</Header>
-                <Table>
+                <Table striped color='green'>
                     <Table.Header>
                         <Table.Row>
                         <Table.HeaderCell>View Course</Table.HeaderCell> 
