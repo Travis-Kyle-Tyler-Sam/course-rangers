@@ -12,6 +12,7 @@ import _ from "lodash";
 import { connect } from "react-redux";
 import moment from "moment";
 import axios from "axios";
+import './TeacherAssignmentsView.css'
 class TeacherAssignmentsView extends Component {
   constructor(props) {
     super(props);
@@ -46,6 +47,7 @@ class TeacherAssignmentsView extends Component {
         });
       });
   }
+  
   letterGrade(percentage) {
     if (percentage >= 90) {
       return "A";
@@ -65,6 +67,7 @@ class TeacherAssignmentsView extends Component {
       return "";
     }
   }
+
   percentageFinder(pointsScored, pointsPossible) {
     this.setState({
       percentage: Math.floor(pointsScored * 10000 / pointsPossible) / 100
@@ -142,7 +145,7 @@ class TeacherAssignmentsView extends Component {
       );
     });
     return (
-      <div>
+      <div className='tav-container' >
         <Header as="h2" />
         <Table striped>
           <Table.Header>

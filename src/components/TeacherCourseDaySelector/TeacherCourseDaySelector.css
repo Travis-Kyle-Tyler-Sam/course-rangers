@@ -12,5 +12,14 @@
     text-align: center;
   }
   .card_floater {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+  .tcds-container {
+    padding: 100px 50px 20px 50px;
+  }
+
+  .tca-container {
+    padding: 118px 150px 0 150px;
   }
