@@ -3,6 +3,7 @@ import axios from "axios";
 import { Button } from "semantic-ui-react";
 import { connect } from "react-redux";
 import { getUserInfo } from "../../dux/userReducer";
+import CRLogo from '../../CourseRangers.png'
 
 import "./Home.css";
 
@@ -15,7 +16,8 @@ class Home extends Component {
     return (
       <div className="mainDiv">
         <div className="login-container">
-          <h1>Welcome to Course Rangers!</h1>
+          {/* <h1>Welcome to Course Rangers!</h1> */}
+          <img src={ CRLogo } width='75%'/>
           <Button
             primary
             size="massive"

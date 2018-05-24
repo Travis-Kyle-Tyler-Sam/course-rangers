@@ -10,9 +10,16 @@
   position: fixed;
   z-index: 10;
   top: 0;
+  justify-content: space-between;
+  padding: 0 34px;
 }
 
-.navbar > a {
-  font-size: 30px;
-  margin: 0 10px;
+.navbar > div > a {
+  font-size: 21px;
+  margin-right: 31px;
+}
+
+.navbar > div {
+  display:flex;
+  align-items: center;
 }

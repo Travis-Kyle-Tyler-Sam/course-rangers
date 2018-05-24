@@ -4,12 +4,16 @@ import _ from "lodash";
 import { connect } from "react-redux";
 import moment from "moment";
 import { Link } from "react-router-dom";
+import './TeacherCourseDaySelector.css'
+
+
 class TeacherCourseAssignments extends Component {
   constructor(props) {
     super(props);
     let filteredCourse = this.props.courses.filter(
       course => course.id === this.props.course
     )[0];
+    
     this.state = {
       currentCourse: filteredCourse
     };
@@ -66,7 +70,7 @@ class TeacherCourseAssignments extends Component {
       );
     });
     return (
-      <div>
+      <div className='tca-container'>
         <Header as="h2">Upcoming Assignments/Quizzes</Header>
         <Table>
           <Table.Header>
