@@ -7,15 +7,21 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    /* grid-column: 1/2;
+    grid-row:2/4 */
 }
 .middle-lecture{
     display: flex;
     flex-direction: column;
+    /* grid-column: 2/3;
+    grid-row:2/4; */
 
 }
 .right-lecture{
     display: flex;
     flex-direction: column;
+    /* grid-column: 3/4;
+    grid-row:2/4; */
 }
 .ui.form {
     display: flex;
@@ -33,6 +39,12 @@
 .resources>div{
     height:50%;
 }
+
+/* .teacher-lecture{
+    display: grid;
+    grid-template-columns:1fr 1fr 1fr;
+    grid-template-rows:100px 1fr 1fr;
+} */
 /* .thumb-section{
 }
 .free-section{

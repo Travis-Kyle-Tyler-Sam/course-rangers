@@ -27,7 +27,8 @@ class StudentLecture extends Component {
             teacherSurveyText: '',
             freeresponseinput: '',
             thumbsVisible: false,
-            courseMaterial: []
+            courseMaterial: [],
+            freeResponseVisible:false
         }
         socket.on('open thumbs', teacherinput => {
             this.setState({
@@ -35,14 +36,14 @@ class StudentLecture extends Component {
                 thumbsDisable: false,
                 studentThumbText: '',
                 studentUnderstands: true,
-                thumbsVisible: true
+                thumbsVisible: true,
             })
         })
         socket.on('student free response', teacherinput => {
             this.setState({
                 teacherSurveyText: teacherinput,
                 studentSurveyText: '',
-
+                freeResponseVisible:true,
             })
         })
     }
@@ -130,12 +131,13 @@ class StudentLecture extends Component {
         })
         const { room, userType, thumbsDisable, studentUnderstands,
             studentSurveyText, teacherSurveyText, freeresponseinput,
-            studentsurveyinput, teacherThumbText, thumbsVisible } = this.state;
+            studentsurveyinput, teacherThumbText, thumbsVisible, 
+            studentThumbText, freeResponseVisible } = this.state;
         return (
             <div>
-                <p>Student Lecture View Room {room}</p>
+                
                 <div className='student-lecture'>
-
+                <Header as='h2'>Student Lecture View Room {room}</Header>
                     <div className='assignments'>
                         <Header as="h2">Assignments</Header>
                         <Table>
@@ -183,23 +185,26 @@ class StudentLecture extends Component {
                                 ? <Form>
                                     <p>What don't you understand?</p>
                                     <TextArea onChange={this.handleInput} name='studentsurveyinput' value={studentsurveyinput} />
-                                    <Button onClick={this.sendStudentResponse}>This is my question</Button>
-                                    <p>{studentSurveyText}</p>
+                                    <Button onClick={this.sendStudentResponse}>SEND YOUR QUESTION</Button>
+                                    <p>Here is your question:</p>
+                                    <p>{studentThumbText}</p>
                                 </Form>
                                 : null
                             }
                         </Segment>
                         <Segment>
                             <Header as='h2'>Free Response</Header>
-                            {
-                                teacherSurveyText
-                                    ? <Form>
-                                        <p>{teacherSurveyText}</p>
-                                        <TextArea onChange={this.handleInput} name='freeresponseinput' value={freeresponseinput}></TextArea>
-                                        <Button onClick={this.sendFreeResponse}>Send Response</Button>
-                                    </Form>
-                                    : null
-                            }
+                            <Transition duration='500' animation='fly left' visible={freeResponseVisible}>
+                                <Form>
+                                    <Icon name='question' size='large'/>
+                                    <p>{teacherSurveyText}</p>
+                                    <TextArea onChange={this.handleInput} name='freeresponseinput' value={freeresponseinput}></TextArea>
+                                    <Button onClick={this.sendFreeResponse}>SEND YOUR RESPONSE</Button>
+                                    <p>Here is your question:</p>
+                                    <p>{studentSurveyText}</p>
+                                </Form>
+                            </Transition>
+                            
                         </Segment>
                     </div>
                 </div>
