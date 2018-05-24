@@ -30,7 +30,6 @@ class StudentCourseResources extends Component{
         })
         return(
             <div className='student-course-resources'>
-                <Header as='h2'>Resources</Header>
                 <Table fixed>
                     <Table.Header>
                         <Table.Row>

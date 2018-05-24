@@ -157,7 +157,7 @@ class AdminDash extends Component {
         return(
             <div className='admin-dash'>
                 <div className='lists'>
-                    <Tab panes={panes}/>
+                    <Tab className ='user-table' panes={panes}/>
                     
                 
                 </div>
