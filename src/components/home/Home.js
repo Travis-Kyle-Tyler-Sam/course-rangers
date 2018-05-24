@@ -18,17 +18,14 @@ class Home extends Component {
         <div className="login-container">
           {/* <h1>Welcome to Course Rangers!</h1> */}
           <img src={ CRLogo } width='75%'/>
-          <a href={ process.env.REACT_APP_LOGIN } >
           <Button
             primary
             size="massive"
-            
+            href={ process.env.REACT_APP_LOGIN }
             id="login_button"
           >
             Login
           </Button>
-          </a>
-          
         </div>
       </div>
     );
