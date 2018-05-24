@@ -42,7 +42,7 @@ deleteCourseTemplate(id){
                         basic 
                         icon 
                         circular
-                        href={ `/curriculumbuilder/${template.id}` }>
+                        href={ `/#/curriculumbuilder/${template.id}` }>
                         <Icon name="edit"/>
                     </Button>
                 </Table.Cell>

@@ -1,0 +1,10 @@
+.no_class {
+    padding-top: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+}
+.no_class_card {
+width: 50vw;
+}
