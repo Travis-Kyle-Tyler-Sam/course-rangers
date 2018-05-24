@@ -14,7 +14,7 @@ class GradesTable extends Component{
         return(
             <div className='grades-table'>
                 <Header as='h3'>{this.props.type}</Header>
-                <Table>
+                <Table fixed columns={3}>
                     <Table.Header>
                         <Table.Row>
                             <Table.HeaderCell>{this.props.singular}</Table.HeaderCell>
