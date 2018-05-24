@@ -1,7 +1,9 @@
 .teacher-lecture{
-    display: flex;
-    justify-content: space-around;
-    height:80vh;
+    display: grid;
+    height: 100vh;
+    padding: 120px 50px 20px 50px;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 41px;
 }
 .left-lecture{
     display: flex;
@@ -9,18 +11,27 @@
     justify-content: flex-start;
 }
 .middle-lecture{
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    padding-top: 51px;
+    grid-template-rows: 1fr 1fr;
 
 }
 .right-lecture{
     display: flex;
     flex-direction: column;
 }
+.ui.segment.right-lecture {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
 .ui.form {
     display: flex;
     flex-direction: column;
+    justify-content: space-evenly;
 }
+
 .ui.form textarea{
     width: 300px;
 }
@@ -33,6 +44,8 @@
 .resources>div{
     height:50%;
 }
+
+
 /* .thumb-section{
 }
 .free-section{
