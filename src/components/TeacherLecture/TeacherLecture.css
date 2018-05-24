@@ -9,6 +9,8 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    /* grid-column: 1/2;
+    grid-row:2/4 */
 }
 .middle-lecture{
     display: grid;
@@ -19,6 +21,8 @@
 .right-lecture{
     display: flex;
     flex-direction: column;
+    /* grid-column: 3/4;
+    grid-row:2/4; */
 }
 .ui.segment.right-lecture {
     margin-top: 50px;
@@ -44,7 +48,6 @@
 .resources>div{
     height:50%;
 }
-
 
 /* .thumb-section{
 }

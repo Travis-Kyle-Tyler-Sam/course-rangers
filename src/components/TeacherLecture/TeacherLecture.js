@@ -29,6 +29,8 @@ class TeacherLecture extends Component {
             teacherThumbText:'',
             studentResponses:[],
             thumbVisible:true,
+            questionVisible:true,
+            questionReturnVisible:false,
             thumbDownVisible:false,
             thumbUpVisible:false,
             resources: [],
@@ -101,7 +103,7 @@ class TeacherLecture extends Component {
         })
     }
     launchThumbs = (e) =>{
-        this.toggleVisibility()
+        this.toggleVisibility('thumbVisible', false)
         e.preventDefault()
         const {classid, teacherthumbinput} = this.state;
         socket.emit('thumbs launched',[teacherthumbinput, classid], (data) => {
@@ -115,6 +117,7 @@ class TeacherLecture extends Component {
         })
     }
     freeResponse = (e) =>{
+        this.toggleVisibility('questionVisible',false)
         e.preventDefault()
         const {classid, teachersurveyinput} = this.state;
         socket.emit('free response', [teachersurveyinput, classid], () => {
@@ -127,7 +130,7 @@ class TeacherLecture extends Component {
     }
     
     
-    toggleVisibility = (e) => this.setState({thumbVisible:false})
+    toggleVisibility = (iconName, bool) => this.setState({[iconName]:bool})
     toggleThumbsDown = () => this.setState({thumbDownVisible:true})
     toggleThumbsUp = () => this.setState({thumbUpVisible:true})
     render(){
@@ -148,7 +151,7 @@ class TeacherLecture extends Component {
         const {  count, count2, room, studentResponses, 
             teacherSurveyText, teacherthumbinput, teachersurveyinput, 
             teacherThumbText, studentFreeResponses, thumbVisible, thumbLeave,
-            thumbUpVisible, thumbDownVisible} = this.state
+            thumbUpVisible, thumbDownVisible, questionVisible} = this.state
 
         return(
             <div className='teacher-lecture'>
@@ -208,17 +211,17 @@ class TeacherLecture extends Component {
                         <div>
                                 <Header as='h4'>thumbsup</Header>
                                 <div className='thumbsup-count'>
-                                <Transition animation='fly up' duration='500' visible={thumbUpVisible} >
-                                    <Icon name='thumbs outline up'size='large' />
+                                    <Transition animation='fly up' duration='500' visible={thumbUpVisible} >
+                                        <Icon name='thumbs outline up'size='large' />
                                     </Transition>
                                     <p>{count}</p>
                                 </div>
                                 <Header as='h4'>thumbsdown</Header>
                                 <div className='thumbsup-count'>
-                                <Transition animation='fly down' duration='500' visible={thumbDownVisible}>
-                                    <Icon name='thumbs outline down'size='large' />
+                                    <Transition animation='fly down' duration='500' visible={thumbDownVisible}>
+                                        <Icon name='thumbs outline down'size='large' />
                                     </Transition>
-                                    <p>{count2}</p>
+                                <p>{count2}</p>
                                 </div>
                         </div>
                         <Transition.Group
@@ -247,6 +250,9 @@ class TeacherLecture extends Component {
                         <Button onClick={ this.launchThumbs}>LAUNCH THE THUMBS</Button>
                     </Form>
                     <Form>
+                        <Transition animation='fly left' duration='500' visible={questionVisible}>
+                            <Icon name='question'size='large'/>
+                        </Transition>
                         <Header as='h3'>Free Response Question</Header>
                         <TextArea name='teachersurveyinput' value={teachersurveyinput} onChange={this.handleInput}/>
                         <Button onClick={this.freeResponse}>LAUNCH THE QUESTION</Button>
