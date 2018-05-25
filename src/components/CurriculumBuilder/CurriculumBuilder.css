@@ -8,6 +8,9 @@
   border: 1px solid black;
   padding: 8px;
   width: 30%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   height: 16vh;
   position: relative;
   border-radius: 5px;

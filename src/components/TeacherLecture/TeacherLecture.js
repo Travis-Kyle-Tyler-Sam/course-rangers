@@ -134,7 +134,7 @@ class TeacherLecture extends Component {
     toggleThumbsDown = () => this.setState({thumbDownVisible:true})
     toggleThumbsUp = () => this.setState({thumbUpVisible:true})
     render(){
-        console.log(this.state.courseMaterial)
+        
         
         let uniqueResources = _.uniqBy(this.state.courseMaterial, "title");
         let uniqueAssignments= _.uniqBy(this.state.courseMaterial, "name");
@@ -156,12 +156,13 @@ class TeacherLecture extends Component {
         return(
             <div className='teacher-lecture'>
                 <div className='left-lecture'>
-                    <div>
+                    {/* <div>
                         <Header as='h3'>TeacherLecture Room: {room}</Header>
                         <p>Topic:</p>
-                    </div>
+                    </div> */}
                     <div className='resources'>
-                        <Segment>
+                        <Segment
+                            color='olive'>
                             <Header as='h2'>Resources</Header>
                             <Table>
                             <Table.Header>
@@ -172,7 +173,8 @@ class TeacherLecture extends Component {
                             <Table.Body>{resources}</Table.Body>
                         </Table>
                         </Segment>
-                        <Segment>
+                        <Segment
+                            color='teal'>
                         <Header as="h2">Assignments</Header>
                         <Table>
                             <Table.Header>                           
@@ -187,7 +189,9 @@ class TeacherLecture extends Component {
                     </div>
                 </div>
                 <div className='middle-lecture'>
-                    <Segment className='free-section'>
+                    <Segment 
+                        color='purple'
+                        className='free-section'>
                     {/* possible icons--comment, comments, talk, help(a question mark, pencil, question) */}
                         <Header as='h1'>Free Responses</Header>
                         <Header as='h3'>{teacherSurveyText}</Header>
@@ -205,18 +209,20 @@ class TeacherLecture extends Component {
                         }
                         </Transition.Group>
                     </Segment>
-                    <Segment className='thumb-section'>
+                    <Segment 
+                        color='orange'
+                        className='thumb-section'>
                         <Header as='h1'>Thumb Survey Results</Header>
                         <Header as='h3'>{teacherThumbText}</Header>
                         <div>
-                                <Header as='h4'>thumbsup</Header>
+                                <Header as='h3'>Thumbs Up</Header>
                                 <div className='thumbsup-count'>
                                     <Transition animation='fly up' duration='500' visible={thumbUpVisible} >
                                         <Icon name='thumbs outline up'size='large' />
                                     </Transition>
                                     <p>{count}</p>
                                 </div>
-                                <Header as='h4'>thumbsdown</Header>
+                                <Header as='h3'>Thumbs Down</Header>
                                 <div className='thumbsup-count'>
                                     <Transition animation='fly down' duration='500' visible={thumbDownVisible}>
                                         <Icon name='thumbs outline down'size='large' />
@@ -238,24 +244,33 @@ class TeacherLecture extends Component {
                         </Transition.Group>
                     </Segment>
                 </div>
-                <Segment className='right-lecture'>
+                <Segment 
+                    color='blue'
+                    className='right-lecture'>
                 <Header as='h1'>In Class Surveys</Header>
                 
                     <Form>
-                        <Transition animation='fly left' duration='500' visible={thumbVisible}>
-                            <Icon name='thumbs outline up'size='large'/>
+                        <Transition className='tl-icon-container' animation='fly left' duration='500' visible={thumbVisible}>
+                            <div>
+                                <Icon name='thumbs outline up'size='huge'/>
+                                <Icon name='thumbs outline down'size='huge'/>
+                            </div>
                         </Transition>
                         <Header as='h3'>Thumbs Survey</Header>
-                        <TextArea name='teacherthumbinput' value = {teacherthumbinput} onChange={this.handleInput}/>
-                        <Button onClick={ this.launchThumbs}>LAUNCH THE THUMBS</Button>
+                        <div className='tl-survey-container'>
+                            <TextArea name='teacherthumbinput' value = {teacherthumbinput} onChange={this.handleInput}/>
+                            <Button onClick={ this.launchThumbs}>Launch Thumbs</Button>
+                        </div>
                     </Form>
                     <Form>
-                        <Transition animation='fly left' duration='500' visible={questionVisible}>
-                            <Icon name='question'size='large'/>
+                        <Transition className='tl-icon-container' animation='fly left' duration='500' visible={questionVisible}>
+                            <Icon name='question'size='huge'/>
                         </Transition>
                         <Header as='h3'>Free Response Question</Header>
-                        <TextArea name='teachersurveyinput' value={teachersurveyinput} onChange={this.handleInput}/>
-                        <Button onClick={this.freeResponse}>LAUNCH THE QUESTION</Button>
+                        <div className='tl-survey-container'>
+                            <TextArea name='teachersurveyinput' value={teachersurveyinput} onChange={this.handleInput}/>
+                            <Button onClick={this.freeResponse}>Launch Question</Button>
+                        </div>
                     </Form>
                 </Segment>
                 
