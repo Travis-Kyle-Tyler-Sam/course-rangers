@@ -101,7 +101,7 @@ class CourseBuilder extends Component {
                 
 
                 <div style={{marginRight: 20}}>
-                    <div className='ui segment cb-home-input-group'>
+                    <div className='ui teal segment cb-home-input-group'>
                         <Form className='cb-home-input' >
                             { routeParams && <h3>Editing course #{ `${routeParams}: ${editingCourse.course_name}` }</h3> }
                             <Form.Group widths='equal'>
@@ -142,7 +142,7 @@ class CourseBuilder extends Component {
                 
                 </div>
                         
-                <div className='ui segment' style={{margin: 0}}>
+                <div className='ui orange segment' style={{margin: 0}}>
                     <StudentSelector 
                         studentIds={ courseStudentIds } />
                 </div>
