@@ -233,7 +233,8 @@ class CBQuizzes extends Component {
 
                  Build a Quiz
              </Header>
-            <Form>
+            <Form
+                fluid>
                  <Input 
                     name='quizTitleInput' 
                     value={this.state.quizTitleInput} 
@@ -281,12 +282,14 @@ class CBQuizzes extends Component {
              <Header>Add a Question</Header>
              <Modal.Content>
                  <Input 
+                    fluid
                     name='quizQuestionInput' 
                     value={ this.state.quizQuestionInput } 
                     placeholder="Question" 
                     onChange={ this.handleInput } />
                 <br />
                  <Input 
+                    fluid
                     name='quizQuestionPtsInput' 
                     type='number'
                     value={ this.state.quizQuestionPtsInput } 
@@ -296,6 +299,7 @@ class CBQuizzes extends Component {
                 <Header> {this.state.quizQuestions.length + 1}. {this.state.quizQuestionInput}? </Header>
                 <br />
                 <Input 
+                    fluid
                     name='quizQuestionOptionsInput' 
                     value={ this.state.quizQuestionOptionsInput } 
                     placeholder='Add option' 
