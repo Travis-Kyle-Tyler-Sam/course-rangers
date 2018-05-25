@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import TeacherCurrentCourses from './TeacherCurrentCourses';
 import TeacherCourseTemplates from './TeacherCourseTemplates';
 import Navbar from './../Navbar/Navbar';
+import { Segment } from 'semantic-ui-react'
 
 import { connect } from 'react-redux'
 import { getCurricula } from '../../dux/teacherReducer'
@@ -25,9 +26,20 @@ class TeacherDashboard extends Component {
     <div className='td-segment-container'>
     
 
-        <div style={{margin: 0}} className='ui segment' ><TeacherCourseTemplates/></div>
+        {/* <div style={{margin: 0}} className='ui segment' ><TeacherCourseTemplates/></div>
 
-        <div style={{margin: 0}} className='ui segment'><TeacherCurrentCourses/></div>
+        <div style={{margin: 0}} className='ui segment'><TeacherCurrentCourses/></div> */}
+
+        <Segment
+            color='pink'>
+            <TeacherCourseTemplates/>
+        </Segment>
+        
+        <Segment
+            style={{margin: 0}}
+            color='yellow'>
+            <TeacherCurrentCourses/>
+        </Segment>
     
     </div>
     

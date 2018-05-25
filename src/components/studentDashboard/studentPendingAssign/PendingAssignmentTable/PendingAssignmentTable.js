@@ -74,7 +74,7 @@ class PendingAssignmentTable extends Component{
         })
         return(
             <div>
-                <Table striped color='brown' compact fixed singleLine>
+                <Table striped compact fixed singleLine>
                     <Table.Header>
                         <Table.Row>
                             <Table.HeaderCell>{course}</Table.HeaderCell>
