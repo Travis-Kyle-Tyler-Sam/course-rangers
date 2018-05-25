@@ -65,7 +65,7 @@ class CBassignments extends Component {
 
         return ( 
 
-        <div className="ui segment cb-pane" style={ { margin: 10 } }>
+        <div className="ui red segment cb-pane" style={ { margin: 10 } }>
              <Header>
                  Add an Assignment
              </Header>
