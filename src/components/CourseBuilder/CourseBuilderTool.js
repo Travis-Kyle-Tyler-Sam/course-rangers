@@ -39,6 +39,10 @@ class CourseBuilderTool extends Component {
     }
   }
 
+  componentWillUnmount() {
+    this.props.updateCourseStudents([]);
+  }
+
   handleDaySelected(day) {
     let selDays = [...this.state.selectedDaysArray];
     let ind = selDays.indexOf(day);
@@ -206,6 +210,7 @@ class CourseBuilderTool extends Component {
       });
 
       this.props.updateCourseStudents([]);
+      
 
       this.props.submitFn();
     }

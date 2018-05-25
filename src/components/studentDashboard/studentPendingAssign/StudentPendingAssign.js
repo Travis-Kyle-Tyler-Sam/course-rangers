@@ -51,7 +51,8 @@ class PendingAssignCard extends Component {
             <div className='pending-assignments'>
             {courses[0]
             ?
-                <Segment>
+                <Segment
+                    color='brown'>
                     <Header as='h1'>Pending Assignments</Header>
                     
                     {table}
