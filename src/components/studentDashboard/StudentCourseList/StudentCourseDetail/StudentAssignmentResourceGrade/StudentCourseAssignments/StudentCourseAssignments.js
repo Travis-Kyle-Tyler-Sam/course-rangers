@@ -81,7 +81,7 @@ class StudentCourseAssignments extends Component{
       
             
             <div className='student-course-assignments'>
-                <Table fixed compact fixed singleLine>
+                <Table fixed compact fixed singleLine color='purple'>
                     <Table.Header>
                         <Table.Row >
                             <Table.HeaderCell>Name</Table.HeaderCell>

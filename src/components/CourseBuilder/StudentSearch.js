@@ -97,10 +97,9 @@ removeStudent(studentId){
             onChange={(e, data) => {  
                 this.setState({searchString: data.value})}
         }/> 
-        <Button onClick={ () => {
-            this.selectStudent() }}>
-            Add Student to Class
-        </Button>
+    
+        <Button positive icon labelPosition='right' onClick={ () => {
+            this.selectStudent() }}>Add to Class<Icon name='plus'/></Button>
         
     
     <ol>{studentsInTheClass}</ol>

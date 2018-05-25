@@ -275,7 +275,8 @@ class CurriculumBuilder extends Component {
               onChange={this.handleInput}
             />
           )}
-          <Button onClick={this.saveName}>{nameBtnLabel}</Button>
+          <Button primary onClick={this.saveName}>{nameBtnLabel}</Button>
+        
           <br />
 
           <Input
@@ -288,7 +289,7 @@ class CurriculumBuilder extends Component {
             value={this.state.numDaysInput}
           />
 
-          <Button onClick={this.populateDays}>Set Days</Button>
+          <Button primary onClick={this.populateDays}>Set Days</Button>
 
           <div className="cb-days-container"> {displayDays} </div>
         </div>
