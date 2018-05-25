@@ -70,7 +70,7 @@ deleteCourseTemplate(id){
             <div className='tct-template-container'>
                    <h2>Curriculum Templates</h2>
                 <Link to= '/curriculumbuilder'>
-                    <Button icon labelPosition='right'>Add New<Icon name='plus'/></Button>
+                    <Button positive icon labelPosition='right'>Add New<Icon name='plus'/></Button>
                 </Link>
 
 
