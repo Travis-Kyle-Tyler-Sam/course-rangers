@@ -137,31 +137,38 @@ class StudentLecture extends Component {
             <div>
                 
                 <div className='student-lecture'>
-                <Header as='h2'>Student Lecture View Room {room}</Header>
-                    <div className='assignments'>
-                        <Header as="h2">Assignments</Header>
-                        <Table>
-                            <Table.Header>                           
-                                <Table.Row>
-                                <Table.HeaderCell>Assignment</Table.HeaderCell>
-                                    <Table.HeaderCell>Grade</Table.HeaderCell>
-                                    <Table.HeaderCell>Due Date</Table.HeaderCell>
-                                </Table.Row>
-                            </Table.Header>
-                            <Table.Body>{assignments}</Table.Body>
-                        </Table>
-                        <Header as="h2">Resources</Header>
-                        <Table>
-                            <Table.Header>
-                                <Table.Row>
-                                <Table.HeaderCell>Resource</Table.HeaderCell>                                   
-                                </Table.Row>
-                            </Table.Header>
-                            <Table.Body>{resources}</Table.Body>
-                        </Table>
-                    </div>
+                {/* <Header as='h2'>Student Lecture View Room {room}</Header> */}
+                    <Segment
+                        style={{ margin: 0 }}                           
+                        color='red'>
+                        <div className='assignments'>
+                            <Header as="h2">Assignments</Header>
+                            <Table>
+                                <Table.Header>                           
+                                    <Table.Row>
+                                    <Table.HeaderCell>Assignment</Table.HeaderCell>
+                                        <Table.HeaderCell>Grade</Table.HeaderCell>
+                                        <Table.HeaderCell>Due Date</Table.HeaderCell>
+                                    </Table.Row>
+                                </Table.Header>
+                                <Table.Body>{assignments}</Table.Body>
+                            </Table>
+                            <Header as="h2">Resources</Header>
+                            <Table>
+                                <Table.Header>
+                                    <Table.Row>
+                                    <Table.HeaderCell>Resource</Table.HeaderCell>                                   
+                                    </Table.Row>
+                                </Table.Header>
+                                <Table.Body>{resources}</Table.Body>
+                            </Table>
+                        </div>
+                    </Segment>
+
+                    <div className='sl-right-container'>
+                    <Segment
+                        color='orange'>
                     <div className='student-response'>
-                        <Segment>
                             <Header as='h2'>Thumbs!</Header>
                             <Transition duration='500' animation='fly left' visible={thumbsVisible}>
                                 <Form>
@@ -169,13 +176,13 @@ class StudentLecture extends Component {
                                     <Icon name='thumbs outline up' size='large' />
                                     <Button onClick={this.buttonPress}
                                         disabled={thumbsDisable}
-                                    >
+                                        >
                                         I get it!
                                 </Button>
                                     <Icon name='thumbs outline down' size='large' />
                                     <Button onClick={this.buttonPress2}
                                         disabled={thumbsDisable}
-                                    >
+                                        >
                                         I don't get it.
                                 </Button>
                                 </Form>
@@ -191,8 +198,10 @@ class StudentLecture extends Component {
                                 </Form>
                                 : null
                             }
+                        </div>
                         </Segment>
-                        <Segment>
+                        <Segment
+                            color='purple'>
                             <Header as='h2'>Free Response</Header>
                             <Transition duration='500' animation='fly left' visible={freeResponseVisible}>
                                 <Form>
@@ -204,11 +213,10 @@ class StudentLecture extends Component {
                                     <p>{studentSurveyText}</p>
                                 </Form>
                             </Transition>
-                            
                         </Segment>
+                        </div>
                     </div>
                 </div>
-            </div>
 
         )
     }
