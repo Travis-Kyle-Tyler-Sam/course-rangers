@@ -18,15 +18,15 @@
   justify-content: space-evenly;
 }
 
-.ui.segment.quiz-taker-question-container {
-  padding: 45px;
-  width: 40vw;
-  height: 45vh;
-}
-
 .qt-option {
   line-height: 43px;
   font-size: 25px;
+}
+
+.ui.segment.quiz-taker-question-container {
+  padding: 45px;
+  width: 40vw;
+  height: 65vh;
 }
 
 .qt-option:hover {
