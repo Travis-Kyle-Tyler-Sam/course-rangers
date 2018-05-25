@@ -1,6 +1,7 @@
-@import url('https://fonts.googleapis.com/css?family=Kavivanar|Modern+Antiqua');
+/* @import url('https://fonts.googleapis.com/css?family=Kavivanar|Modern+Antiqua'); */
 .student-course-detail{
   display: grid;
+  grid-gap: 10px;
   grid-template-columns: 50px auto 10px auto 50px;
   grid-template-rows: 100px 1fr;
   height:100vh;

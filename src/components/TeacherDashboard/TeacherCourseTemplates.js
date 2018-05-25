@@ -38,12 +38,16 @@ deleteCourseTemplate(id){
                     { template.curriculum_name }
                 </Table.Cell>
                 <Table.Cell>
-                    <Button 
-                        basic 
-                        icon 
-                        circular
+                    <Button
+                        color='blue' 
+                        animated
                         href={ `/#/curriculumbuilder/${template.id}` }>
-                        <Icon name="edit"/>
+                        <Button.Content visible>
+                            <Icon name="edit"/>
+                        </Button.Content>
+                        <Button.Content hidden>
+                            Edit
+                        </Button.Content>
                     </Button>
                 </Table.Cell>
 
