@@ -3,6 +3,7 @@ import axios from 'axios'
 import QList from './QList'
 import moment from 'moment'
 import { Segment, Button, Icon, Modal, Header } from 'semantic-ui-react'
+import fns from './utils/functions'
 
 import './QuizTaker.css'
 
@@ -31,29 +32,11 @@ class QuizTaker extends Component {
         .catch( err => console.log(err))
     }
 
-    cycleLeft = () => {
-        let { index, questions } = this.state
+    
 
-        if( index !== 0) {
-            index--
-            this.setState({ index: index })
-        } 
-    }
+  
 
-    cycleRight = () => {
-        let { index, questions } = this.state
 
-        if( index !== questions.length -1) {
-            index++
-            this.setState({ index: index })
-        } 
-    }
-
-    selectQuestion = (i) => {
-        this.setState({
-            index: i
-        })
-    }
 
     selectOption = (i) => {
 
@@ -163,7 +146,7 @@ class QuizTaker extends Component {
                 <QList
                     questions={ this.state.questions } 
                     index={ this.state.index }
-                    changeQ={ this.selectQuestion }/>
+                    changeQ={ fns.selectQuestion }/>
 
                 <div className='quiz-taker-question-guide'>
                 <Segment 
@@ -179,7 +162,7 @@ class QuizTaker extends Component {
                         icon 
                         style={{margin:0}} 
                         labelPosition='left'
-                        onClick={ this.cycleLeft }
+                        onClick={ ()=>fns.cycleLeft(this.state.index) }
                         size='huge'>
                         <Icon name='left arrow' />
                         Last
@@ -187,7 +170,7 @@ class QuizTaker extends Component {
 
                     {this.state.index !== (this.state.questions.length -1) && <Button 
                         icon
-                        onClick= {this.cycleRight }
+                        onClick= {()=>this.cycleRight(this.state.index, this.state.questions) }
                         className='qt-btn-right'
                         style={{margin:0}} 
                         size='huge'
