@@ -39,7 +39,7 @@ module.exports = {
         };
 
         req.app.get('db')
-        .users_DB.create_user([name, null, email, phone, userType, adminID, null, null, null])
+        .users_DB.create_user([name, null, email, phone, userType, adminID, null, null, null, null])
         .then( response => {
             res.status(200).send({
                 id:response[0].id,

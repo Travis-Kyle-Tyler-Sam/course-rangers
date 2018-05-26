@@ -1,6 +1,6 @@
 import React, {Component}from 'react';
 import AdminAddEdit from '../AdminAddEdit/AdminAddEdit';
-import { Modal, Button, Header, Table, Pagination, Input, Form, Loader, Dimmer } from 'semantic-ui-react';
+import { Modal, Button, Header, Table, Pagination, Input, Form, Loader, Dimmer, Icon } from 'semantic-ui-react';
 import '../AdminDash/AdminDash.css'
 import _ from 'lodash';
 
@@ -153,10 +153,19 @@ class AdminList extends Component{
                         <Input onChange={ e => this.setState({
                             searchString:e.target.value}
                             )}
-                            />
-                        <Button primaryonClick={ () => {
+                            placeholder='Search Names Here'/>
+                        <Button onClick={ () => {
                             this.searchList()
-                        }}>Search</Button>
+                            }}
+                            animated='vertical'
+                        >
+                            <Button.Content hidden>
+                                Search
+                            </Button.Content>
+                            <Button.Content visible>
+                                <Icon name='search'/>
+                            </Button.Content>
+                        </Button>
                         
                     </Form>
                     
