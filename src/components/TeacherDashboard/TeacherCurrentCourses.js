@@ -68,24 +68,31 @@ class TeacherCurrentCourses extends Component {
             {moment(course.completion_date).format("MMMM DD, YYYY")}
           </Table.Cell>
           <Table.Cell>
-            <Button basic icon circular>
-              <Link to={`/coursebuilder/${course.id}`}>
+            <Button 
+              color='blue'
+              animated
+              href={`/#/coursebuilder/${course.id}`}
+            >
+              <Button.Content visible>
                 <Icon name="edit" />
-              </Link>
+              </Button.Content>
+              <Button.Content hidden >
+                Edit
+              </Button.Content>
             </Button>
           </Table.Cell>
           <Table.Cell>
   
             <Button onClick={() => this.deleteCourse(course.id)}
-                                negative
-                                animated>
-                                <Button.Content visible>
-                                    <Icon name='trash'/>
-                                </Button.Content>
-                                <Button.Content hidden>
-                                    Delete 
-                                </Button.Content>
-                            </Button>
+                negative
+                animated >
+                <Button.Content visible>
+                    <Icon name='trash'/>
+                </Button.Content>
+                <Button.Content hidden>
+                    Delete 
+                </Button.Content>
+            </Button>
           </Table.Cell>
         </Table.Row>
       );
@@ -95,7 +102,7 @@ class TeacherCurrentCourses extends Component {
       <div className='tct-template-container'>
       <h2>My Courses</h2>
         <Link to="/coursebuilder">
-          <Button icon labelPosition="right">
+          <Button positive icon labelPosition="right">
             Add New<Icon name="plus" />
           </Button>
         </Link>

@@ -14,7 +14,7 @@ function StudentCourseList (props){
         let coursePercent = calculatePercentFn(courseAssignments)
         return(
         <Table.Row key={`${course.name}${course.id}`}>
-            <Table.Cell onClick={ () => courseRouteFn(course.course_id)} ><Button>View Course</Button></Table.Cell>
+            <Table.Cell onClick={ () => courseRouteFn(course.course_id)} ><Button primary>View Course</Button></Table.Cell>
         
             <Table.Cell >{course.course_name}</Table.Cell>
             <Table.Cell>{course.teacher_name}</Table.Cell>
@@ -35,11 +35,12 @@ function StudentCourseList (props){
     return(
         <div className='course-list'>
             
-            <Segment>
+            <Segment
+                color='green'>
             {studentsCourses.length !== 0
             ?<div>
                 <Header as='h1'>My Courses</Header>
-                <Table striped color='green'>
+                <Table striped >
                     <Table.Header>
                         <Table.Row>
                         <Table.HeaderCell>View Course</Table.HeaderCell> 

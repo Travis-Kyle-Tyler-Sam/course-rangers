@@ -30,7 +30,7 @@ class StudentCourseResources extends Component{
         })
         return(
             <div className='student-course-resources'>
-                <Table fixed>
+                <Table fixed color='yellow'>
                     <Table.Header>
                         <Table.Row>
                             <Table.HeaderCell>Resource</Table.HeaderCell>

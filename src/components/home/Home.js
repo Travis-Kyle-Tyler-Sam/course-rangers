@@ -8,9 +8,9 @@ import CRLogo from '../../CourseRangers.png'
 import "./Home.css";
 
 class Home extends Component {
-  componentDidMount() {
-    this.props.getUserInfo();
-  }
+  // componentDidMount() {
+  //   this.props.getUserInfo();
+  // }
 
   render() {
     return (
@@ -21,7 +21,7 @@ class Home extends Component {
           <Button
             primary
             size="massive"
-            href={process.env.REACT_APP_LOGIN}
+            href={ process.env.REACT_APP_LOGIN }
             id="login_button"
           >
             Login

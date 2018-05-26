@@ -38,12 +38,16 @@ deleteCourseTemplate(id){
                     { template.curriculum_name }
                 </Table.Cell>
                 <Table.Cell>
-                    <Button 
-                        basic 
-                        icon 
-                        circular
+                    <Button
+                        color='blue' 
+                        animated
                         href={ `/#/curriculumbuilder/${template.id}` }>
-                        <Icon name="edit"/>
+                        <Button.Content visible>
+                            <Icon name="edit"/>
+                        </Button.Content>
+                        <Button.Content hidden>
+                            Edit
+                        </Button.Content>
                     </Button>
                 </Table.Cell>
 
@@ -66,7 +70,7 @@ deleteCourseTemplate(id){
             <div className='tct-template-container'>
                    <h2>Curriculum Templates</h2>
                 <Link to= '/curriculumbuilder'>
-                    <Button icon labelPosition='right'>Add New<Icon name='plus'/></Button>
+                    <Button positive icon labelPosition='right'>Add New<Icon name='plus'/></Button>
                 </Link>
 
 

@@ -108,6 +108,7 @@ class AdminList extends Component{
         const editModal = () => (
             
             <AdminAddEdit
+            
                 handleClickFn = {this.handleClick}
                 adjust = 'Save'
                 callbackFn = {addUserFn}
@@ -169,7 +170,7 @@ class AdminList extends Component{
                     </Form>
                     
                 </div>
-                <Table striped={true} compact={true} sortable={true} celled fixed attached>
+                <Table striped={true} compact={true} sortable={true} celled fixed attached color='blue'>
                     <Table.Header>
                         <Table.Row>
                             <Table.HeaderCell sorted={column === 'name' ? direction: null} onClick={this.handleSort('name')}>Name</Table.HeaderCell>

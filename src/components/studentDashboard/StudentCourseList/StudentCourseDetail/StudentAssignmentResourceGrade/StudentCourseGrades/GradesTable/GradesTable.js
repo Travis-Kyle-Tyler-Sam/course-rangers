@@ -14,7 +14,7 @@ class GradesTable extends Component{
         return(
             <div className='grades-table'>
                 
-                <Table fixed compact singeLine columns={3}>
+                <Table fixed compact singeLine columns={3} color='orange'>
                     <Table.Header>
                         <Table.Row>
                             <Table.HeaderCell>{this.props.singular}</Table.HeaderCell>
