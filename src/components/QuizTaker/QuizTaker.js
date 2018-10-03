@@ -19,6 +19,9 @@ class QuizTaker extends Component {
             ptsPossible: 0,
             message: ''
          }
+         fns.selectQuestion = fns.selectQuestion.bind(this);
+         fns.cycleRight = fns.cycleRight.bind(this);
+         fns.cycleLeft = fns.cycleLeft.bind(this);
     }
 
     componentDidMount() {
@@ -170,7 +173,7 @@ class QuizTaker extends Component {
 
                     {this.state.index !== (this.state.questions.length -1) && <Button 
                         icon
-                        onClick= {()=>this.cycleRight(this.state.index, this.state.questions) }
+                        onClick= {()=>fns.cycleRight(this.state.index, this.state.questions) }
                         className='qt-btn-right'
                         style={{margin:0}} 
                         size='huge'

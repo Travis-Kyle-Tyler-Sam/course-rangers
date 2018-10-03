@@ -156,10 +156,7 @@ class TeacherLecture extends Component {
         return(
             <div className='teacher-lecture'>
                 <div className='left-lecture'>
-                    {/* <div>
-                        <Header as='h3'>TeacherLecture Room: {room}</Header>
-                        <p>Topic:</p>
-                    </div> */}
+                   
                     <div className='resources'>
                         <Segment
                             color='olive'>
@@ -177,7 +174,7 @@ class TeacherLecture extends Component {
                             color='teal'>
                         <Header as="h2">Assignments</Header>
                         <Table>
-                            <Table.Header>                           
+                            <Table.Header>
                                 <Table.Row>
                                 <Table.HeaderCell>Assignment</Table.HeaderCell>
                                     <Table.HeaderCell>Due Date</Table.HeaderCell>

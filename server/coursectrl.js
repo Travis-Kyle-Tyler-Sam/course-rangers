@@ -93,20 +93,9 @@ module.exports = {
     },
 
     getCourses: async (req, res) => {
-        //======================================================================================//
-        //==================== Change this back to req.user ====================================//
-        /*===========================*/ let id = req.user.id /*===========================================*/
-        //======================================================================================//
-
-    //    let db = req.app.get('db')
-
-       
-    //    return res.status(200).send(courses)
-       
-       
+        let { id } = req.user;
        
         let db = req.app.get('db')
-        // =========== CHANGE THIS TO REQ.USER ===========//
         let courses = db.courses_DB.get_courses( [id] )
         let courseDays = db.course_days_DB.get_course_days();
         let courseQuizzes = db.course_assignments_DB.get_course_quizzes();

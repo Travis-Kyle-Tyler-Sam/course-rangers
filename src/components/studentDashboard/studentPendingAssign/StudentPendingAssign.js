@@ -7,44 +7,20 @@ class PendingAssignCard extends Component {
     
     render() {
        const { courses, assignments } = this.props;
-        // const assignments = [
-        //     { 
-        //         courseName:'Math', 
-        //         assignmentName:'Shapes', 
-        //         instructorName:'Voltron', 
-        //         dueDate:'Sometime soon', 
-        //         instructions:'Draw some shapes or something'
-        //     },
-        //     { 
-        //         courseName:'English', 
-        //         assignmentName:'Shakespear', 
-        //         instructorName:'Voltron', 
-        //         dueDate:'Eventually', 
-        //         instructions:'Read Romeo and Juliet'
-        //     },
-        //     { 
-        //         courseName:'Biology', 
-        //         assignmentName:'Cells', 
-        //         instructorName:'Voltron', 
-        //         dueDate:'Someday', 
-        //         instructions:'Look at cells or sumthin'
-        //     },
-
-        // ];
         
         const table = courses.map( course => {
+            let courseAssignments = assignments.filter( assignment => {
+                return assignment.course_id === course.course_id && !assignment.date_submitted
+            })
+
             return(
                 assignments.length !== 0
-                ?<PendingAssignmentTable
+                && <PendingAssignmentTable
                     course = {course}
-                    list = {assignments.filter( assignment => {
-                        return assignment.course_name == course && !assignment.date_submitted
-                    })}
+                    list = {courseAssignments}
                     key = {`pendingtable${course}`}
                     uploadFileFn = {this.props.uploadFileFn}
                 />
-                :null
-                
             )
         })
         return (

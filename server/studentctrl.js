@@ -7,14 +7,14 @@ module.exports = {
     },
     getCourses: async (req, res, next) =>{
         const {studentid} = req.params;
-        req.session.studentid = studentid
+        req.studentid = studentid;
         let results = await req.app.get('db')
         .course_students_DB
         .get_course_students([studentid])
         if (results.length === 0){
             results = [{course_name:'No courses yet!'}]
         }
-        req.session.userCourses = results
+        req.userCourses = results
         next()
 
     },
@@ -49,9 +49,7 @@ module.exports = {
         let results = await req.app.get('db')
         .course_students_DB
         .get_all_assignments([studentid])
-
-        req.session.userAssignments = results
-        res.status(200).send({courses:req.session.userCourses, assignments:results})
+        res.status(200).send({courses:req.userCourses, assignments:results})
     },
     getCourseDetail: async (req, res, next) => {
         const { courseid } = req.params;

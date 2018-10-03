@@ -81,9 +81,7 @@ class StudentDashboard extends Component {
       <div className='dashboard'>
         <div className='columns'>
           <StudentPendingAssign
-            courses = {studentsCourses.map( course => {
-              return course.course_name
-            })}
+            courses = {studentsCourses}
             assignments = {studentsAssignments}
             uploadFileFn = {this.uploadFile}
           />
