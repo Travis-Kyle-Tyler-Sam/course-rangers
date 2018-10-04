@@ -42,7 +42,6 @@ class PendingAssignmentTable extends Component{
                                 </Table.Cell>
                                 :<Table.Cell >
                                     Incomplete 
-                                    {/* <Icon name='protect'/> */}
                                 </Table.Cell>
                         }
                         {
@@ -77,7 +76,7 @@ class PendingAssignmentTable extends Component{
                 <Table striped compact fixed singleLine>
                     <Table.Header>
                         <Table.Row>
-                            <Table.HeaderCell>{course}</Table.HeaderCell>
+                            <Table.HeaderCell>{course.course_name}</Table.HeaderCell>
                             <Table.HeaderCell>Due Date</Table.HeaderCell>
                             <Table.HeaderCell>Status</Table.HeaderCell>
                             <Table.HeaderCell></Table.HeaderCell>
@@ -88,9 +87,10 @@ class PendingAssignmentTable extends Component{
                     </Table.Body>
                 </Table>
                 <Pagination
-                defaultActivePage={1}
-                totalPages={totalPages}
-                onPageChange={(event, data) => this.handlePage(data.activePage)}/>
+                    style={{ margin: '0 0 25px 0'}}
+                    defaultActivePage={1}
+                    totalPages={totalPages}
+                    onPageChange={(event, data) => this.handlePage(data.activePage)}/>
             </div>
         )
     }

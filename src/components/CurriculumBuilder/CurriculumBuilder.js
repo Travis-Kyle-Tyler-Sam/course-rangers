@@ -268,6 +268,7 @@ class CurriculumBuilder extends Component {
 
           {this.state.editingName && (
             <Input
+              id='cb-cur-name'
               className="cb-inputs"
               placeholder="Curriculum Name"
               name="curriculumNameInput"

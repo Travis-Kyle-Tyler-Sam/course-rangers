@@ -158,6 +158,7 @@ class CBDaySelect extends Component {
           {this.state.editingTopicDesc && (
             <div>
               <Input
+                id="cb-day-name"
                 name="dayTopicInput"
                 value={this.state.dayTopicInput}
                 onChange={this.handleInput}

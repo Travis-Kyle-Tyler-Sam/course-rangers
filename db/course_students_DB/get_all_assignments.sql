@@ -9,6 +9,6 @@ on c.id = uc.class_id
 join users as us
 on us.id = c.teacher_id
 join course_assignments as ca
-on ca.student_id = u.id
+on ca.student_id = u.id and ca.course_id = c.id
 where u.id = $1
 order by ca.due_date;

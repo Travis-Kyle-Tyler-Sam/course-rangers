@@ -95,6 +95,7 @@ class StudentCourseAssignments extends Component{
                     </Table.Body>
                 </Table>
                 <Pagination
+                    style={{ margin: '15px 0'}}
                     defaultActivePage={1}
                     totalPages={this.state.totalPages}
                     onPageChange={(event, data) => this.handlePage(data.activePage)}

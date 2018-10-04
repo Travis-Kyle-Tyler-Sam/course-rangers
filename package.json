@@ -15,7 +15,7 @@
     "express-session": "^1.15.6",
     "faker": "^4.1.0",
     "fs": "0.0.1-security",
-    "jest": "^22.4.3",
+    "jest": "^22.4.4",
     "lodash": "^4.17.10",
     "massive": "^4.8.0",
     "material-ui": "^1.0.0-beta.47",

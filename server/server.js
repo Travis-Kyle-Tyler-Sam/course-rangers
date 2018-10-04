@@ -109,6 +109,25 @@ app.get(
   })
 );
 
+app.use( (req, res, next) => {
+  if(process.env.MODE === 'development'){
+    req.user = {
+      auth_id:"google-oauth2|114146967500188859005",
+      course_connect:null,
+      email:"travisallen6@gmail.com",
+      exp:0,
+      id:4,
+      level:0,
+      linker_id:null,
+      phone:null,
+      user_image:"https://lh3.googleusercontent.com/-zR2_L45pjK4/AAAAAAAAAAI/AAAAAAAACSw/YL4xjs1PCvg/photo.jpg",
+      user_name:"Travis Allen",
+      user_type:"Student"
+    }
+  }
+  next();
+})
+
 app.get("/auth/me", function(req, res) {
   if (!req.user) {
     res.sendStatus(401);
@@ -183,7 +202,6 @@ app.put('/api/course/:id', coursectrl.prepDelete, coursectrl.addCourse)
 app.delete('/api/course/:id', coursectrl.deleteCourse)
 
 app.get('/api/student/lecture_material/:course_day_id', (req, res)=>{
-  console.log(req.params)
   app
     .get('db')
     .course_days_DB.get_student_lecture_material([req.params.course_day_id, req.user.id])

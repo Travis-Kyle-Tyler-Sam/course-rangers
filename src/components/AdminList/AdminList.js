@@ -186,6 +186,7 @@ class AdminList extends Component{
                 </Table>
                 <div>
                     <Pagination
+                        style={{ margin: '15px 0'}}
                         defaultActivePage={1}
                         totalPages={this.state.totalPages}
                         onPageChange={(event, data) => this.handlePage(data.activePage)}

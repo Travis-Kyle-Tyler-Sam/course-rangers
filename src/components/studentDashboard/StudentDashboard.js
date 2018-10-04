@@ -9,13 +9,7 @@ class StudentDashboard extends Component {
     constructor(props) {
       super(props);
       this.state = { 
-        studentsCourses: [{
-          courseName:'Math',
-          teacherName:'Mrs. Henry',
-          percent:92,
-          letterGrade:'A-',
-          id:5
-        }],
+        studentsCourses: [],
         studentsAssignments: [],
         studentID:9,
        }
@@ -81,9 +75,7 @@ class StudentDashboard extends Component {
       <div className='dashboard'>
         <div className='columns'>
           <StudentPendingAssign
-            courses = {studentsCourses.map( course => {
-              return course.course_name
-            })}
+            courses = {studentsCourses}
             assignments = {studentsAssignments}
             uploadFileFn = {this.uploadFile}
           />
