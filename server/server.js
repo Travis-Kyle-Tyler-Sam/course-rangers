@@ -202,7 +202,6 @@ app.put('/api/course/:id', coursectrl.prepDelete, coursectrl.addCourse)
 app.delete('/api/course/:id', coursectrl.deleteCourse)
 
 app.get('/api/student/lecture_material/:course_day_id', (req, res)=>{
-  console.log(req.params)
   app
     .get('db')
     .course_days_DB.get_student_lecture_material([req.params.course_day_id, req.user.id])
