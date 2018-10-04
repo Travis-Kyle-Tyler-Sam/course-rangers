@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Table, Header, Pagination } from 'semantic-ui-react';
+import { Table, Pagination } from 'semantic-ui-react';
 import moment from 'moment';
 import '../../StudentCourseDetail.css'
 class StudentCourseResources extends Component{
@@ -19,8 +19,9 @@ class StudentCourseResources extends Component{
     render(){
         const { resources } = this.props;
         const { currentPage } = this.state;
-        const list = resources.map( (resource, i) => {
-            if (Math.ceil((i+1)/5) === currentPage)
+        const list = resources
+        .filter((resource, i) => Math.ceil((i+1)/5) === currentPage)
+        .map( (resource, i) => {
             return(
                 <Table.Row>  
                     <Table.Cell><a target='_blank' href={resource.url}>{resource.title}</a></Table.Cell>

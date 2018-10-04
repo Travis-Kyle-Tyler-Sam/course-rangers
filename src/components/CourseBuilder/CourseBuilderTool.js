@@ -2,13 +2,12 @@ import React, { Component } from "react";
 import moment from "moment";
 import axios from "axios";
 import "./CourseBuilderTool.css";
-import BigCalendar from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { connect } from "react-redux";
 import { updateCourseStudents } from "../../dux/teacherReducer";
 import Snackbar from "material-ui/Snackbar";
 
-import { Button, Table, Message, Icon } from "semantic-ui-react";
+import { Button, Message, } from "semantic-ui-react";
 
 moment.locale("en");
 
@@ -24,16 +23,10 @@ class CourseBuilderTool extends Component {
     };
   }
 
-  // componentWillReceiveProps(newProps) {
-  //   if(this.props.selectedDays.length !== newProps.selectedDays && newProps.length > 0 ) {
-  //     newProps.selectedDays.forEach( selDay => this.handleDaySelected(selDay) )
-  //   }
-  // }
-
   componentDidMount() {
     if (
       this.props.selectedDays.length > 0 &&
-      this.props.selectedDays != this.state.selectedDaysArray
+      this.props.selectedDays !== this.state.selectedDaysArray
     ) {
       this.props.selectedDays.forEach(sD => this.handleDaySelected(sD));
     }
@@ -58,8 +51,6 @@ class CourseBuilderTool extends Component {
         });
       }
     }
-
-    let template = this.props.template;
 
     let selectedCurriculum = this.props.curricula.filter(
       curr => curr.id === +this.props.template

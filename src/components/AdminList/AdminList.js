@@ -1,6 +1,6 @@
 import React, {Component}from 'react';
 import AdminAddEdit from '../AdminAddEdit/AdminAddEdit';
-import { Modal, Button, Header, Table, Pagination, Input, Form, Loader, Dimmer } from 'semantic-ui-react';
+import { Button, Table, Pagination, Input, Form } from 'semantic-ui-react';
 import '../AdminDash/AdminDash.css'
 import _ from 'lodash';
 
@@ -31,14 +31,14 @@ class AdminList extends Component{
             bool = false;
         } else {
             list.forEach( (user, i) => {
-                if (user.name === prevList[i].name &&
-                    user.email === prevList[i].email &&
-                    user.phone === prevList[i].phone &&
-                    user.userType === prevList[i].userType &&
-                    user.id === prevList[i].id 
+                if (user.name !== prevList[i].name &&
+                    user.email !== prevList[i].email &&
+                    user.phone !== prevList[i].phone &&
+                    user.userType !== prevList[i].userType &&
+                    user.id !== prevList[i].id 
                     ){
-                        null
-                    } else bool = false
+                    bool = false
+                } 
             })
         }
         
@@ -102,8 +102,7 @@ class AdminList extends Component{
         })
     }
     render(){
-        // const { list, type } = this.state;
-        const { handleUsersChangeFn, type, addUserFn, editUserFn, deleteUserFn } = this.props;
+        const { addUserFn, editUserFn, deleteUserFn } = this.props;
         const { currentPage, searchList, column, direction } = this.state;
         const editModal = () => (
             
@@ -118,37 +117,36 @@ class AdminList extends Component{
             />
 
         )
-        const listItems = searchList.map( (user,i) => {
-            if (Math.ceil((i+1)/5)===currentPage){
-                return (
-                    <Table.Row key={user.id}>
-                        <Table.Cell id={`${user.name}_cell`}>{user.name}</Table.Cell>
-                        <Table.Cell >{user.email}</Table.Cell>
-                        <Table.Cell id={`${user.phone}_cell`}>{user.phone}</Table.Cell>
-                        <Table.Cell >{user.id}</Table.Cell>
-                        <Table.Cell >
-                            <AdminAddEdit
-                                name = {user.name}
-                                email = {user.email}
-                                phone = {user.phone}
-                                id = {user.id}
-                                role = {user.userType}
-                                handleClickFn = {this.handleClick}
-                                adjust = 'Edit'
-                                callbackFn = {editUserFn}
-                                key={user.id}
-                                deleteUserFn = {deleteUserFn}
-                                handleListChangeFn = {this.handleListChange}
-                            />
-                        </Table.Cell>
-                    </Table.Row>
-                )
-            }
+        const listItems = searchList
+        .filter( (user, i) => Math.ceil((i+1)/5)===currentPage )
+        .map( (user) => {
+            return (
+                <Table.Row key={user.id}>
+                    <Table.Cell id={`${user.name}_cell`}>{user.name}</Table.Cell>
+                    <Table.Cell >{user.email}</Table.Cell>
+                    <Table.Cell id={`${user.phone}_cell`}>{user.phone}</Table.Cell>
+                    <Table.Cell >{user.id}</Table.Cell>
+                    <Table.Cell >
+                        <AdminAddEdit
+                            name = {user.name}
+                            email = {user.email}
+                            phone = {user.phone}
+                            id = {user.id}
+                            role = {user.userType}
+                            handleClickFn = {this.handleClick}
+                            adjust = 'Edit'
+                            callbackFn = {editUserFn}
+                            key={user.id}
+                            deleteUserFn = {deleteUserFn}
+                            handleListChangeFn = {this.handleListChange}
+                        />
+                    </Table.Cell>
+                </Table.Row>
+            )
         })
         return (
             <div> 
                 <div>
-                    
                     <Form>
                         <Input onChange={ e => this.setState({
                             searchString:e.target.value}
@@ -157,9 +155,7 @@ class AdminList extends Component{
                         <Button primaryonClick={ () => {
                             this.searchList()
                         }}>Search</Button>
-                        
                     </Form>
-                    
                 </div>
                 <Table striped={true} compact={true} sortable={true} celled fixed attached color='blue'>
                     <Table.Header>

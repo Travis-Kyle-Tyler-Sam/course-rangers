@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
 import { getUserInfo } from './../dux/userReducer'
-import { truncate } from "fs";
 import Dropzone from 'react-dropzone';
 import { Button, Icon } from 'semantic-ui-react';
 
@@ -46,10 +45,8 @@ class FileUpload extends Component {
     }
   }
 
-  handlePhoto(event) {
-    const reader = new FileReader(),
-      file = event[0],
-      _this = this;
+  handlePhoto([file]) {
+    const reader = new FileReader();
 
     reader.onload = photo => {
       this.setState({

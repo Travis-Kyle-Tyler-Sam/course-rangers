@@ -1,23 +1,21 @@
 import React, { Component } from "react";
 import {
-  Card,
   Icon,
-  Image,
   Input,
   Button,
   TextArea,
   Form,
   Header,
-  Checkbox
 } from "semantic-ui-react";
 import "../CurriculumBuilder.css";
 
 class CBDaySelect extends Component {
   constructor(props) {
     super(props);
+    const { editing } = this.props;
     this.state = {
       dayTopicInput: this.props.selectedDay.dayTopic || "",
-      editingTopicDesc: true,
+      editingTopicDesc: editing ? false : true,
       dayDescriptionInput: this.props.selectedDay.dayDesc || ""
     };
   }
@@ -88,10 +86,11 @@ class CBDaySelect extends Component {
   };
 
   componentDidUpdate(prevProps, prevState, snapshot) {
+    const { editing } = this.props;
     if (prevProps.selectedDay.dayNum !== this.props.selectedDay.dayNum) {
       this.setState({
         dayTopicInput: this.props.selectedDay.dayTopic || "",
-        editingTopicDesc: true,
+        editingTopicDesc: editing ? false : true,
         dayDescriptionInput: this.props.selectedDay.dayDesc || ""
       });
     }

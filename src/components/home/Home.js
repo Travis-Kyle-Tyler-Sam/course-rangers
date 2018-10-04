@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import axios from "axios";
 import { Button } from "semantic-ui-react";
 import { connect } from "react-redux";
 import { getUserInfo } from "../../dux/userReducer";
@@ -8,16 +7,12 @@ import CRLogo from '../../CourseRangers.png'
 import "./Home.css";
 
 class Home extends Component {
-  // componentDidMount() {
-  //   this.props.getUserInfo();
-  // }
 
   render() {
     return (
       <div className="mainDiv">
         <div className="login-container">
-          {/* <h1>Welcome to Course Rangers!</h1> */}
-          <img src={ CRLogo } width='75%'/>
+          <img alt='course rangers logo' src={ CRLogo } width='75%'/>
           <Button
             primary
             size="massive"
@@ -30,12 +25,6 @@ class Home extends Component {
       </div>
     );
   }
-}
-
-function mapStateToProps(state) {
-  return {
-    user: state.user
-  };
 }
 
 export default connect(null, { getUserInfo })(Home);

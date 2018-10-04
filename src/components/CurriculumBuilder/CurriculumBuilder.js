@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import axios from "axios";
-import FileUpload from "../FileUpload";
 import CBDaySelect from "./CBDaySelect/CBDaySelect";
 import CBResources from "./CBResources/CBResources";
 import CBAssignments from "./CBAssignments/CBAssignments";
@@ -10,15 +9,8 @@ import CBQuizzes from "./CBQuizzes/CBQuizzes";
 import "./CurriculumBuilder.css";
 
 import {
-  Card,
-  Icon,
-  Image,
   Input,
   Button,
-  TextArea,
-  Form,
-  Header,
-  Checkbox,
   Message
 } from "semantic-ui-react";
 
@@ -112,7 +104,6 @@ class CurriculumBuilder extends Component {
       resourceLink: "",
       windowIndex: 0
     };
-    // this.populateDays = this.populateDays.bind(this)
   }
 
   handleInput = e => {
@@ -249,10 +240,7 @@ class CurriculumBuilder extends Component {
         </div>
       );
     });
-
-    let topicDescFlag =
-      this.state.dayTopicInput && this.state.dayDescriptionInput;
-
+   
     return (
       <div className="cb-container">
         <div
@@ -282,8 +270,7 @@ class CurriculumBuilder extends Component {
 
           <Input
             type="number"
-            className="cb-inputs"
-            className="cb-num-days-input"
+            className="cb-inputs cb-num-days-input"
             name="numDaysInput"
             placeholder="# of Days in Curriculum"
             onChange={this.handleInput}
@@ -299,6 +286,7 @@ class CurriculumBuilder extends Component {
           selectedDay={this.state.curriculumDays[this.state.selectedDay]}
           updateDay={this.updateDay}
           switch={this.switchWindows}
+          editing={this.props.match.params.curriculumid}
         />
 
         {this.state.windowIndex === 1 && (

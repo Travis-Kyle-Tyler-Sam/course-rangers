@@ -1,8 +1,7 @@
-import _ from 'lodash'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { updateCourseStudents } from '../../dux/teacherReducer'
-import { Search, Grid, Header, List, Form, Input, Button, Dropdown, Icon } from 'semantic-ui-react'
+import { Button, Dropdown, Icon } from 'semantic-ui-react'
 import axios from 'axios'
 
 
@@ -34,7 +33,7 @@ componentDidMount(){
 selectStudent(){
     let selectedList = [...this.props.selectedStudentList]
     let studentList = [...this.state.studentList]
-    const studentName = studentList.filter(student => student.id == this.state.searchString);
+    const studentName = studentList.filter(student => student.id === +this.state.searchString);
     selectedList.push(studentName[0])
    
     

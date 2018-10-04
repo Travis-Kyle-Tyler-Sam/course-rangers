@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Icon, Image, Input, Button, TextArea, Form, Header, Checkbox } from 'semantic-ui-react'
+import { Input, Button, TextArea, Form, Header } from 'semantic-ui-react'
 import FileUpload from '../../FileUpload'
 import '../CurriculumBuilder.css'
 
@@ -41,7 +41,6 @@ class CBassignments extends Component {
             let sendDay = {
                 dayNum,
                 resources,
-                assignments,
                 assignments: updatedassignments,
                 quizzes,
                 dayTopic,
@@ -60,11 +59,7 @@ class CBassignments extends Component {
     }
 
     render() { 
-
-        let daySaveLabel = this.state.editingTopicDesc ? 'Save' : 'Edit'
-
         return ( 
-
         <div className="ui red segment cb-pane" style={ { margin: 10 } }>
              <Header>
                  Add an Assignment
@@ -103,7 +98,7 @@ class CBassignments extends Component {
                   
                 <FileUpload 
                     cb={ this.uploadedFile } />
-                { this.state.assignmentFileInput !== '' && <img src={ this.state.assignmentFileInput } width='50px' />  }
+                { this.state.assignmentFileInput !== '' && <img alt='assignment document' src={ this.state.assignmentFileInput } width='50px' />  }
                     
             </Form>
              <Button 

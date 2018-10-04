@@ -6,29 +6,10 @@ import "./TeacherCourseDaySelector.css";
 
 import TeacherCourseResources from "./TeacherCourseResources";
 import TeacherCourseAssignments from "./TeacherCourseAssignments";
-import _ from "lodash";
-import TodayButton from './../TeacherDashboard/TodayButton';
-import axios from 'axios';
 import {
   Card,
-  Icon,
-  Image,
-  Input,
-  Button,
-  TextArea,
-  Form,
-  Header,
-  Checkbox,
-  Message,
   Tab,
-  Pane,
-  Segment
 } from "semantic-ui-react";
-import { updateCourses } from '../../dux/teacherReducer';
-
-
-
-
 
 class TeacherCourseDaySelector extends Component {
   constructor(props) {
@@ -44,28 +25,21 @@ class TeacherCourseDaySelector extends Component {
     };
   }
 
-
-
   componentDidMount() {
     this.populateToday()
   }
-
-
-
 
   populateToday(){
     this.setState({today: moment().format('YYYY-MM-DD')}) 
   }
 
-
   render() {
     const {
-      completion_date,
       course_name,
       days,
-      start_date,
       students
     } = this.state.course;
+    
     let daysToDisplay = days.map(day => {
       return (
         <Link to={`/teacher/lecture/${day.id}`} key={day.id + day.topic}>

@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-import {Link} from 'react-router-dom';
 import StudentSelector from './StudentSelector';
 import CourseBuilderTool from './CourseBuilderTool';
 import moment from 'moment';
 
 import './CourseBuilder.css'
 
-import { Input, Form, Dropdown, Button } from 'semantic-ui-react'
+import { Form } from 'semantic-ui-react'
 
 import { connect } from 'react-redux'
-import { getCurricula, updateCourseStudents } from '../../dux/teacherReducer'
+import { updateCourseStudents } from '../../dux/teacherReducer'
 
 class CourseBuilder extends Component {
 
@@ -73,8 +71,6 @@ class CourseBuilder extends Component {
         })
 
         let buttonsShowing = this.state.templateInput !== '' && this.state.startDateInput !== '';
-
-        let curriculumOptions = this.props.curr
 
         let routeParams = this.props.match 
             ? this.props.match.params.courseid

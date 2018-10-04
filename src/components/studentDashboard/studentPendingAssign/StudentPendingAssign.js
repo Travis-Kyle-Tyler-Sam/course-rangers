@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import { Table, Dimmer, Loader, Segment, Header } from 'semantic-ui-react'
+import { Dimmer, Loader, Segment, Header } from 'semantic-ui-react'
 import './../../studentDashboard/StudentDashboard.css'
-import StudentAssignmentDetail from './../StudentAssignmentDetail/StudentAssignmentDetail';
 import PendingAssignmentTable from './PendingAssignmentTable/PendingAssignmentTable';
 class PendingAssignCard extends Component {
     
@@ -17,8 +16,8 @@ class PendingAssignCard extends Component {
                 assignments.length !== 0
                 && <PendingAssignmentTable
                     course = {course}
-                    list = {courseAssignments}
-                    key = {`pendingtable${course}`}
+                    list={courseAssignments}
+                    key={course.course_id}
                     uploadFileFn = {this.props.uploadFileFn}
                 />
             )

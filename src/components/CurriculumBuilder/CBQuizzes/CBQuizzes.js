@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Icon, Image, Input, Button, TextArea, Form, Header, Modal, Checkbox, Label, Message } from 'semantic-ui-react'
+import { Icon, Input, Button, TextArea, Form, Header, Modal, Checkbox, Message } from 'semantic-ui-react'
 import '../CurriculumBuilder.css'
 
 
@@ -111,7 +111,6 @@ class CBQuizzes extends Component {
                 dayNum,
                 resources,
                 assignments,
-                assignments,
                 quizzes: updatedQuizzes,
                 dayTopic,
                 dayDesc
@@ -185,9 +184,6 @@ class CBQuizzes extends Component {
     }
 
     render() { 
-
-        let daySaveLabel = this.state.editingTopicDesc ? 'Save' : 'Edit'
-
         let answerOptions = this.state.quizQuestionOptions 
             ? this.state.quizQuestionOptions.map( (option, i) => {
                 return (

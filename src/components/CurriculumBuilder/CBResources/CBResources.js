@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Icon, Image, Input, Button, TextArea, Form, Header, Checkbox } from 'semantic-ui-react'
+import { Input, Button, TextArea, Form, Header, Checkbox } from 'semantic-ui-react'
 import FileUpload from '../../FileUpload'
 import '../CurriculumBuilder.css'
 
@@ -61,9 +61,6 @@ class CBResources extends Component {
     }
 
     render() { 
-
-        let daySaveLabel = this.state.editingTopicDesc ? 'Save' : 'Edit'
-
         return ( 
         <div className="ui segment cb-pane" style={ { margin: 10 } }>
              <Header>
@@ -98,7 +95,7 @@ class CBResources extends Component {
                      { ! this.state.resourceTypeLink && <div>
                          <FileUpload 
                              cb={ this.uploadedFile } />
-                         { this.state.resourceFileInput !== '' && <img src={ this.state.resourceFileInput } width='50px' />  }
+                         { this.state.resourceFileInput !== '' && <img alt='resource document' src={ this.state.resourceFileInput } width='50px' />  }
                      </div> 
                      }
                      { this.state.resourceTypeLink && 

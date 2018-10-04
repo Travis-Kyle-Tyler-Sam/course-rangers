@@ -7,16 +7,8 @@ import { connect } from 'react-redux';
 import { updateCourses } from '../../dux/teacherReducer';
 import TodayButton from './TodayButton';
 import {
-  Card,
   Icon,
-  Image,
-  Input,
   Button,
-  TextArea,
-  Form,
-  Header,
-  Checkbox,
-  Message
 } from "semantic-ui-react";
 
 import './TeacherCourseTemplates.css'

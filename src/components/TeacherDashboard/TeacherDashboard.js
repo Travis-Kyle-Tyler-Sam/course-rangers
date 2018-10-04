@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import TeacherCurrentCourses from './TeacherCurrentCourses';
 import TeacherCourseTemplates from './TeacherCourseTemplates';
-import Navbar from './../Navbar/Navbar';
 import { Segment } from 'semantic-ui-react'
 
 import { connect } from 'react-redux'

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import '../../StudentCourseDetail.css'
 import StudentAssignmentDetail from './../../../../StudentAssignmentDetail/StudentAssignmentDetail';
-import {Header, Segment, List, Table, Pagination, Button} from 'semantic-ui-react';
+import { Table, Pagination, Button} from 'semantic-ui-react';
 import moment from 'moment';
 import {withRouter} from 'react-router-dom';
 
@@ -27,8 +27,9 @@ class StudentCourseAssignments extends Component{
     }
     render(){
         const {assignments, course, uploadFileFn} = this.props
-        const list = assignments.map( (assignment, i) => {
-            if (Math.ceil((i+1)/5) === this.state.currentPage){
+        const list = assignments
+        .filter((assignment, i) => Math.ceil((i+1)/5) === this.state.currentPage)
+        .map( (assignment, i) => {
                 let disabled = false;
                 if (assignment.date_submitted){
                     disabled = true;
@@ -74,14 +75,12 @@ class StudentCourseAssignments extends Component{
                         }
                     </Table.Row>
                 )
-            }}
+            }
         )
         
         return(
-      
-            
             <div className='student-course-assignments'>
-                <Table fixed compact fixed singleLine color='purple'>
+                <Table fixed compact singleLine color='purple'>
                     <Table.Header>
                         <Table.Row >
                             <Table.HeaderCell>Name</Table.HeaderCell>

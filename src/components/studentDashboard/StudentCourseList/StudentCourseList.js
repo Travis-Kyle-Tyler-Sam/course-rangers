@@ -1,19 +1,16 @@
 import React from 'react'
-import { Header, Segment, List, Table, Loader, Dimmer, Button } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
+import { Header, Segment, Table, Button } from 'semantic-ui-react';
 import '../StudentDashboard.css'
 
 function StudentCourseList (props){
-    const { id, studentsCourses, courseRouteFn, calculatePercentFn, assignments } = props;
+    const { studentsCourses, courseRouteFn, calculatePercentFn, assignments } = props;
     const courseList = studentsCourses.map( course => {
         let courseAssignments = assignments.filter( assignment => {
-            return assignment.course_id === course.course_id
-        }).filter( assignment => {
-            return assignment.point_scored !== null
+            return assignment.course_id === course.course_id && assignment.point_scored !== null
         })
         let coursePercent = calculatePercentFn(courseAssignments)
         return(
-        <Table.Row key={`${course.courseName}${course.id}`}>
+        <Table.Row key={course.course_id}>
             <Table.Cell onClick={ () => courseRouteFn(course.course_id)} ><Button primary>View Course</Button></Table.Cell>
         
             <Table.Cell >{course.course_name}</Table.Cell>
@@ -55,9 +52,6 @@ function StudentCourseList (props){
                     </Table.Body>
                 </Table>
                 </div>
-            //     :<Dimmer active>
-            //     <Loader/>
-            // </Dimmer>
             :<div>No classes yet!</div>
             }
             </Segment>

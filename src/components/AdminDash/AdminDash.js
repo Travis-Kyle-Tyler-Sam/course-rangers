@@ -13,46 +13,8 @@ class AdminDash extends Component {
     constructor(){
         super();
         this.state = {
-            students:[
-                // {
-                //     name: 'Jose Gonzalez',
-                //     email: 'jose@jose.jose',
-                //     phone:'801-801-8018',
-                //     userType:'Student',
-                //     id:98234598
-                // },
-                
-                // {
-                //     name:'Hermione Granger',
-                //     email:'ilovebooks55@gmail.com',
-                //     phone:'801-801-8017',
-                //     userType:'Student',
-                //     id:1934875
-                // },
-                // {
-                //     name:'Goku',
-                //     email:'supersaiyinlol@capsulecorp.com',
-                //     phone:'801-801-8016',
-                //     userType:'Student',
-                //     id:981357
-                // }
-            ],
-            instructors:[
-                // {
-                //     name:'The Grandmaster',
-                //     email:'fearTheMeltyStick@grandmaster.io',
-                //     phone:'801-801-8015',
-                //     userType:'Instructor',
-                //     id:89734509
-                // },
-                // {
-                //     name:'Albus Dumbledore',
-                //     email:'justsendanowl@owlmail.owl',
-                //     phone:'801-801-8014',
-                //     userType:'Instructor',
-                //     id:2359879134
-                // }
-            ],
+            students:[],
+            instructors:[],
             adminID:2,
             snackOpen:false,
             action:'',
@@ -86,12 +48,6 @@ class AdminDash extends Component {
                 });
             });
         });
-        // axios.get(`/api/registry/${this.state.adminID}`).then( response => {
-        //     this.setState({
-        //         students:response.data.students, 
-        //         instructors:response.data.instructors
-        //     });
-        // });
     };
     handleSnack( bool, name, action){
         this.setState({
@@ -118,13 +74,13 @@ class AdminDash extends Component {
     }
     deleteUser(id){
         axios.delete(`/api/registry/deleteUser/${id}`).then( result => {
-            let {id} = result.data
-            this.removeUser(result.data.id)
-            this.handleSnack(true, result.data.user_name, 'deleted')
+            let {id, user_name} = result.data
+            this.removeUser(id)
+            this.handleSnack(true, user_name, 'deleted')
         })
     }
     render(){
-        const { students, instructors, action, actionName, displayStudents } = this.state;
+        const { students, instructors, action, actionName } = this.state;
         const panes = [
             {
                 menuItem:'Students', render: () => <Tab.Pane>

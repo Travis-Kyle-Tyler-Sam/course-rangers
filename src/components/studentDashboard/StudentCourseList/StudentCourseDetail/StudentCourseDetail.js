@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Segment, Loader, Dimmer, Card} from 'semantic-ui-react';
-import StudentDaySelector from './StudentDaySelector/StudentDaySelector';
+import { Loader, Dimmer, Card} from 'semantic-ui-react';
 import StudentAssignmentResourceGrade from './StudentAssignmentResourceGrade/StudentAssignmentResourceGrade';
 import axios from 'axios';
 import './StudentCourseDetail.css'
@@ -11,9 +10,6 @@ import moment from 'moment';
 class StudentCourseDetail extends Component {
     constructor(){
         super();
-        // let filteredCourse = this.props.courses.filter(
-        //     course => course.id === +this.props.match.params.courseid
-        //   )[0];
         this.state = {
             course: {},
             daysArray: [],

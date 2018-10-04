@@ -1,14 +1,11 @@
 import React, { Component } from "react";
 import {
   Header,
-  Segment,
-  List,
   Table,
   Button,
   Icon,
   Modal
 } from "semantic-ui-react";
-import _ from "lodash";
 import { connect } from "react-redux";
 import moment from "moment";
 import axios from "axios";
