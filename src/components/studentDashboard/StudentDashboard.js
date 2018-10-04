@@ -9,13 +9,15 @@ class StudentDashboard extends Component {
     constructor(props) {
       super(props);
       this.state = { 
-        studentsCourses: [{
-          courseName:'Math',
-          teacherName:'Mrs. Henry',
-          percent:92,
-          letterGrade:'A-',
-          id:5
-        }],
+        studentsCourses: [
+        //   {
+        //   courseName:'Math',
+        //   teacherName:'Mrs. Henry',
+        //   percent:92,
+        //   letterGrade:'A-',
+        //   id:5
+        // }
+      ],
         studentsAssignments: [],
         studentID:9,
        }
