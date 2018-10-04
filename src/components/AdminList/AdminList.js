@@ -151,8 +151,8 @@ class AdminList extends Component{
                         <Input onChange={ e => this.setState({
                             searchString:e.target.value}
                             )}
-                            />
-                        <Button primaryonClick={ () => {
+                            placeholder='Search Names Here'/>
+                        <Button onClick={ () => {
                             this.searchList()
                         }}>Search</Button>
                     </Form>
