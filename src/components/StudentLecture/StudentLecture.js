@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import openSocket from 'socket.io-client';
-import { Button, Input, Form, Icon, Label, List, Loader, Segment, Breadcrumb, Grid, Transition, TextArea, Header, Table } from 'semantic-ui-react';
+import { Button, Form, Icon, Segment, Transition, TextArea, Header, Table } from 'semantic-ui-react';
 import './StudentLecture.css'
-import StudentResources from './StudentResources/StudentResources';
 import axios from 'axios';
 import _ from 'lodash';
 import moment from 'moment';
@@ -67,7 +66,7 @@ class StudentLecture extends Component {
 
     buttonPress = (e) => {
         e.preventDefault()
-        const { userType, classid, userid } = this.state;
+        const { classid, userid } = this.state;
         socket.emit('students send thumbs', ['thumbsup', classid, userid], () => {
             this.setState({
                 thumbsDisable: true
@@ -76,7 +75,7 @@ class StudentLecture extends Component {
     }
     buttonPress2 = (e) => {
         e.preventDefault()
-        const { count2, classid, userid } = this.state;
+        const { classid, userid } = this.state;
         socket.emit('students send thumbs', ['thumbsdown', classid, userid], () => {
             this.setState({
                 thumbsDisable: true,
@@ -129,7 +128,7 @@ class StudentLecture extends Component {
                 <Table.Cell>{assignment.date_submitted ? moment(assignment.date_submitted).format('MM/DD') : moment(assignment.due_date).format('MM/DD')}</Table.Cell>
             </Table.Row>
         })
-        const { room, userType, thumbsDisable, studentUnderstands,
+        const { thumbsDisable, studentUnderstands,
             studentSurveyText, teacherSurveyText, freeresponseinput,
             studentsurveyinput, teacherThumbText, thumbsVisible, 
             studentThumbText, freeResponseVisible } = this.state;

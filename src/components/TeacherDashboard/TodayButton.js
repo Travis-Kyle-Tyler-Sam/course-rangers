@@ -1,17 +1,6 @@
 import React, { Component } from 'react';
-import {
-    Card,
-    Icon,
-    Image,
-    Input,
-    Button,
-    TextArea,
-    Form,
-    Header,
-    Checkbox,
-    Message
-  } from "semantic-ui-react";
-  import axios from 'axios';
+import { Button } from "semantic-ui-react";
+import axios from 'axios';
 
 class TodayButton extends Component {
     constructor(props) {
@@ -21,14 +10,11 @@ class TodayButton extends Component {
          }
     }
 
-
-
     componentDidMount(){
         this.getDate()
     }
 
     getDate() {
-
         axios.get(`/api/gettoday/?date=${this.props.today}&courseid=${this.props.courseid}`)
         .then(response => this.setState({todaysClass: response.data}))
         .catch(err=>console.log(err))
@@ -48,10 +34,7 @@ class TodayButton extends Component {
         return ( 
             <div>      
                 <Button href={`/#/teacher/lecture/${routeParam()}`}>Today</Button>
-                </div>
-     
-
-
+            </div>
          )
     }
 }

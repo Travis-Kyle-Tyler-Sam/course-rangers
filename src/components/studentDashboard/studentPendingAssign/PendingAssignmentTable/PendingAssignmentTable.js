@@ -28,48 +28,47 @@ class PendingAssignmentTable extends Component{
     render(){
         const { list, course } = this.props;
         const { currentPage, totalPages } = this.state;
-        const assignments = list.map( (assignment, i) => {
-            if (Math.ceil((i+1)/3)===currentPage){
-                return (
-                    <Table.Row>
-                        <Table.Cell >{assignment.name}</Table.Cell>
-                        <Table.Cell >{moment(assignment.due_date).format('MM/DD')}</Table.Cell>
-                        {
-                            assignment.date_submitted
-                                ?<Table.Cell >
-                                    {`submitted ${moment(assignment.date_submitted).format('MM/DD')}`}
-                                    {/* <Icon name='target'/> */}
-                                </Table.Cell>
-                                :<Table.Cell >
-                                    Incomplete 
-                                </Table.Cell>
-                        }
-                        {
-                            assignment.type === 'quiz'
-                                ?<Table.Cell >
-                                    <Button onClick={() => this.props.history.push(`/student/quiz/${assignment.id}`)}>
-                                        Take Quiz!
-                                    </Button>
-                                </Table.Cell>
-                                
-                                :<StudentAssignmentDetail
-                                    courseName = {assignment.course_name}
-                                    assignmentName = {assignment.name}
-                                    instructorName = {assignment.teacher_name}
-                                    dueDate = {moment(assignment.due_date).format('MM/DD')}
-                                    instructions = {assignment.description}
-                                    key = {`pend-assignment-detail${assignment.id}`}
-                                    uploadFileFn = {this.props.uploadFileFn}
-                                    assignmentID = {assignment.id}
-                                    studentID = {assignment.studentID}
-                                    attachment = {assignment.attachment}
-                                    dateSubmitted = {assignment.date_submitted}
-                                    type = {assignment.type}
-                                />
-                        }
-                    </Table.Row>
-                )
-            }
+        const assignments = list
+        .filter( (assignment, i) => Math.ceil((i+1)/3)===currentPage)
+        .map( (assignment, i) => {
+            return (
+                <Table.Row key={assignment.id}>
+                    <Table.Cell >{assignment.name}</Table.Cell>
+                    <Table.Cell >{moment(assignment.due_date).format('MM/DD')}</Table.Cell>
+                    {
+                        assignment.date_submitted
+                            ?<Table.Cell >
+                                {`submitted ${moment(assignment.date_submitted).format('MM/DD')}`}
+                            </Table.Cell>
+                            :<Table.Cell >
+                                Incomplete 
+                            </Table.Cell>
+                    }
+                    {
+                        assignment.type === 'quiz'
+                            ?<Table.Cell >
+                                <Button onClick={() => this.props.history.push(`/student/quiz/${assignment.id}`)}>
+                                    Take Quiz!
+                                </Button>
+                            </Table.Cell>
+                            
+                            :<StudentAssignmentDetail
+                                courseName = {assignment.course_name}
+                                assignmentName = {assignment.name}
+                                instructorName = {assignment.teacher_name}
+                                dueDate = {moment(assignment.due_date).format('MM/DD')}
+                                instructions = {assignment.description}
+                                key = {`pend-assignment-detail${assignment.id}`}
+                                uploadFileFn = {this.props.uploadFileFn}
+                                assignmentID = {assignment.id}
+                                studentID = {assignment.studentID}
+                                attachment = {assignment.attachment}
+                                dateSubmitted = {assignment.date_submitted}
+                                type = {assignment.type}
+                            />
+                    }
+                </Table.Row>
+            )
         })
         return(
             <div>

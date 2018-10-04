@@ -1,36 +1,9 @@
 import React from 'react';
-import { Table, Header, Tab } from 'semantic-ui-react';
+import { Table, Tab } from 'semantic-ui-react';
 import GradesTable from './GradesTable/GradesTable';
 import '../../StudentCourseDetail.css';
 function StudentCourseGrades(props){
-    // const grades = [
-    //     {
-    //         type:'assignment',
-    //         name:'assignment1',
-    //         score:'17/20',
-    //         grade:85
-    //     },
-    //     {
-    //         type:'assignment',
-    //         name:'assignment2',
-    //         score:'17/20',
-    //         grade:85
-    //     },
-    //     {
-    //         type:'quiz',
-    //         name:'quiz1',
-    //         score:'17/20',
-    //         grade:85
-    //     },
-    //     {
-    //         type:'quiz',
-    //         name:'quiz2',
-    //         score:'17/20',
-    //         grade:85
-    //     }
-    // ]
-    
-    const {grades} = props
+    const { grades } = props
     const assignments = grades.filter( assignment => assignment.type==='assignment').map( assignment => {
         return(
             <Table.Row>
@@ -90,7 +63,6 @@ function StudentCourseGrades(props){
     ]
     return(
         <div className='student-course-grades'>
-            {/* <Header as='h2'>Grades</Header> */}
             <Tab panes={panes}/>
             
         </div>

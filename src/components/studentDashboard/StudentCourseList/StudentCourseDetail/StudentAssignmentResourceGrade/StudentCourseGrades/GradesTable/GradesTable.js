@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Header, Pagination } from 'semantic-ui-react';
+import { Table, Pagination } from 'semantic-ui-react';
 import '../../../StudentCourseDetail.css'
 class GradesTable extends Component{
     constructor(props){

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { getUserInfo } from './../dux/userReducer';
 import { Link } from "react-router-dom";
-import Navbar from './Navbar/Navbar';
 
 class TemporaryDashboard extends Component {
     constructor(props) {
@@ -40,21 +39,15 @@ class TemporaryDashboard extends Component {
                 Admin Dashboard
              </Link>
                 </button>
-                
-        
             </section>
-
-
-
-
             </div>
          )
     }
 }
 function mapStateToProps(state) {
     return {
-      user: state.users.user
+        user: state.users.user
     };
-  }
+}
   
-  export default connect(mapStateToProps, { getUserInfo })(TemporaryDashboard);
+export default connect(mapStateToProps, { getUserInfo })(TemporaryDashboard);

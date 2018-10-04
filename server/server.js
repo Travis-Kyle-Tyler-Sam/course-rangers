@@ -109,24 +109,24 @@ app.get(
   })
 );
 
-// app.use( (req, res, next) => {
-//   if(process.env.MODE === 'development'){
-//     req.user = {
-//       auth_id:"google-oauth2|114146967500188859005",
-//       course_connect:null,
-//       email:"travisallen6@gmail.com",
-//       exp:0,
-//       id:4,
-//       level:0,
-//       linker_id:null,
-//       phone:null,
-//       user_image:"https://lh3.googleusercontent.com/-zR2_L45pjK4/AAAAAAAAAAI/AAAAAAAACSw/YL4xjs1PCvg/photo.jpg",
-//       user_name:"Travis Allen",
-//       user_type:"Student"
-//     }
-//   }
-//   next();
-// })
+app.use( (req, res, next) => {
+  if(process.env.MODE === 'development'){
+    req.user = {
+      auth_id:"google-oauth2|114146967500188859005",
+      course_connect:null,
+      email:"travisallen6@gmail.com",
+      exp:0,
+      id:4,
+      level:0,
+      linker_id:null,
+      phone:null,
+      user_image:"https://lh3.googleusercontent.com/-zR2_L45pjK4/AAAAAAAAAAI/AAAAAAAACSw/YL4xjs1PCvg/photo.jpg",
+      user_name:"Travis Allen",
+      user_type:"Student"
+    }
+  }
+  next();
+})
 
 app.get("/auth/me", function(req, res) {
   if (!req.user) {

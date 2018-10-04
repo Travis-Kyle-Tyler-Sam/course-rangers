@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import { Header, Segment, List, Table, Button, Icon, Modal, Image, Card } from "semantic-ui-react";
+import { Button, Image, Card } from "semantic-ui-react";
 import { getUserInfo } from './../../dux/userReducer';
-import FileUpload from './../FileUpload';
 import './Profile.css';
-
 
 class Profile extends Component {
     constructor(props) {
@@ -14,13 +12,12 @@ class Profile extends Component {
 
     componentDidMount() {
         this.props.getUserInfo();
-      }
+    }
 
     
     goBack = () => {
         this.props.history.goBack();
     }
-
 
     render() { 
         return ( 

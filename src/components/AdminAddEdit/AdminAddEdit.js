@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Header, Input, Form, Label, Modal, Checkbox, Radio, Icon } from 'semantic-ui-react';
+import { Button, Input, Form, Label, Modal, Radio, Icon } from 'semantic-ui-react';
 import './../AdminDash/AdminDash.css';
 class AdminAddEdit extends Component {
     constructor(){
@@ -36,13 +36,7 @@ class AdminAddEdit extends Component {
     componentDidUpdate(prevProps, prevState, snapshot){
         const { name:newName, role:newRole, phone:newPhone, email:newEmail, id:newID } = this.props;
         const { name, role, phone, email, id } = prevProps;
-        if (name === newName 
-            && role === newRole 
-            && phone === newPhone 
-            && email === newEmail 
-            && id === newID){
-            null
-        } else {
+        if (name !== newName && role !== newRole && phone !== newPhone && email !== newEmail && id !== newID){
             this.setState({
                 name:newName, 
                 value:newRole,
@@ -81,7 +75,7 @@ class AdminAddEdit extends Component {
 
     render(){
         const { name, phone, email, id, adjust, value } = this.state;
-        const { handleClickFn, callbackFn, deleteUserFn } = this.props;
+        const { callbackFn } = this.props;
         let displayID = () =>{
             if (id === -1){
                 return <p>Not yet set</p>

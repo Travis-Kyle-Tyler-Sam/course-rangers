@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import openSocket from 'socket.io-client';
 import axios from 'axios';
-import { Table, Button, Input, Form, Icon, Label, List, Loader, Segment, Breadcrumb, Grid, Transition, TextArea, Feed, Header} from 'semantic-ui-react';
+import { Table, Button, Form, Icon, List, Segment, Transition, TextArea, Header} from 'semantic-ui-react';
 import './TeacherLecture.css';
 import { connect } from "react-redux";
 import _ from 'lodash';
@@ -12,9 +12,6 @@ const socket = openSocket(process.env.REACT_APP_SOCKET)
 class TeacherLecture extends Component {
     constructor(){
         super();
-        // let filteredCourse = this.props.courses.filter(
-        //     course => course.id === +this.props.match.params.dayid
-        //   )[0];
         this.state = {
             userType:'Instructor',
             name:'',
@@ -82,9 +79,6 @@ class TeacherLecture extends Component {
         this.getCourseMaterial() 
 
     }
-    // componentDidUpdate(prevProps, prevState, snapshot){
-    //     const { socket, userType } = this.state;
-    // }
     componentWillUnmount(){
         socket.close()
     }
@@ -148,9 +142,9 @@ class TeacherLecture extends Component {
                 <Table.Cell>{moment(assignment.due_date).format('MM/DD')}</Table.Cell>
             </Table.Row>
         })
-        const {  count, count2, room, studentResponses, 
+        const {  count, count2, studentResponses, 
             teacherSurveyText, teacherthumbinput, teachersurveyinput, 
-            teacherThumbText, studentFreeResponses, thumbVisible, thumbLeave,
+            teacherThumbText, studentFreeResponses, thumbVisible,
             thumbUpVisible, thumbDownVisible, questionVisible} = this.state
 
         return(
@@ -189,7 +183,7 @@ class TeacherLecture extends Component {
                     <Segment 
                         color='purple'
                         className='free-section'>
-                    {/* possible icons--comment, comments, talk, help(a question mark, pencil, question) */}
+                   
                         <Header as='h1'>Free Responses</Header>
                         <Header as='h3'>{teacherSurveyText}</Header>
                         <Transition.Group

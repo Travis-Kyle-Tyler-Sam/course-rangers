@@ -1,35 +1,16 @@
 import React, {Component} from 'react';
-import {Header, Button, Modal, Icon, Table} from 'semantic-ui-react';
-import axios from 'axios';
+import { Button, Modal, Table} from 'semantic-ui-react';
 import FileUpload from './../../FileUpload'
 import './StudentAssignmentDetail.css';
-import { List } from 'material-ui';
 import moment from 'moment';
 
 
 class StudentAssignmentDetail extends Component{
-    constructor(){
-        super();
-        this.state = {
-            modalOpen:false,
-            courseName:'Math',
-            assignmentName:'Fractions',
-            instructorName:'Billie the Kid',
-            dueDate:'Friday',
-            instructions: 'These are some instructions that would instruct people on how to instruct other people.', 
-            // courseAssignmentID:73,
-            // pointsPossible:50,
-            // pointScored:30,
-            // dateSubmitted:new Date()
-        }
-    }
-    
-    
-    
+
     render(){
         const { courseName, assignmentName, instructorName, dueDate, 
-            instructions, status, uploadFileFn, assignmentID, studentID, 
-            attachment, dateSubmitted  } = this.props;
+            instructions, uploadFileFn, assignmentID, 
+            attachment } = this.props;
         return(
         <Modal trigger={
             <Table.Cell>
@@ -51,7 +32,7 @@ class StudentAssignmentDetail extends Component{
                         attachment
                         ? <div>
                             <p>Attachment:</p>
-                            <a href={attachment} target={'_blank'}><img src = {attachment} style={{height:'100px', width:'100px'}}/></a>
+                            <a href={attachment} target={'_blank'}><img src = {attachment} alt='document' style={{height:'100px', width:'100px'}}/></a>
                         </div>
                         :
                         <div>
@@ -63,14 +44,6 @@ class StudentAssignmentDetail extends Component{
                     }
                 </div>
             </Modal.Content >
-            {/* <Modal.Actions >
-                <Button>
-                    <Icon name='arrow left'/>Back
-                </Button>
-                <Button>
-                   <Icon name='upload'/> Submit
-                </Button>
-            </Modal.Actions> */}
         </Modal>
         )
     }

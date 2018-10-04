@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import axios from 'axios';
-import { Card, Icon, Image, Input, Button, TextArea, Form, Header, Checkbox, Message, Table } from 'semantic-ui-react'
+import { Icon, Button, Table } from 'semantic-ui-react'
 
 import { connect } from 'react-redux'
 import { getCurricula } from '../../dux/teacherReducer'

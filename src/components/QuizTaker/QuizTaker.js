@@ -35,12 +35,6 @@ class QuizTaker extends Component {
         .catch( err => console.log(err))
     }
 
-    
-
-  
-
-
-
     selectOption = (i) => {
 
         let freshQuestions = [...this.state.questions]
@@ -52,10 +46,9 @@ class QuizTaker extends Component {
     }
 
     submitQuiz = () => {
-        let freshQuiz = {...this.state.quiz}
         let freshQuestions = [...this.state.questions]
 
-        freshQuestions.forEach( (current, i, questionArray) => {
+        freshQuestions.forEach( (current) => {
             if( current.option_selected === current.correct_answer ) {
                 current.points_awarded = +current.points_possible
             } else {
@@ -99,8 +92,6 @@ class QuizTaker extends Component {
                 message: message
             })
         )
-
-
     }
 
     modalComplete = () => {
@@ -108,8 +99,6 @@ class QuizTaker extends Component {
     }
 
     render() {
-        
-        let questions = []
         let question = null
         let options = null
         
@@ -117,9 +106,6 @@ class QuizTaker extends Component {
             
             question = this.state.index + 1 + ".  " + this.state.quiz.questions[this.state.index].question + "?";
             options = this.state.questions[this.state.index].options.map( (option, i) => {
-
-                let optionText = option.option_text
-                let corAns = this.state.questions[this.state.index].correct_answer
 
                 let liClass = option.option_text === this.state.questions[this.state.index].option_selected ? 'qt-option-selected qt-option' : 'qt-option-notselected qt-option'
 

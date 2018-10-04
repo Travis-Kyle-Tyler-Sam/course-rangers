@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Icon, Segment, Header } from "semantic-ui-react";
+import { Icon, Segment } from "semantic-ui-react";
 
 class QList extends Component {
   constructor(props) {

@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
+import React from 'react';
 import StudentCourseAssignments from './StudentCourseAssignments/StudentCourseAssignments';
 import StudentCourseGrade from './StudentCourseGrades/StudentCourseGrades';
 import StudentCourseResources from './StudentCourseResources/StudentCourseResources';
-import {Segment, Tab, Dimmer, Loader} from 'semantic-ui-react';
+import { Tab } from 'semantic-ui-react';
 import '../StudentCourseDetail';
 
 function StudentAssignmentResourceGrade(props) {

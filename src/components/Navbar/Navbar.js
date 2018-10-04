@@ -1,13 +1,6 @@
 import React, { Component } from "react";
-import {
-  Sidebar,
-  Segment,
-  Button,
-  Menu,
-  Image,
-  Dropdown
-} from "semantic-ui-react";
-import { Link, withRouter } from "react-router-dom";
+import { Image, Dropdown } from "semantic-ui-react";
+import { withRouter } from "react-router-dom";
 import axios from "axios";
 import { connect } from "react-redux";
 import { getUserInfo } from "../../dux/userReducer";
@@ -32,7 +25,7 @@ class Navbar extends Component {
     handleDropDown = (e, data) => {
         if (data.value === "log-out") {
             axios.get("/auth/logout")
-            .then(response => this.props.history.push("/"));
+            .then( () => this.props.history.push("/"));
         } else {
             this.props.history.push(data.value);
         }
@@ -81,7 +74,7 @@ class Navbar extends Component {
         
     return (
         <div className="navbar">
-            <img src={ CRLogo } height='90%'/>
+            <img alt='course rangers logo' src={ CRLogo } height='90%'/>
 
             <div>
                 <a href={ dashUrl }>Dashboard</a>

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Header, Segment, List, Table } from "semantic-ui-react";
+import { Header, Table } from "semantic-ui-react";
 import _ from "lodash";
 import { connect } from "react-redux";
 import moment from "moment";
