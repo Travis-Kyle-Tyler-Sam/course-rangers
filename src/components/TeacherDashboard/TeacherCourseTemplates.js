@@ -97,7 +97,7 @@ deleteCourseTemplate(id){
 
 function mapStateToProps(state) {
     return {
-        curricula: state.teachers.curricula
+        curricula: state.teachers.curricula,
     }
 }
  

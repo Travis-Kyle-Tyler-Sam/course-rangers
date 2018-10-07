@@ -14,7 +14,8 @@ class StudentCourseDetail extends Component {
             course: {},
             daysArray: [],
             resources: [],
-            assignments: []
+            assignments: [],
+            loading: true
         }
         this.uploadFile = this.uploadFile.bind(this);
     }
@@ -48,7 +49,8 @@ class StudentCourseDetail extends Component {
                     course:response.data.course[0],
                     daysArray:response.data.daysArray,
                     resources:response.data.resources,
-                    assignments:response.data.assignments
+                    assignments:response.data.assignments,
+                    loading: false
                 })
             })
         }
@@ -65,7 +67,15 @@ class StudentCourseDetail extends Component {
         })
     }
     render(){
-        const { assignments, resources, daysArray, course } = this.state;
+        const { assignments, resources, daysArray, course, loading } = this.state;
+        if(loading) {
+            return (
+            <Dimmer active>
+                <Loader>Loading</Loader>
+            </Dimmer>
+        
+            )
+        }
         let daysToDisplay = daysArray.map(day => {
             return (
               <Link to={`/student/lecture/${day.id}`} key={day.id + day.topic}>

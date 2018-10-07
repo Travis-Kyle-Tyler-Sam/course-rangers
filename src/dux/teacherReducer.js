@@ -5,7 +5,8 @@ const initialState = {
   user: {},
   curricula: [],
   studentList: [],
-  courses: []
+  courses: [],
+  loading: true
 };
 
 const UPDATE_USER_INFO = "UPDATE_USER_INFO";
@@ -56,7 +57,7 @@ export default function reducer(state = initialState, action) {
       return Object.assign({}, state, { user: action.payload });
 
     case GET_CURRICULA + "_FULFILLED":
-      return Object.assign( {}, state, { curricula: action.payload });
+      return Object.assign( {}, state, { curricula: action.payload, loading: false });
 
     case UPDATE_COURSE_STUDENTS:
       return Object.assign( {}, state, { studentList: action.payload} )

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import TeacherCurrentCourses from './TeacherCurrentCourses';
 import TeacherCourseTemplates from './TeacherCourseTemplates';
-import { Segment } from 'semantic-ui-react'
+import { Dimmer, Loader, Segment } from 'semantic-ui-react'
 
 import { connect } from 'react-redux'
 import { getCurricula } from '../../dux/teacherReducer'
@@ -19,10 +19,17 @@ class TeacherDashboard extends Component {
         this.props.getCurricula()
     }
     render() { 
+        if(this.props.loading) {
+            return (
+            <Dimmer active>
+                <Loader>Loading</Loader>
+            </Dimmer>
+            )
+        }
         return ( 
-<div className='td-container'>
-    <h1>Teacher Dashboard</h1>
-    <div className='td-segment-container'>
+        <div className='td-container'>
+            <h1>Teacher Dashboard</h1>
+        <div className='td-segment-container'>
     
 
         {/* <div style={{margin: 0}} className='ui segment' ><TeacherCourseTemplates/></div>
@@ -51,7 +58,8 @@ class TeacherDashboard extends Component {
 
 function mapStateToProps(state) {
     return {
-        curricula: state.teachers.curricula
+        curricula: state.teachers.curricula,
+        loading: state.teachers.loading
     }
 }
  

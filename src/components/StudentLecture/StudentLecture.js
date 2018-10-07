@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import openSocket from 'socket.io-client';
-import { Button, Form, Icon, Segment, Transition, TextArea, Header, Table } from 'semantic-ui-react';
+import { Dimmer, Loader, Button, Form, Icon, Segment, Transition, TextArea, Header, Table } from 'semantic-ui-react';
 import './StudentLecture.css'
 import axios from 'axios';
 import _ from 'lodash';
@@ -27,7 +27,8 @@ class StudentLecture extends Component {
             freeresponseinput: '',
             thumbsVisible: false,
             courseMaterial: [],
-            freeResponseVisible:false
+            freeResponseVisible:false,
+            Loading: true
         }
         socket.on('open thumbs', teacherinput => {
             this.setState({
@@ -58,7 +59,7 @@ class StudentLecture extends Component {
     getCourseMaterial() {
         axios.get(`/api/student/lecture_material/${this.props.match.params.dayid}`)
             .then(response => {
-                this.setState({ courseMaterial: response.data })
+                this.setState({ courseMaterial: response.data, loading: false })
             })
             .catch(err => console.log(err))
     }
@@ -116,6 +117,14 @@ class StudentLecture extends Component {
         })
     }
     render() {
+        let { loading } = this.state;
+        if(loading) {
+            return (
+            <Dimmer active>
+                <Loader>Loading</Loader>
+            </Dimmer>
+            )
+        }
         let uniqueResources = _.uniqBy(this.state.courseMaterial, "title");
         let uniqueAssignments = _.uniqBy(this.state.courseMaterial, "name");
         let resources = uniqueResources.map(resource => {
@@ -134,7 +143,6 @@ class StudentLecture extends Component {
             studentThumbText, freeResponseVisible } = this.state;
         return (
             <div>
-                
                 <div className='student-lecture'>
                 {/* <Header as='h2'>Student Lecture View Room {room}</Header> */}
                     <Segment
