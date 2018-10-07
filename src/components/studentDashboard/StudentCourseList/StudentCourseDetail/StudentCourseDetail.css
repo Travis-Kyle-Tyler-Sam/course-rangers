@@ -32,8 +32,15 @@ align-self: center;
   grid-column:2/3;
   grid-row:2/3;
   width: 600px;
+  padding: 0 30px 30px; 
   padding: 20px;
 }
+
+#course-day-selector {
+  width: 660px;
+  padding: 0 30px 30px;
+}
+
 .container1 {
   display: inline-grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));

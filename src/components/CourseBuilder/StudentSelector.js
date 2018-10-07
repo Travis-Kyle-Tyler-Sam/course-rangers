@@ -11,11 +11,10 @@ class StudentSelector extends Component {
     
     render() { 
         return ( 
-        
-            <div>
-                <h3>Students</h3>
-                    <StudentSearch 
-                        studentIds={this.props.studentIds} />
+        <div>
+            <h3>Students</h3>
+            <StudentSearch 
+                studentIds={this.props.studentIds} />
                 
         </div> )
     }

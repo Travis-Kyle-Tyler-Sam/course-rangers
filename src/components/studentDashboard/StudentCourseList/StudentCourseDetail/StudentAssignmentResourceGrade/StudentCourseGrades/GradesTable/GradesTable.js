@@ -11,10 +11,27 @@ class GradesTable extends Component{
     }
     
     render(){
+        const displayedList = this.props.list.map( assignment => {
+            return(
+                <Table.Row key={assignment.id}>
+                    <Table.Cell>{assignment.name}</Table.Cell>
+                    <Table.Cell>{
+                        assignment.point_scored
+                        ?`${assignment.point_scored}/${assignment.points_possible}`
+                        : 'Not yet graded'
+                        }</Table.Cell>
+                    <Table.Cell>{
+                        assignment.percentage
+                        ?`${assignment.percentage}%`
+                        : 'Not yet graded'
+                        }</Table.Cell>
+                </Table.Row>
+            )
+        })
         return(
             <div className='grades-table'>
                 
-                <Table fixed compact singeLine columns={3} color='orange'>
+                <Table fixed compact columns={3} color='orange'>
                     <Table.Header>
                         <Table.Row>
                             <Table.HeaderCell>{this.props.singular}</Table.HeaderCell>
@@ -23,7 +40,7 @@ class GradesTable extends Component{
                         </Table.Row>
                     </Table.Header>
                     <Table.Body>
-                        {this.props.list}
+                        {displayedList}
                     </Table.Body>
                 </Table>
                 <Pagination

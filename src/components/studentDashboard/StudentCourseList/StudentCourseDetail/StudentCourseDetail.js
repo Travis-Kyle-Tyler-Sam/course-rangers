@@ -21,7 +21,7 @@ class StudentCourseDetail extends Component {
 
     componentDidMount(){
         const {courseid} = this.props.match.params;
-        if (courseid === 'undefined'){
+        if (!courseid){
             this.setState({
                 course:{
                     course_name:'No courses yet!',
@@ -81,7 +81,9 @@ class StudentCourseDetail extends Component {
                 { course
                 ?
                 <div className='student-course-detail'>
-                    <Card style={{ width: "600px"}} className='day-selector'>
+                    <Card 
+                    id='course-day-selector'
+                    className='day-selector'>
                         <h1 className='course-name'>{course.course_name}</h1>
                         <div className="container1">{daysToDisplay}</div>
                     </Card> 

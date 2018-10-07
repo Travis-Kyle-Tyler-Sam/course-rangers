@@ -1,37 +1,39 @@
 {
   "version": "0.2.0",
   "configurations": [
-      // {
-      //   "type": "chrome",
-      //   "request": "attach",
-      //   "name": "Attach to Chrome",
-      //   "port": 3000,
-      //   "webRoot": "${workspaceRoot}/src"
-      // },
-      {
-        "type": "node",
-          "request": "launch",
-          "name": "Server",
-          "program": "${workspaceFolder}/server/server.js",
-          "skipFiles": [
-            "${workspaceRoot}/node_modules/**/*.js",
-            "<node_internals>/**/*.js"
-        ]
-      },
-      {
-        "name": "React",
-        "type": "chrome",
-        "request": "launch",
-        "skipFiles": [
-          "${workspaceRoot}/node_modules/**/*.js",
-          "<node_internals>/**/*.js"
-        ],
-        "url": "http://localhost:3000",
-        "webRoot": "${workspaceRoot}/src",
-        "sourceMapPathOverrides": {
-          "webpack:///src/*": "${webRoot}/*"
-        }
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "nodemon",
+      "runtimeExecutable": "nodemon",
+      "program": "${workspaceFolder}/server/server.js",
+      "restart": true,
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Server",
+      "program": "${workspaceFolder}/server/server.js",
+      "skipFiles": [
+        "${workspaceRoot}/node_modules/**/*.js",
+        "<node_internals>/**/*.js"
+      ]
+    },
+    {
+      "name": "React",
+      "type": "chrome",
+      "request": "launch",
+      "skipFiles": [
+        "${workspaceRoot}/node_modules/**/*.js",
+        "<node_internals>/**/*.js"
+      ],
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceRoot}/src",
+      "sourceMapPathOverrides": {
+        "webpack:///src/*": "${webRoot}/*"
       }
-    ]
+    }
+  ]
 }
-

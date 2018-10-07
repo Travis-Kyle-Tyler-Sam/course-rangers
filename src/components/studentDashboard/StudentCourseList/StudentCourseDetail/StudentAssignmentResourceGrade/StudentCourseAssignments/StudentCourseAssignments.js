@@ -35,7 +35,7 @@ class StudentCourseAssignments extends Component{
                     disabled = true;
                 }
                 return(
-                    <Table.Row>
+                    <Table.Row key={assignment.id}>
                         <Table.Cell>{assignment.name}</Table.Cell>
                         <Table.Cell>{moment(assignment.due_date).format('MM/DD')}</Table.Cell>
                         {
